@@ -1,0 +1,164 @@
+/* src/App.css */
+#root {
+  width: 100%;
+}
+
+/* src/components/IOSLayout.css */
+.ios-layout {
+  background-color: #f2f2f7;
+  min-height: 100vh;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+  color: #000;
+}
+.ios-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(44px + env(safe-area-inset-top, 20px));
+  padding-top: env(safe-area-inset-top, 20px);
+  background-color: rgba(242, 242, 247, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.0);
+  transition: border-bottom-color 0.2s, background-color 0.2s;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ios-header.scrolled {
+  background-color: rgba(242, 242, 247, 0.95);
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+}
+.header-content {
+  width: 100%;
+  max-width: 600px;
+  padding: 0 16px;
+  height: 44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-content h1 {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+  flex-grow: 1;
+}
+.header-right {
+  position: absolute;
+  right: 16px;
+  font-size: 17px;
+  color: #007aff;
+  cursor: pointer;
+}
+.ios-content {
+  padding-top: calc(44px + env(safe-area-inset-top, 20px) + 16px);
+  padding-bottom: calc(40px + env(safe-area-inset-bottom, 20px));
+  max-width: 600px;
+  margin: 0 auto;
+}
+@media (prefers-color-scheme: dark) {
+  .ios-layout {
+    background-color: #000;
+    color: #fff;
+  }
+  .ios-header {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  .ios-header.scrolled {
+    background-color: rgba(28, 28, 30, 0.95);
+    border-bottom-color: rgba(255, 255, 255, 0.15);
+  }
+  .header-content h1 {
+    color: #fff;
+  }
+}
+
+/* src/components/ToggleRow.css */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding-left: 16px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.toggle-row:active {
+  background-color: #e5e5ea;
+}
+.row-number {
+  font-size: 17px;
+  color: #8e8e93;
+  width: 35px;
+  flex-shrink: 0;
+}
+.row-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px 12px 0;
+  border-bottom: 0.5px solid #c6c6c8;
+  min-height: 44px;
+}
+.row-content.last {
+  border-bottom: none;
+}
+.row-label {
+  font-size: 17px;
+  margin-right: 16px;
+  line-height: 1.3;
+}
+.ios-switch {
+  width: 51px;
+  height: 31px;
+  background-color: #e9e9ea;
+  border-radius: 15.5px;
+  position: relative;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+.ios-switch.checked {
+  background-color: #34c759;
+}
+.switch-handle {
+  width: 27px;
+  height: 27px;
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+.ios-switch.checked .switch-handle {
+  transform: translateX(20px);
+}
+@media (prefers-color-scheme: dark) {
+  .toggle-row {
+    background-color: #1c1c1e;
+  }
+  .toggle-row:active {
+    background-color: #2c2c2e;
+  }
+  .row-content {
+    border-bottom-color: #38383a;
+  }
+  .row-label {
+    color: #fff;
+  }
+  .ios-switch {
+    background-color: #39393d;
+  }
+}

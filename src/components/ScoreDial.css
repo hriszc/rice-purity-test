@@ -1,0 +1,58 @@
+.score-dial-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 16px;
+  background-color: #fff;
+  border-radius: 12px;
+  margin: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.score-dial {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dial-bg {
+  fill: none;
+  stroke: #e5e5ea;
+}
+
+.dial-progress {
+  fill: none;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease-in-out, stroke 0.5s;
+}
+
+.score-value {
+  position: absolute;
+  font-size: 48px;
+  font-weight: 700;
+  color: #000;
+}
+
+.score-category {
+  margin-top: 16px;
+  font-size: 17px;
+  text-align: center;
+  color: #8e8e93;
+  line-height: 1.4;
+  font-style: italic;
+}
+
+@media (prefers-color-scheme: dark) {
+  .score-dial-container {
+    background-color: #1c1c1e;
+  }
+  .score-value {
+    color: #fff;
+  }
+  .dial-bg {
+    stroke: #39393d;
+  }
+}

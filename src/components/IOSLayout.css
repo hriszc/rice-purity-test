@@ -1,0 +1,79 @@
+.ios-layout {
+  background-color: #f2f2f7; /* iOS grouped background color */
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #000;
+}
+
+.ios-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(44px + env(safe-area-inset-top, 20px));
+  padding-top: env(safe-area-inset-top, 20px);
+  background-color: rgba(242, 242, 247, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.0);
+  transition: border-bottom-color 0.2s, background-color 0.2s;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ios-header.scrolled {
+  background-color: rgba(242, 242, 247, 0.95);
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+}
+
+.header-content {
+  width: 100%;
+  max-width: 600px;
+  padding: 0 16px;
+  height: 44px; /* Explicit height for content area */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-content h1 {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.header-right {
+  position: absolute;
+  right: 16px;
+  font-size: 17px;
+  color: #007aff;
+  cursor: pointer;
+}
+
+.ios-content {
+  padding-top: calc(44px + env(safe-area-inset-top, 20px) + 16px);
+  padding-bottom: calc(40px + env(safe-area-inset-bottom, 20px));
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@media (prefers-color-scheme: dark) {
+  .ios-layout {
+    background-color: #000;
+    color: #fff;
+  }
+  .ios-header {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  .ios-header.scrolled {
+    background-color: rgba(28, 28, 30, 0.95);
+    border-bottom-color: rgba(255, 255, 255, 0.15);
+  }
+  .header-content h1 {
+    color: #fff;
+  }
+}
