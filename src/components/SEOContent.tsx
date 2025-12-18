@@ -12,6 +12,23 @@ export const SEOContent: React.FC = () => {
         </p>
       </section>
 
+      {/* Methodology Section */}
+      <section style={{ marginBottom: '32px' }}>
+        <h2 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '12px' }}>Methodology & Scoring</h2>
+        <p style={{ fontSize: '15px', lineHeight: '1.6', color: '#3c3c43', marginBottom: '16px' }}>
+          This digital version faithfully recreates the 1988 Rice Purity Test (150-question extended edition) as documented in Rice University archives.
+          The scoring logic is transparent:
+        </p>
+        <ul style={{ fontSize: '15px', lineHeight: '1.6', color: '#3c3c43', paddingLeft: '20px', marginBottom: '16px' }}>
+          <li>You start with a perfect score of 100 (or 150).</li>
+          <li>Each "Yes" answer deducts 1 point.</li>
+          <li>Your final score represents your remaining percentage of "purity" or innocence.</li>
+        </ul>
+        <p style={{ fontSize: '15px', lineHeight: '1.6', color: '#3c3c43' }}>
+          We utilize local browser storage to save your progress temporarily so you don't lose your spot, but no data is ever transmitted to us or third parties.
+        </p>
+      </section>
+
       {/* History Section */}
       <section style={{ marginBottom: '32px' }}>
         <h2 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '12px' }}>History of the Rice Purity Test</h2>
@@ -19,7 +36,7 @@ export const SEOContent: React.FC = () => {
           The Rice Purity Test is a famous 100-question survey that originated at Rice University in Houston, Texas. 
           First published in 1924, it was designed to help students bond and track their life experiences throughout college.
           Over the decades, it has evolved into a viral internet phenomenon, serving as a rite of passage for high school 
-          and college students worldwide. The "1988 version" featured here is considered one of the most classic and standard iterations.
+          and college students worldwide. The "1988 version" featured here is considered one of the most classic and standard iterations, widely cited in student culture and online communities.
         </p>
       </section>
 
