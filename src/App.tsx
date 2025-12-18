@@ -4,6 +4,7 @@ import { sections, scoringCategories, introText } from './data';
 import { IOSLayout } from './components/IOSLayout';
 import { ToggleRow } from './components/ToggleRow';
 import { SEOContent } from './components/SEOContent';
+import { ScoreDial } from './components/ScoreDial';
 
 function App() {
   // Flatten questions for easy state management
@@ -47,14 +48,9 @@ function App() {
   }, [checkedState, isShortMode, currentMaxScore, allQuestions]);
 
   const category = useMemo(() => {
-    if (isShortMode) {
-      // Scale short score (0-30) to full scale (0-150) for category lookup
-      const scaledScore = displayScore * 5;
-      const found = scoringCategories.find(c => scaledScore >= c.min && scaledScore <= c.max);
-      return found ? found.text : "Short Test Mode";
-    }
-    const found = scoringCategories.find(c => displayScore >= c.min && displayScore <= c.max);
-    return found ? found.text : "";
+    const scoreToLookup = isShortMode ? displayScore * 5 : displayScore;
+    const found = scoringCategories.find(c => scoreToLookup >= c.min && scoreToLookup <= c.max);
+    return found ? found.text : (isShortMode ? "Short Test Mode" : "");
   }, [displayScore, isShortMode]);
 
   const handleSubmit = () => {
@@ -67,93 +63,52 @@ function App() {
     window.scrollTo(0, 0);
   };
 
-  // Rendering Helper
-  // We need to track a "global index" to match the flat checkedState array
-  // We also need to calculate which question number to display (1, 2, 3...) based on the mode.
-  // Let's pre-calculate the indices to render.
-  
-  // No, we can just iterate through sections and filter.
-  // But we need to maintain the original global index for handleToggle.
+  let globalIndexCounter = 0;
+  let displayedQuestionCounter = 1;
 
-  let globalIndexCounter = 0; // Tracks index in allQuestions (0 to 149)
-  let displayedQuestionCounter = 1; // Tracks 1..30 or 1..150
+  const handleShare = async () => {
+    const shareData = {
+      title: 'Rice Purity Test Result',
+      text: `I scored a ${displayScore}/${currentMaxScore} on the Rice Purity Test! Check your score here:`,
+      url: window.location.origin,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
+        alert('Score copied to clipboard!');
+      }
+    } catch (err) {
+      console.error('Error sharing:', err);
+    }
+  };
 
   if (isSubmitted) {
     return (
-      <IOSLayout title="Result">
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          alignItems: 'center', 
-          justifyContent: 'center', 
-          padding: '40px 20px',
-          textAlign: 'center',
-          minHeight: '60vh'
-        }}>
-           <div style={{ fontSize: '18px', color: '#8e8e93', marginBottom: '20px' }}>Your Score</div>
-           <div style={{ 
-             fontSize: '80px', 
-             fontWeight: '700', 
-             color: '#007aff',
-             lineHeight: 1,
-             marginBottom: '10px'
-           }}>
-             {displayScore}
-             <span style={{ fontSize: '24px', color: '#8e8e93', fontWeight: 400 }}>/{currentMaxScore}</span>
-           </div>
-           
-           <div style={{ 
-             fontSize: '20px', 
-             fontWeight: '600', 
-             marginTop: '30px', 
-             marginBottom: '10px'
-           }}>
-             Purity Category
-           </div>
-           
-           <div style={{ 
-             fontSize: '16px', 
-             color: '#1c1c1e', 
-             maxWidth: '90%', 
-             lineHeight: '1.5' 
-           }}>
-             {category}
-           </div>
+      <IOSLayout title="Results">
+        <div className="results-view">
+           <ScoreDial 
+             score={displayScore} 
+             maxScore={currentMaxScore} 
+             category={category} 
+           />
 
-           <div style={{ marginTop: '60px', width: '100%', maxWidth: '300px' }}>
-             <button 
-               onClick={handleRetake}
-               style={{
-                 width: '100%',
-                 padding: '16px',
-                 backgroundColor: '#007aff',
-                 color: 'white',
-                 border: 'none',
-                 borderRadius: '12px',
-                 fontSize: '17px',
-                 fontWeight: '600',
-                 cursor: 'pointer',
-                 marginBottom: '12px'
-               }}
-             >
+           <div className="action-buttons">
+             <button onClick={handleShare} className="button-primary">
+               Share Result
+             </button>
+             <button onClick={handleRetake} className="button-secondary">
                Review Answers
              </button>
-             <button 
-               onClick={handleReset}
-               style={{
-                 width: '100%',
-                 padding: '16px',
-                 backgroundColor: 'transparent',
-                 color: '#ff3b30',
-                 border: 'none',
-                 borderRadius: '12px',
-                 fontSize: '17px',
-                 fontWeight: '600',
-                 cursor: 'pointer'
-               }}
-             >
+             <button onClick={handleReset} className="button-text-danger">
                Start Over
              </button>
+           </div>
+           
+           <div className="seo-wrapper">
+             <SEOContent />
            </div>
         </div>
       </IOSLayout>
@@ -163,68 +118,39 @@ function App() {
   return (
     <IOSLayout 
       title="Rice Purity test"
-      rightAction={<span onClick={handleReset}>Clear</span>}
+      rightAction={<span className="clear-button" onClick={handleReset}>Clear</span>}
     >
-      <div style={{ padding: '0 16px 16px' }}>
-        <div style={{ 
-          display: 'flex',
-          alignItems: 'center',
-          gap: '10px',
-          marginBottom: '18px',
-          padding: '12px 14px',
-          backgroundColor: '#f2f8ff',
-          border: '1px solid #d6e6ff',
-          borderRadius: '12px',
-          color: '#0f4471',
-          fontSize: '14px',
-          fontWeight: 600
-        }}>
+      <div className="app-container">
+        <div className="privacy-badge">
           <span role="img" aria-label="shield">🛡️</span>
           <span>Runs entirely locally and can work offline</span>
         </div>
         
         {/* Intro Card */}
         {showIntro && (
-          <div style={{ 
-            backgroundColor: '#fff', 
-            borderRadius: '12px', 
-            padding: '20px', 
-            marginBottom: '24px',
-            boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
-          }}>
-            <h2 style={{ margin: '0 0 10px 0', fontSize: '20px' }}>{introText.title}</h2>
-            <p style={{ fontSize: '14px', color: '#3c3c43', lineHeight: '1.4', marginBottom: '16px' }}>
+          <div className="intro-card">
+            <h2 className="intro-title">{introText.title}</h2>
+            <p className="intro-desc">
               {introText.description}
             </p>
             
-            <div style={{ marginBottom: '16px' }}>
-              <h4 style={{ margin: '0 0 4px 0', fontSize: '15px' }}>Instructions</h4>
-              <p style={{ fontSize: '13px', color: '#666', margin: 0 }} dangerouslySetInnerHTML={{ __html: introText.instructions }}></p>
+            <div className="intro-section">
+              <h4 className="intro-subtitle">Instructions</h4>
+              <p className="intro-text-small" dangerouslySetInnerHTML={{ __html: introText.instructions }}></p>
             </div>
 
-            <div>
-              <h4 style={{ margin: '0 0 8px 0', fontSize: '15px' }}>Definitions</h4>
+            <div className="intro-section">
+              <h4 className="intro-subtitle">Definitions</h4>
               {introText.definitions.map((def, i) => (
-                <div key={i} style={{ marginBottom: '6px', fontSize: '13px' }}>
-                  <span style={{ fontWeight: 600 }}>{def.term}:</span> <span style={{ color: '#666' }}>{def.definition}</span>
+                <div key={i} className="definition-item">
+                  <span className="term">{def.term}:</span> <span className="definition">{def.definition}</span>
                 </div>
               ))}
             </div>
             
             <button 
               onClick={() => setShowIntro(false)}
-              style={{
-                marginTop: '16px',
-                width: '100%',
-                padding: '10px',
-                backgroundColor: '#f2f2f7',
-                color: '#007aff',
-                border: 'none',
-                borderRadius: '8px',
-                fontSize: '14px',
-                fontWeight: '600',
-                cursor: 'pointer'
-              }}
+              className="button-secondary-small"
             >
               Hide Info
             </button>
@@ -232,52 +158,25 @@ function App() {
         )}
 
         {!showIntro && (
-          <div style={{ textAlign: 'center', marginBottom: '16px' }}>
+          <div className="info-toggle-container">
              <button 
                onClick={() => setShowIntro(true)} 
-               style={{ background: 'none', border: 'none', color: '#007aff', fontSize: '14px', cursor: 'pointer' }}
+               className="info-toggle-button"
              >
                Show Instructions & Definitions
              </button>
           </div>
         )}
 
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          marginBottom: '24px',
-          backgroundColor: '#e3e3e8',
-          padding: '2px',
-          borderRadius: '8px',
-          width: 'fit-content',
-          margin: '0 auto 24px auto'
-        }}>
+        <div className="mode-selector">
           <button 
-            style={{
-              padding: '6px 12px',
-              borderRadius: '6px',
-              border: 'none',
-              background: !isShortMode ? '#fff' : 'transparent',
-              boxShadow: !isShortMode ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
-              fontSize: '13px',
-              fontWeight: 500,
-              cursor: 'pointer'
-            }}
+            className={`mode-button ${!isShortMode ? 'active' : ''}`}
             onClick={() => setIsShortMode(false)}
           >
             Full (150)
           </button>
           <button 
-            style={{
-              padding: '6px 12px',
-              borderRadius: '6px',
-              border: 'none',
-              background: isShortMode ? '#fff' : 'transparent',
-              boxShadow: isShortMode ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
-              fontSize: '13px',
-              fontWeight: 500,
-              cursor: 'pointer'
-            }}
+            className={`mode-button ${isShortMode ? 'active' : ''}`}
             onClick={() => setIsShortMode(true)}
           >
             Short (30)
@@ -305,24 +204,13 @@ function App() {
           if (questionsToRender.length === 0) return null;
 
           return (
-            <div key={sIndex} style={{ marginBottom: '24px' }}>
+            <div key={sIndex} className="section-container">
               {section.title && (
-                <div style={{ 
-                  padding: '0 12px 8px', 
-                  fontSize: '13px', 
-                  fontWeight: '600', 
-                  color: '#8e8e93', 
-                  textTransform: 'uppercase' 
-                }}>
+                <div className="section-title">
                   {section.title}
                 </div>
               )}
-              <div style={{ 
-                backgroundColor: '#fff', 
-                borderRadius: '12px', 
-                overflow: 'hidden',
-                boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
-              }}>
+              <div className="questions-group">
                 {questionsToRender.map((q, i) => {
                    return (
                     <ToggleRow
@@ -340,21 +228,10 @@ function App() {
           );
         })}
 
-        <div style={{ marginTop: '30px', marginBottom: '40px' }}>
+        <div className="submit-container">
           <button 
             onClick={handleSubmit}
-            style={{
-              width: '100%',
-              padding: '16px',
-              backgroundColor: '#007aff',
-              color: 'white',
-              border: 'none',
-              borderRadius: '12px',
-              fontSize: '17px',
-              fontWeight: '600',
-              cursor: 'pointer',
-              boxShadow: '0 4px 12px rgba(0,122,255,0.3)'
-            }}
+            className="button-primary-large"
           >
             Calculate Score
           </button>
@@ -363,7 +240,7 @@ function App() {
         <SEOContent />
       </div>
       
-      <div style={{ textAlign: 'center', padding: '0 24px 24px', color: '#8e8e93', fontSize: '13px' }}>
+      <div className="footer-notice">
         Caution: This is the 1988 version. Definitions may vary.
       </div>
     </IOSLayout>

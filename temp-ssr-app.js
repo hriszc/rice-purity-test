@@ -478,7 +478,7 @@ var require_react = __commonJS({
 });
 
 // src/App.tsx
-var import_react4 = __toESM(require_react(), 1);
+var import_react5 = __toESM(require_react(), 1);
 
 // src/data.ts
 var introText = {
@@ -681,13 +681,41 @@ var IOSLayout = ({ title, children, rightAction }) => {
 // src/components/ToggleRow.tsx
 var import_react2 = __toESM(require_react(), 1);
 var ToggleRow = ({ label, index, checked, onChange, last }) => {
-  return /* @__PURE__ */ import_react2.default.createElement("div", { className: "toggle-row", onClick: () => onChange(!checked) }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "row-number" }, index, "."), /* @__PURE__ */ import_react2.default.createElement("div", { className: `row-content ${last ? "last" : ""}` }, /* @__PURE__ */ import_react2.default.createElement("span", { className: "row-label" }, label), /* @__PURE__ */ import_react2.default.createElement("div", { className: `ios-switch ${checked ? "checked" : ""}` }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "switch-handle" }))));
+  const handleKeyDown = (e) => {
+    if (e.key === " " || e.key === "Enter") {
+      e.preventDefault();
+      onChange(!checked);
+    }
+  };
+  return /* @__PURE__ */ import_react2.default.createElement(
+    "label",
+    {
+      className: "toggle-row",
+      onKeyDown: handleKeyDown,
+      tabIndex: 0,
+      role: "checkbox",
+      "aria-checked": checked,
+      "aria-label": `${index}. ${label}`
+    },
+    /* @__PURE__ */ import_react2.default.createElement(
+      "input",
+      {
+        type: "checkbox",
+        className: "hidden-checkbox",
+        checked,
+        onChange: (e) => onChange(e.target.checked),
+        tabIndex: -1
+      }
+    ),
+    /* @__PURE__ */ import_react2.default.createElement("div", { className: "row-number" }, index, "."),
+    /* @__PURE__ */ import_react2.default.createElement("div", { className: `row-content ${last ? "last" : ""}` }, /* @__PURE__ */ import_react2.default.createElement("span", { className: "row-label" }, label), /* @__PURE__ */ import_react2.default.createElement("div", { className: `ios-switch ${checked ? "checked" : ""}`, "aria-hidden": "true" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "switch-handle" })))
+  );
 };
 
 // src/components/SEOContent.tsx
 var import_react3 = __toESM(require_react(), 1);
 var SEOContent = () => {
-  return /* @__PURE__ */ import_react3.default.createElement("div", { style: { padding: "24px 16px", color: "#1c1c1e", maxWidth: "600px", margin: "0 auto" } }, /* @__PURE__ */ import_react3.default.createElement("section", { style: { marginBottom: "32px", padding: "16px", backgroundColor: "#e8f5e9", borderRadius: "12px", border: "1px solid #c8e6c9" } }, /* @__PURE__ */ import_react3.default.createElement("h2", { style: { fontSize: "18px", fontWeight: "700", marginBottom: "8px", color: "#2e7d32" } }, "Privacy & Security"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "15px", lineHeight: "1.5", color: "#1b5e20", margin: 0, fontWeight: 500 } }, "This test runs entirely locally, ensuring your privacy is always protected. Your answers never leave your device.")), /* @__PURE__ */ import_react3.default.createElement("section", { style: { marginBottom: "32px" } }, /* @__PURE__ */ import_react3.default.createElement("h2", { style: { fontSize: "22px", fontWeight: "700", marginBottom: "12px" } }, "History of the Rice Purity Test"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "15px", lineHeight: "1.6", color: "#3c3c43", marginBottom: "16px" } }, 'The Rice Purity Test is a famous 100-question survey that originated at Rice University in Houston, Texas. First published in 1924, it was designed to help students bond and track their life experiences throughout college. Over the decades, it has evolved into a viral internet phenomenon, serving as a rite of passage for high school and college students worldwide. The "1988 version" featured here is considered one of the most classic and standard iterations.')), /* @__PURE__ */ import_react3.default.createElement("section", { style: { marginBottom: "32px" } }, /* @__PURE__ */ import_react3.default.createElement("h2", { style: { fontSize: "22px", fontWeight: "700", marginBottom: "12px" } }, "What Does Your Rice Purity Score Mean?"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "15px", lineHeight: "1.6", color: "#3c3c43", marginBottom: "16px" } }, `Your score is calculated by subtracting the number of "yes" answers from 100 (or 150 in the extended version). A score of 100 implies absolute innocence (having done nothing on the list), while a lower score indicates more life experiences. It is important to remember that this test is for entertainment purposes only. There is no "good" or "bad" score\u2014everyone's journey and comfort level with life experiences is unique.`)), /* @__PURE__ */ import_react3.default.createElement("section", { style: { marginBottom: "32px" } }, /* @__PURE__ */ import_react3.default.createElement("h2", { style: { fontSize: "22px", fontWeight: "700", marginBottom: "12px" } }, "Score Breakdown & Interpretation"), /* @__PURE__ */ import_react3.default.createElement("div", { style: { backgroundColor: "#fff", borderRadius: "12px", padding: "16px", boxShadow: "0 1px 2px rgba(0,0,0,0.05)" } }, /* @__PURE__ */ import_react3.default.createElement("div", { style: { marginBottom: "16px" } }, /* @__PURE__ */ import_react3.default.createElement("h3", { style: { fontSize: "17px", fontWeight: "600", marginBottom: "4px" } }, "90 - 100: The Innocent"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "14px", color: "#666", margin: 0 } }, "You are likely very young or choose to abstain from most adult activities. You are pure of heart and habits.")), /* @__PURE__ */ import_react3.default.createElement("div", { style: { marginBottom: "16px" } }, /* @__PURE__ */ import_react3.default.createElement("h3", { style: { fontSize: "17px", fontWeight: "600", marginBottom: "4px" } }, "60 - 89: The Average Student"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "14px", color: "#666", margin: 0 } }, "You've had some relationships, attended parties, and perhaps experimented a bit. This is a very common range for college students.")), /* @__PURE__ */ import_react3.default.createElement("div", { style: { marginBottom: "16px" } }, /* @__PURE__ */ import_react3.default.createElement("h3", { style: { fontSize: "17px", fontWeight: "600", marginBottom: "4px" } }, "30 - 59: The Experienced"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "14px", color: "#666", margin: 0 } }, "You have lived a full life with many wild stories to tell. You are likely the life of the party.")), /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement("h3", { style: { fontSize: "17px", fontWeight: "600", marginBottom: "4px" } }, "0 - 29: The Wild One"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "14px", color: "#666", margin: 0 } }, "Few boundaries exist for you. You have likely tried almost everything on the list.")))), /* @__PURE__ */ import_react3.default.createElement("section", { style: { marginBottom: "32px" } }, /* @__PURE__ */ import_react3.default.createElement("h2", { style: { fontSize: "22px", fontWeight: "700", marginBottom: "12px" } }, "Frequently Asked Questions (FAQ)"), /* @__PURE__ */ import_react3.default.createElement("div", { style: { marginBottom: "20px" } }, /* @__PURE__ */ import_react3.default.createElement("h3", { style: { fontSize: "17px", fontWeight: "600", marginBottom: "6px" } }, "Is the Rice Purity Test anonymous?"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "15px", lineHeight: "1.5", color: "#3c3c43" } }, "Yes, this calculator is purely client-side. Your answers are processed in your browser and are never sent to any server. Your privacy is guaranteed.")), /* @__PURE__ */ import_react3.default.createElement("div", { style: { marginBottom: "20px" } }, /* @__PURE__ */ import_react3.default.createElement("h3", { style: { fontSize: "17px", fontWeight: "600", marginBottom: "6px" } }, 'What is a "good" Rice Purity Score?'), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "15px", lineHeight: "1.5", color: "#3c3c43" } }, 'There is no objective "good" score. A high score means you are more innocent, while a low score means you are more experienced. Most college students score between 40 and 70.')), /* @__PURE__ */ import_react3.default.createElement("div", { style: { marginBottom: "20px" } }, /* @__PURE__ */ import_react3.default.createElement("h3", { style: { fontSize: "17px", fontWeight: "600", marginBottom: "6px" } }, "How many questions are there?"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "15px", lineHeight: "1.5", color: "#3c3c43" } }, 'The classic version has 100 questions. However, the 1988 version presented here includes 150 questions for a more comprehensive checklist. We also offer a "Short Mode" with 30 questions for a quick check.'))), /* @__PURE__ */ import_react3.default.createElement("script", { type: "application/ld+json" }, JSON.stringify({
+  return /* @__PURE__ */ import_react3.default.createElement("div", { style: { padding: "24px 16px", color: "#1c1c1e", maxWidth: "600px", margin: "0 auto" } }, /* @__PURE__ */ import_react3.default.createElement("section", { style: { marginBottom: "32px", padding: "16px", backgroundColor: "#e8f5e9", borderRadius: "12px", border: "1px solid #c8e6c9" } }, /* @__PURE__ */ import_react3.default.createElement("h2", { style: { fontSize: "18px", fontWeight: "700", marginBottom: "8px", color: "#2e7d32" } }, "Privacy & Security"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "15px", lineHeight: "1.5", color: "#1b5e20", margin: 0, fontWeight: 500 } }, "This test runs entirely locally, ensuring your privacy is always protected. Your answers never leave your device.")), /* @__PURE__ */ import_react3.default.createElement("section", { style: { marginBottom: "32px" } }, /* @__PURE__ */ import_react3.default.createElement("h2", { style: { fontSize: "22px", fontWeight: "700", marginBottom: "12px" } }, "History of the Rice Purity Test"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "15px", lineHeight: "1.6", color: "#3c3c43", marginBottom: "16px" } }, 'The Rice Purity Test is a famous 100-question survey that originated at Rice University in Houston, Texas. First published in 1924, it was designed to help students bond and track their life experiences throughout college. Over the decades, it has evolved into a viral internet phenomenon, serving as a rite of passage for high school and college students worldwide. The "1988 version" featured here is considered one of the most classic and standard iterations.')), /* @__PURE__ */ import_react3.default.createElement("section", { style: { marginBottom: "32px" } }, /* @__PURE__ */ import_react3.default.createElement("h2", { style: { fontSize: "22px", fontWeight: "700", marginBottom: "12px" } }, "What Does Your Rice Purity Score Mean?"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "15px", lineHeight: "1.6", color: "#3c3c43", marginBottom: "16px" } }, `Your score is calculated by subtracting the number of "yes" answers from 100 (or 150 in the extended version). A score of 100 implies absolute innocence (having done nothing on the list), while a lower score indicates more life experiences. It is important to remember that this test is for entertainment purposes only. There is no "good" or "bad" score\u2014everyone's journey and comfort level with life experiences is unique.`)), /* @__PURE__ */ import_react3.default.createElement("section", { style: { marginBottom: "32px" } }, /* @__PURE__ */ import_react3.default.createElement("h2", { style: { fontSize: "22px", fontWeight: "700", marginBottom: "12px" } }, "Score Breakdown & Interpretation"), /* @__PURE__ */ import_react3.default.createElement("div", { style: { backgroundColor: "#fff", borderRadius: "12px", padding: "16px", boxShadow: "0 1px 2px rgba(0,0,0,0.05)" } }, /* @__PURE__ */ import_react3.default.createElement("div", { style: { marginBottom: "16px" } }, /* @__PURE__ */ import_react3.default.createElement("h3", { style: { fontSize: "17px", fontWeight: "600", marginBottom: "4px" } }, "121 - 150: The Innocent"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "14px", color: "#666", margin: 0 } }, "You have done very few items on the list. This range usually means you are newer to the social scene or choose to stay cautious.")), /* @__PURE__ */ import_react3.default.createElement("div", { style: { marginBottom: "16px" } }, /* @__PURE__ */ import_react3.default.createElement("h3", { style: { fontSize: "17px", fontWeight: "600", marginBottom: "4px" } }, "91 - 120: The Typical Student"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "14px", color: "#666", margin: 0 } }, "You've explored some parties and relationships but still keep plenty of boundaries. Many college students land here.")), /* @__PURE__ */ import_react3.default.createElement("div", { style: { marginBottom: "16px" } }, /* @__PURE__ */ import_react3.default.createElement("h3", { style: { fontSize: "17px", fontWeight: "600", marginBottom: "4px" } }, "61 - 90: The Experienced"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "14px", color: "#666", margin: 0 } }, "You have a solid list of stories and have tried a wide variety of items. You are comfortable experimenting.")), /* @__PURE__ */ import_react3.default.createElement("div", { style: { marginBottom: "16px" } }, /* @__PURE__ */ import_react3.default.createElement("h3", { style: { fontSize: "17px", fontWeight: "600", marginBottom: "4px" } }, "31 - 60: The Adventurous"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "14px", color: "#666", margin: 0 } }, "You have gone well beyond the basics and probably have plenty of wild memories to share.")), /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement("h3", { style: { fontSize: "17px", fontWeight: "600", marginBottom: "4px" } }, "0 - 30: The Wild One"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "14px", color: "#666", margin: 0 } }, "Almost everything on the checklist is familiar territory. Few boundaries exist for you.")))), /* @__PURE__ */ import_react3.default.createElement("section", { style: { marginBottom: "32px" } }, /* @__PURE__ */ import_react3.default.createElement("h2", { style: { fontSize: "22px", fontWeight: "700", marginBottom: "12px" } }, "Frequently Asked Questions (FAQ)"), /* @__PURE__ */ import_react3.default.createElement("div", { style: { marginBottom: "20px" } }, /* @__PURE__ */ import_react3.default.createElement("h3", { style: { fontSize: "17px", fontWeight: "600", marginBottom: "6px" } }, "Is the Rice Purity Test anonymous?"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "15px", lineHeight: "1.5", color: "#3c3c43" } }, "Yes, this calculator is purely client-side. Your answers are processed in your browser and are never sent to any server. Your privacy is guaranteed.")), /* @__PURE__ */ import_react3.default.createElement("div", { style: { marginBottom: "20px" } }, /* @__PURE__ */ import_react3.default.createElement("h3", { style: { fontSize: "17px", fontWeight: "600", marginBottom: "6px" } }, 'What is a "good" Rice Purity Score?'), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "15px", lineHeight: "1.5", color: "#3c3c43" } }, 'There is no objective "good" score. A high score means you are more innocent, while a low score means you are more experienced. Most college students score between 40 and 70.')), /* @__PURE__ */ import_react3.default.createElement("div", { style: { marginBottom: "20px" } }, /* @__PURE__ */ import_react3.default.createElement("h3", { style: { fontSize: "17px", fontWeight: "600", marginBottom: "6px" } }, "How many questions are there?"), /* @__PURE__ */ import_react3.default.createElement("p", { style: { fontSize: "15px", lineHeight: "1.5", color: "#3c3c43" } }, 'The classic version has 100 questions. However, the 1988 version presented here includes 150 questions for a more comprehensive checklist. We also offer a "Short Mode" with 30 questions for a quick check.'))), /* @__PURE__ */ import_react3.default.createElement("script", { type: "application/ld+json" }, JSON.stringify({
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [{
@@ -715,13 +743,53 @@ var SEOContent = () => {
   })));
 };
 
+// src/components/ScoreDial.tsx
+var import_react4 = __toESM(require_react(), 1);
+var ScoreDial = ({ score, maxScore, category }) => {
+  const getColor = (p) => {
+    if (p >= 0.9) return "#34c759";
+    if (p >= 0.7) return "#ffcc00";
+    if (p >= 0.5) return "#ff9500";
+    return "#ff3b30";
+  };
+  const percentage = score / maxScore;
+  const color = getColor(percentage);
+  const radius = 60;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - percentage * circumference;
+  return /* @__PURE__ */ import_react4.default.createElement("div", { className: "score-dial-container" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "score-dial" }, /* @__PURE__ */ import_react4.default.createElement("svg", { width: "140", height: "140", viewBox: "0 0 140 140" }, /* @__PURE__ */ import_react4.default.createElement(
+    "circle",
+    {
+      className: "dial-bg",
+      cx: "70",
+      cy: "70",
+      r: radius,
+      strokeWidth: "10"
+    }
+  ), /* @__PURE__ */ import_react4.default.createElement(
+    "circle",
+    {
+      className: "dial-progress",
+      cx: "70",
+      cy: "70",
+      r: radius,
+      strokeWidth: "10",
+      stroke: color,
+      strokeDasharray: circumference,
+      strokeDashoffset: offset,
+      strokeLinecap: "round",
+      transform: "rotate(-90 70 70)"
+    }
+  )), /* @__PURE__ */ import_react4.default.createElement("div", { className: "score-value" }, score, /* @__PURE__ */ import_react4.default.createElement("div", { className: "score-max" }, "/", maxScore))), /* @__PURE__ */ import_react4.default.createElement("div", { className: "score-category" }, category));
+};
+
 // src/App.tsx
 function App() {
-  const allQuestions = (0, import_react4.useMemo)(() => sections.flatMap((s) => s.questions), []);
-  const [checkedState, setCheckedState] = (0, import_react4.useState)(new Array(allQuestions.length).fill(false));
-  const [isShortMode, setIsShortMode] = (0, import_react4.useState)(false);
-  const [isSubmitted, setIsSubmitted] = (0, import_react4.useState)(false);
-  const [showIntro, setShowIntro] = (0, import_react4.useState)(false);
+  const allQuestions = (0, import_react5.useMemo)(() => sections.flatMap((s) => s.questions), []);
+  const [checkedState, setCheckedState] = (0, import_react5.useState)(new Array(allQuestions.length).fill(false));
+  const [isShortMode, setIsShortMode] = (0, import_react5.useState)(false);
+  const [isSubmitted, setIsSubmitted] = (0, import_react5.useState)(false);
+  const [showIntro, setShowIntro] = (0, import_react5.useState)(false);
   const handleToggle = (index, checked) => {
     const newCheckedState = [...checkedState];
     newCheckedState[index] = checked;
@@ -739,7 +807,7 @@ function App() {
     return index % 5 === 0;
   };
   const currentMaxScore = isShortMode ? 30 : 150;
-  const displayScore = (0, import_react4.useMemo)(() => {
+  const displayScore = (0, import_react5.useMemo)(() => {
     let checkedCount = 0;
     allQuestions.forEach((_, index) => {
       if (isQuestionIncluded(index) && checkedState[index]) {
@@ -748,14 +816,10 @@ function App() {
     });
     return currentMaxScore - checkedCount;
   }, [checkedState, isShortMode, currentMaxScore, allQuestions]);
-  const category = (0, import_react4.useMemo)(() => {
-    if (isShortMode) {
-      const scaledScore = displayScore * 5;
-      const found2 = scoringCategories.find((c) => scaledScore >= c.min && scaledScore <= c.max);
-      return found2 ? found2.text : "Short Test Mode";
-    }
-    const found = scoringCategories.find((c) => displayScore >= c.min && displayScore <= c.max);
-    return found ? found.text : "";
+  const category = (0, import_react5.useMemo)(() => {
+    const scoreToLookup = isShortMode ? displayScore * 5 : displayScore;
+    const found = scoringCategories.find((c) => scoreToLookup >= c.min && scoreToLookup <= c.max);
+    return found ? found.text : isShortMode ? "Short Test Mode" : "";
   }, [displayScore, isShortMode]);
   const handleSubmit = () => {
     setIsSubmitted(true);
@@ -768,142 +832,46 @@ function App() {
   let globalIndexCounter = 0;
   let displayedQuestionCounter = 1;
   if (isSubmitted) {
-    return /* @__PURE__ */ React.createElement(IOSLayout, { title: "Result" }, /* @__PURE__ */ React.createElement("div", { style: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: "40px 20px",
-      textAlign: "center",
-      minHeight: "60vh"
-    } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: "18px", color: "#8e8e93", marginBottom: "20px" } }, "Your Score"), /* @__PURE__ */ React.createElement("div", { style: {
-      fontSize: "80px",
-      fontWeight: "700",
-      color: "#007aff",
-      lineHeight: 1,
-      marginBottom: "10px"
-    } }, displayScore, /* @__PURE__ */ React.createElement("span", { style: { fontSize: "24px", color: "#8e8e93", fontWeight: 400 } }, "/", currentMaxScore)), /* @__PURE__ */ React.createElement("div", { style: {
-      fontSize: "20px",
-      fontWeight: "600",
-      marginTop: "30px",
-      marginBottom: "10px"
-    } }, "Purity Category"), /* @__PURE__ */ React.createElement("div", { style: {
-      fontSize: "16px",
-      color: "#1c1c1e",
-      maxWidth: "90%",
-      lineHeight: "1.5"
-    } }, category), /* @__PURE__ */ React.createElement("div", { style: { marginTop: "60px", width: "100%", maxWidth: "300px" } }, /* @__PURE__ */ React.createElement(
-      "button",
+    return /* @__PURE__ */ React.createElement(IOSLayout, { title: "Results" }, /* @__PURE__ */ React.createElement("div", { className: "results-view" }, /* @__PURE__ */ React.createElement(
+      ScoreDial,
       {
-        onClick: handleRetake,
-        style: {
-          width: "100%",
-          padding: "16px",
-          backgroundColor: "#007aff",
-          color: "white",
-          border: "none",
-          borderRadius: "12px",
-          fontSize: "17px",
-          fontWeight: "600",
-          cursor: "pointer",
-          marginBottom: "12px"
-        }
-      },
-      "Review Answers"
-    ), /* @__PURE__ */ React.createElement(
-      "button",
-      {
-        onClick: handleReset,
-        style: {
-          width: "100%",
-          padding: "16px",
-          backgroundColor: "transparent",
-          color: "#ff3b30",
-          border: "none",
-          borderRadius: "12px",
-          fontSize: "17px",
-          fontWeight: "600",
-          cursor: "pointer"
-        }
-      },
-      "Start Over"
-    ))));
+        score: displayScore,
+        maxScore: currentMaxScore,
+        category
+      }
+    ), /* @__PURE__ */ React.createElement("div", { className: "action-buttons" }, /* @__PURE__ */ React.createElement("button", { onClick: handleRetake, className: "button-primary" }, "Review Answers"), /* @__PURE__ */ React.createElement("button", { onClick: handleReset, className: "button-text-danger" }, "Start Over")), /* @__PURE__ */ React.createElement("div", { className: "seo-wrapper" }, /* @__PURE__ */ React.createElement(SEOContent, null))));
   }
   return /* @__PURE__ */ React.createElement(
     IOSLayout,
     {
       title: "Rice Purity test",
-      rightAction: /* @__PURE__ */ React.createElement("span", { onClick: handleReset }, "Clear")
+      rightAction: /* @__PURE__ */ React.createElement("span", { className: "clear-button", onClick: handleReset }, "Clear")
     },
-    /* @__PURE__ */ React.createElement("div", { style: { padding: "0 16px 16px" } }, showIntro && /* @__PURE__ */ React.createElement("div", { style: {
-      backgroundColor: "#fff",
-      borderRadius: "12px",
-      padding: "20px",
-      marginBottom: "24px",
-      boxShadow: "0 1px 2px rgba(0,0,0,0.05)"
-    } }, /* @__PURE__ */ React.createElement("h2", { style: { margin: "0 0 10px 0", fontSize: "20px" } }, introText.title), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "14px", color: "#3c3c43", lineHeight: "1.4", marginBottom: "16px" } }, introText.description), /* @__PURE__ */ React.createElement("div", { style: { marginBottom: "16px" } }, /* @__PURE__ */ React.createElement("h4", { style: { margin: "0 0 4px 0", fontSize: "15px" } }, "Instructions"), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "13px", color: "#666", margin: 0 }, dangerouslySetInnerHTML: { __html: introText.instructions } })), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h4", { style: { margin: "0 0 8px 0", fontSize: "15px" } }, "Definitions"), introText.definitions.map((def, i) => /* @__PURE__ */ React.createElement("div", { key: i, style: { marginBottom: "6px", fontSize: "13px" } }, /* @__PURE__ */ React.createElement("span", { style: { fontWeight: 600 } }, def.term, ":"), " ", /* @__PURE__ */ React.createElement("span", { style: { color: "#666" } }, def.definition)))), /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React.createElement("div", { className: "app-container" }, /* @__PURE__ */ React.createElement("div", { className: "privacy-badge" }, /* @__PURE__ */ React.createElement("span", { role: "img", "aria-label": "shield" }, "\u{1F6E1}\uFE0F"), /* @__PURE__ */ React.createElement("span", null, "Runs entirely locally and can work offline")), showIntro && /* @__PURE__ */ React.createElement("div", { className: "intro-card" }, /* @__PURE__ */ React.createElement("h2", { className: "intro-title" }, introText.title), /* @__PURE__ */ React.createElement("p", { className: "intro-desc" }, introText.description), /* @__PURE__ */ React.createElement("div", { className: "intro-section" }, /* @__PURE__ */ React.createElement("h4", { className: "intro-subtitle" }, "Instructions"), /* @__PURE__ */ React.createElement("p", { className: "intro-text-small", dangerouslySetInnerHTML: { __html: introText.instructions } })), /* @__PURE__ */ React.createElement("div", { className: "intro-section" }, /* @__PURE__ */ React.createElement("h4", { className: "intro-subtitle" }, "Definitions"), introText.definitions.map((def, i) => /* @__PURE__ */ React.createElement("div", { key: i, className: "definition-item" }, /* @__PURE__ */ React.createElement("span", { className: "term" }, def.term, ":"), " ", /* @__PURE__ */ React.createElement("span", { className: "definition" }, def.definition)))), /* @__PURE__ */ React.createElement(
       "button",
       {
         onClick: () => setShowIntro(false),
-        style: {
-          marginTop: "16px",
-          width: "100%",
-          padding: "10px",
-          backgroundColor: "#f2f2f7",
-          color: "#007aff",
-          border: "none",
-          borderRadius: "8px",
-          fontSize: "14px",
-          fontWeight: "600",
-          cursor: "pointer"
-        }
+        className: "button-secondary-small"
       },
       "Hide Info"
-    )), !showIntro && /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", marginBottom: "16px" } }, /* @__PURE__ */ React.createElement(
+    )), !showIntro && /* @__PURE__ */ React.createElement("div", { className: "info-toggle-container" }, /* @__PURE__ */ React.createElement(
       "button",
       {
         onClick: () => setShowIntro(true),
-        style: { background: "none", border: "none", color: "#007aff", fontSize: "14px", cursor: "pointer" }
+        className: "info-toggle-button"
       },
       "Show Instructions & Definitions"
-    )), /* @__PURE__ */ React.createElement("div", { style: {
-      display: "flex",
-      justifyContent: "center",
-      marginBottom: "24px",
-      backgroundColor: "#e3e3e8",
-      padding: "2px",
-      borderRadius: "8px",
-      width: "fit-content",
-      margin: "0 auto 24px auto"
-    } }, /* @__PURE__ */ React.createElement(
+    )), /* @__PURE__ */ React.createElement("div", { className: "mode-selector" }, /* @__PURE__ */ React.createElement(
       "button",
       {
-        style: {
-          padding: "6px 12px",
-          borderRadius: "6px",
-          border: "none",
-          background: !isShortMode ? "#fff" : "transparent",
-          boxShadow: !isShortMode ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
-          fontSize: "13px",
-          fontWeight: 500,
-          cursor: "pointer"
-        },
+        className: `mode-button ${!isShortMode ? "active" : ""}`,
         onClick: () => setIsShortMode(false)
       },
       "Full (150)"
     ), /* @__PURE__ */ React.createElement(
       "button",
       {
-        style: {
-          padding: "6px 12px",
-          borderRadius: "6px",
-          border: "none",
-          background: isShortMode ? "#fff" : "transparent",
-          boxShadow: isShortMode ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
-          fontSize: "13px",
-          fontWeight: 500,
-          cursor: "pointer"
-        },
+        className: `mode-button ${isShortMode ? "active" : ""}`,
         onClick: () => setIsShortMode(true)
       },
       "Short (30)"
@@ -922,18 +890,7 @@ function App() {
         globalIndexCounter++;
       });
       if (questionsToRender.length === 0) return null;
-      return /* @__PURE__ */ React.createElement("div", { key: sIndex, style: { marginBottom: "24px" } }, section.title && /* @__PURE__ */ React.createElement("div", { style: {
-        padding: "0 12px 8px",
-        fontSize: "13px",
-        fontWeight: "600",
-        color: "#8e8e93",
-        textTransform: "uppercase"
-      } }, section.title), /* @__PURE__ */ React.createElement("div", { style: {
-        backgroundColor: "#fff",
-        borderRadius: "12px",
-        overflow: "hidden",
-        boxShadow: "0 1px 2px rgba(0,0,0,0.05)"
-      } }, questionsToRender.map((q, i) => {
+      return /* @__PURE__ */ React.createElement("div", { key: sIndex, className: "section-container" }, section.title && /* @__PURE__ */ React.createElement("div", { className: "section-title" }, section.title), /* @__PURE__ */ React.createElement("div", { className: "questions-group" }, questionsToRender.map((q, i) => {
         return /* @__PURE__ */ React.createElement(
           ToggleRow,
           {
@@ -946,26 +903,15 @@ function App() {
           }
         );
       })));
-    }), /* @__PURE__ */ React.createElement("div", { style: { marginTop: "30px", marginBottom: "40px" } }, /* @__PURE__ */ React.createElement(
+    }), /* @__PURE__ */ React.createElement("div", { className: "submit-container" }, /* @__PURE__ */ React.createElement(
       "button",
       {
         onClick: handleSubmit,
-        style: {
-          width: "100%",
-          padding: "16px",
-          backgroundColor: "#007aff",
-          color: "white",
-          border: "none",
-          borderRadius: "12px",
-          fontSize: "17px",
-          fontWeight: "600",
-          cursor: "pointer",
-          boxShadow: "0 4px 12px rgba(0,122,255,0.3)"
-        }
+        className: "button-primary-large"
       },
       "Calculate Score"
     )), /* @__PURE__ */ React.createElement(SEOContent, null)),
-    /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", padding: "0 24px 24px", color: "#8e8e93", fontSize: "13px" } }, "Caution: This is the 1988 version. Definitions may vary.")
+    /* @__PURE__ */ React.createElement("div", { className: "footer-notice" }, "Caution: This is the 1988 version. Definitions may vary.")
   );
 }
 var App_default = App;

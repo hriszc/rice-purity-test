@@ -1,0 +1,17 @@
+{
+  "name": "Rice Purity Test 1988",
+  "short_name": "Rice Purity",
+  "description": "Calculate your innocence score with the classic 1988 Rice Purity Test.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/rice.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
