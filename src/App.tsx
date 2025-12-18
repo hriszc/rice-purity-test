@@ -5,6 +5,7 @@ import { IOSLayout } from './components/IOSLayout';
 import { ToggleRow } from './components/ToggleRow';
 import { SEOContent } from './components/SEOContent';
 import { ScoreDial } from './components/ScoreDial';
+import { WidgetPoster } from './components/WidgetPoster';
 
 function App() {
   // Flatten questions for easy state management
@@ -101,6 +102,11 @@ function App() {
            />
 
            <div className="action-buttons">
+             <WidgetPoster 
+               score={displayScore} 
+               maxScore={currentMaxScore} 
+               category={category} 
+             />
              <button onClick={handleShare} className="button-primary">
                Share Result
              </button>

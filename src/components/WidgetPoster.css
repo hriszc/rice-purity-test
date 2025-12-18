@@ -1,0 +1,11 @@
+.widget-poster-container {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.widget-poster-container .button-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0; /* Override default margin if needed */
+}

@@ -11,21 +11,60 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* iOS Light Theme Variables */
+  --system-background: #ffffff;
+  --secondary-system-background: #f2f2f7;
+  --tertiary-system-background: #ffffff;
+  --label: #000000;
+  --secondary-label: #8e8e93;
+  --tertiary-label: #aeaeb2;
+  --quaternary-label: #d1d1d6;
+  --separator: #c6c6c8;
+  --accent-color: #007aff;
+  --system-green: #34c759;
+  --system-yellow: #ffcc00;
+  --system-orange: #ff9500;
+  --system-red: #ff3b30;
+  --card-bg: #ffffff;
+  --card-shadow: rgba(0, 0, 0, 0.05);
+  --header-bg: rgba(242, 242, 247, 0.8);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* iOS Dark Theme Variables */
+    --system-background: #000000;
+    --secondary-system-background: #1c1c1e;
+    --tertiary-system-background: #2c2c2e;
+    --label: #ffffff;
+    --secondary-label: #8e8e93;
+    --tertiary-label: #48484a;
+    --quaternary-label: #3a3a3c;
+    --separator: #38383a;
+    --accent-color: #0a84ff;
+    --system-green: #30d158;
+    --system-yellow: #ffd60a;
+    --system-orange: #ff9f0a;
+    --system-red: #ff453a;
+    --card-bg: #1c1c1e;
+    --card-shadow: rgba(0, 0, 0, 0.2);
+    --header-bg: rgba(0, 0, 0, 0.7);
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
   padding: 0;
-  background-color: #f2f2f7;
-  overscroll-behavior-y: none; /* Optional: prevents rubber banding if desired, but matching bg is usually better. Let's just match bg. */
+  background-color: var(--secondary-system-background);
+  color: var(--label);
+  overscroll-behavior-y: none;
 }
 
 html {
-  background-color: #f2f2f7;
-}
-
-@media (prefers-color-scheme: dark) {
-  body, html {
-    background-color: #000;
-  }
+  background-color: var(--secondary-system-background);
 }

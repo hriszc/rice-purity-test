@@ -34,10 +34,10 @@ export const ScoreDial: React.FC<ScoreDialProps> = ({ score, maxScore, category 
 
   // Calculate color based on percentage (100% is pure, 0% is corrupt)
   const getColor = (p: number) => {
-    if (p >= 0.9) return '#34c759'; // Green
-    if (p >= 0.7) return '#ffcc00'; // Yellow
-    if (p >= 0.5) return '#ff9500'; // Orange
-    return '#ff3b30'; // Red
+    if (p >= 0.9) return 'var(--system-green)';
+    if (p >= 0.7) return 'var(--system-yellow)';
+    if (p >= 0.5) return 'var(--system-orange)';
+    return 'var(--system-red)';
   };
 
   const percentage = score / maxScore;
