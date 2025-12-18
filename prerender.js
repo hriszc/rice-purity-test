@@ -25,8 +25,8 @@ async function prerender() {
       platform: 'node',
       format: 'esm',
       outfile: tempSsrAppPath,
-      external: ['react-dom/server', 'react-dom'],
-      jsx: 'transform',
+      external: ['react', 'react-dom', 'react-dom/server'],
+      jsx: 'automatic',
       define: {
         'process.env.NODE_ENV': JSON.stringify('production'),
         'global': 'globalThis'

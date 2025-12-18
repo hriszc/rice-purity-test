@@ -4,10 +4,9 @@ import './WidgetPoster.css';
 interface WidgetPosterProps {
   score: number;
   maxScore: number;
-  category: string;
 }
 
-export const WidgetPoster: React.FC<WidgetPosterProps> = ({ score, maxScore, category }) => {
+export const WidgetPoster: React.FC<WidgetPosterProps> = ({ score, maxScore }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const generateImage = useCallback(() => {
@@ -27,7 +26,6 @@ export const WidgetPoster: React.FC<WidgetPosterProps> = ({ score, maxScore, cat
     const bgColor = isDark ? '#1C1C1E' : '#FFFFFF';
     const textColor = isDark ? '#FFFFFF' : '#000000';
     const secondaryTextColor = '#8E8E93';
-    const accentColor = '#007AFF';
 
     // Helper: Rounded Rect
     const roundRect = (x: number, y: number, w: number, h: number, r: number) => {
@@ -42,27 +40,6 @@ export const WidgetPoster: React.FC<WidgetPosterProps> = ({ score, maxScore, cat
       ctx.lineTo(x, y + r);
       ctx.quadraticCurveTo(x, y, x + r, y);
       ctx.closePath();
-    };
-
-    // Helper: Wrap Text
-    const wrapText = (text: string, x: number, y: number, maxWidth: number, lineHeight: number) => {
-      const words = text.split(' ');
-      let line = '';
-      let currentY = y;
-      for (let n = 0; n < words.length; n++) {
-        const testLine = line + words[n] + ' ';
-        const metrics = ctx.measureText(testLine);
-        const testWidth = metrics.width;
-        if (testWidth > maxWidth && n > 0) {
-          ctx.fillText(line, x, currentY);
-          line = words[n] + ' ';
-          currentY += lineHeight;
-        } else {
-          line = testLine;
-        }
-      }
-      ctx.fillText(line, x, currentY);
-      return currentY;
     };
 
     // 1. Full Canvas Background
@@ -136,7 +113,7 @@ export const WidgetPoster: React.FC<WidgetPosterProps> = ({ score, maxScore, cat
     link.download = `rice-purity-score-${score}.png`;
     link.href = canvas.toDataURL('image/png', 1.0);
     link.click();
-  }, [score, maxScore, category]);
+  }, [score, maxScore]);
 
 
   return (

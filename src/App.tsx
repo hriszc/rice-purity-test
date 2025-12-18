@@ -105,7 +105,6 @@ function App() {
              <WidgetPoster 
                score={displayScore} 
                maxScore={currentMaxScore} 
-               category={category} 
              />
              <button onClick={handleShare} className="button-primary">
                Share Result
