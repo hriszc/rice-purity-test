@@ -49,6 +49,18 @@
   color: var(--label);
 }
 
+.header-left {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 17px;
+  color: var(--accent-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
 .header-right {
   position: absolute;
   right: 16px;

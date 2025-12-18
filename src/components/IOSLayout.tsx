@@ -4,11 +4,12 @@ import './IOSLayout.css';
 interface IOSLayoutProps {
   title: string;
   children: React.ReactNode;
+  leftAction?: React.ReactNode;
   rightAction?: React.ReactNode;
   showLargeTitle?: boolean;
 }
 
-export const IOSLayout: React.FC<IOSLayoutProps> = ({ title, children, rightAction, showLargeTitle = true }) => {
+export const IOSLayout: React.FC<IOSLayoutProps> = ({ title, children, leftAction, rightAction, showLargeTitle = true }) => {
   const [scrolled, setScrolled] = useState(false);
   const [titleOpacity, setTitleOpacity] = useState(0);
 
@@ -34,8 +35,9 @@ export const IOSLayout: React.FC<IOSLayoutProps> = ({ title, children, rightActi
     <div className="ios-layout">
       <header className={`ios-header ${scrolled ? 'scrolled' : ''}`}>
         <div className="header-content">
+          <div className="header-left">{leftAction}</div>
           <div className="sticky-header-title" style={{ opacity: showLargeTitle ? titleOpacity : 1 }}>{title}</div>
-          {rightAction && <div className="header-right">{rightAction}</div>}
+          <div className="header-right">{rightAction}</div>
         </div>
       </header>
       <main className="ios-content">
