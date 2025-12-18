@@ -106,10 +106,65 @@ function App() {
                score={displayScore} 
                maxScore={currentMaxScore} 
              />
-             <button onClick={handleShare} className="button-primary">
-               Share Result
-             </button>
-             <button onClick={handleRetake} className="button-secondary">
+
+             {/* Social Sharing Section */}
+             <div className="share-section">
+               <h3 className="share-title">Share your result</h3>
+               <div className="social-buttons-grid">
+                 <button 
+                   onClick={() => window.open(`https://twitter.com/intent/tweet?text=I%20scored%20a%20${displayScore}/${currentMaxScore}%20on%20the%20Rice%20Purity%20Test!%20See%20your%20score%20here:%20&url=${window.location.origin}`, '_blank')}
+                   className="social-button twitter"
+                 >
+                   Twitter
+                 </button>
+                 <button 
+                   onClick={() => window.open(`https://www.reddit.com/submit?title=I%20scored%20a%20${displayScore}/${currentMaxScore}%20on%20the%20Rice%20Purity%20Test!&url=${window.location.origin}`, '_blank')}
+                   className="social-button reddit"
+                 >
+                   Reddit
+                 </button>
+                 <button 
+                   onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${window.location.origin}&quote=I%20scored%20a%20${displayScore}/${currentMaxScore}%20on%20the%20Rice%20Purity%20Test!`, '_blank')}
+                   className="social-button facebook"
+                 >
+                   Facebook
+                 </button>
+                 <button 
+                   onClick={() => window.open(`https://wa.me/?text=I%20scored%20a%20${displayScore}/${currentMaxScore}%20on%20the%20Rice%20Purity%20Test!%20Check%20yours%20here:%20${window.location.origin}`, '_blank')}
+                   className="social-button whatsapp"
+                 >
+                   WhatsApp
+                 </button>
+               </div>
+               
+               <button onClick={handleShare} className="button-secondary" style={{ marginTop: '12px' }}>
+                 More Options...
+               </button>
+             </div>
+
+             {/* Embed Code Section for Backlinks */}
+             <div className="embed-section">
+               <h3 className="share-title">Add badge to your website</h3>
+               <p className="embed-desc">Copy this code to show off your score on your blog or profile:</p>
+               <div className="embed-box">
+                 <textarea 
+                   readOnly 
+                   value={`<a href="${window.location.origin}" style="display:inline-block;padding:8px 16px;background:#007aff;color:white;text-decoration:none;border-radius:20px;font-family:system-ui;font-weight:bold;">Rice Purity Score: ${displayScore}</a>`}
+                   onClick={(e) => (e.target as HTMLTextAreaElement).select()}
+                 />
+                 <button 
+                   className="copy-btn"
+                   onClick={() => {
+                     navigator.clipboard.writeText(`<a href="${window.location.origin}" style="display:inline-block;padding:8px 16px;background:#007aff;color:white;text-decoration:none;border-radius:20px;font-family:system-ui;font-weight:bold;">Rice Purity Score: ${displayScore}</a>`);
+                     alert('Embed code copied!');
+                   }}
+                 >
+                   Copy
+                 </button>
+               </div>
+             </div>
+
+             <button onClick={handleRetake} className="button-secondary" style={{ marginTop: '24px' }}>
                Review Answers
              </button>
              <button onClick={handleReset} className="button-text-danger">
