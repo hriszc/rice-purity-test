@@ -10,7 +10,9 @@ const require = createRequire(import.meta.url);
 
 const ROUTES = [
   { path: '/', output: 'index.html' },
-  { path: '/rice-purity-test-score-meanings', output: 'rice-purity-test-score-meanings/index.html' }
+  { path: '/rice-purity-test-score-meanings', output: 'rice-purity-test-score-meanings/index.html' },
+  { path: '/what-is-french-kissing', output: 'what-is-french-kissing/index.html' },
+  { path: '/rice-test', output: 'rice-test/index.html' }
 ];
 
 async function prerender() {

@@ -6,17 +6,26 @@ import { ToggleRow } from './ToggleRow';
 import { SEOContent } from './SEOContent';
 import { ScoreDial } from './ScoreDial';
 import { WidgetPoster } from './WidgetPoster';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 type View = 'test' | 'results';
 
 export function TestPage() {
   const allQuestions = useMemo(() => sections.flatMap(s => s.questions), []);
+  const navigate = useNavigate();
   
   const [checkedState, setCheckedState] = useState<boolean[]>(new Array(allQuestions.length).fill(false));
   const [isShortMode, setIsShortMode] = useState(false);
   const [view, setView] = useState<View>('test');
   const [showIntro, setShowIntro] = useState(false);
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLParagraphElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'A' && target.getAttribute('href')?.startsWith('/')) {
+      e.preventDefault();
+      navigate(target.getAttribute('href')!);
+    }
+  };
 
   const handleToggle = (index: number, checked: boolean) => {
     const newCheckedState = [...checkedState];
@@ -86,6 +95,26 @@ export function TestPage() {
     } catch (err) {
       console.error('Error sharing:', err);
     }
+  };
+
+  const renderLabel = (text: string) => {
+    if (text.includes("French kissed")) {
+      const parts = text.split("French kissed");
+      return (
+        <>
+          {parts[0]}
+          <Link 
+            to="/what-is-french-kissing" 
+            onClick={(e) => e.stopPropagation()} 
+            style={{ color: 'var(--accent-color)', textDecoration: 'underline' }}
+          >
+            French kissed
+          </Link>
+          {parts[1]}
+        </>
+      );
+    }
+    return text;
   };
 
   let globalIndexCounter = 0;
@@ -214,7 +243,11 @@ export function TestPage() {
             
             <div className="intro-section">
               <h4 className="intro-subtitle">Instructions</h4>
-              <p className="intro-text-small" dangerouslySetInnerHTML={{ __html: introText.instructions }}></p>
+              <p 
+                className="intro-text-small" 
+                dangerouslySetInnerHTML={{ __html: introText.instructions }}
+                onClick={handleLinkClick}
+              ></p>
             </div>
 
             <div className="intro-section">
@@ -312,7 +345,7 @@ export function TestPage() {
                     <ToggleRow
                       key={q.originalIndex}
                       index={q.displayIndex}
-                      label={q.text}
+                      label={renderLabel(q.text)}
                       checked={checkedState[q.originalIndex]}
                       onChange={(c) => handleToggle(q.originalIndex, c)}
                       last={i === questionsToRender.length - 1}

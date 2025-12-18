@@ -2,7 +2,7 @@ import React, { type KeyboardEvent } from 'react';
 import './ToggleRow.css';
 
 interface ToggleRowProps {
-  label: string;
+  label: React.ReactNode;
   index: number;
   checked: boolean;
   onChange: (checked: boolean) => void;
@@ -31,7 +31,7 @@ export const ToggleRow: React.FC<ToggleRowProps> = ({ label, index, checked, onC
       tabIndex={0}
       role="checkbox"
       aria-checked={checked}
-      aria-label={`${index}. ${label}`}
+      aria-label={typeof label === 'string' ? `${index}. ${label}` : `Question ${index}`}
     >
       <input 
         type="checkbox" 
