@@ -34,7 +34,7 @@ export const IOSLayout: React.FC<IOSLayoutProps> = ({ title, children, rightActi
     <div className="ios-layout">
       <header className={`ios-header ${scrolled ? 'scrolled' : ''}`}>
         <div className="header-content">
-          <h1 style={{ opacity: showLargeTitle ? titleOpacity : 1 }}>{title}</h1>
+          <div className="sticky-header-title" style={{ opacity: showLargeTitle ? titleOpacity : 1 }}>{title}</div>
           {rightAction && <div className="header-right">{rightAction}</div>}
         </div>
       </header>

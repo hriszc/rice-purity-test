@@ -39,7 +39,7 @@
   position: relative;
 }
 
-.header-content h1 {
+.header-content .sticky-header-title {
   font-size: 17px;
   font-weight: 600;
   margin: 0;
