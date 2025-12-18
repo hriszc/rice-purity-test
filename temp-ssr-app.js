@@ -900,7 +900,7 @@ function App() {
   return /* @__PURE__ */ React.createElement(
     IOSLayout,
     {
-      title: "Rice Purity",
+      title: "Rice Purity Test",
       rightAction: /* @__PURE__ */ React.createElement("span", { className: "clear-button", onClick: handleReset }, "Clear")
     },
     /* @__PURE__ */ React.createElement("div", { className: "progress-container" }, /* @__PURE__ */ React.createElement("div", { className: "progress-bar", style: { width: `${progress}%` } })),
