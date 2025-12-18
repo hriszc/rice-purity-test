@@ -47,14 +47,34 @@
   margin-top: 2px;
 }
 
+.dial-progress.animate-ring {
+  stroke-dashoffset: var(--circumference);
+  animation: fillRing 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes fillRing {
+  to {
+    stroke-dashoffset: var(--target-offset);
+  }
+}
+
 .score-category {
   margin-top: 16px;
-  font-size: 17px;
+  font-size: 24px;
+  font-weight: 700;
   text-align: center;
-  color: #8e8e93;
-  line-height: 1.4;
-  font-style: italic;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInLabel 0.8s ease-out 0.5s forwards;
 }
+
+@keyframes fadeInLabel {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 @media (prefers-color-scheme: dark) {
   .score-dial-container {

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import './App.css';
 import { sections, scoringCategories, introText } from './data';
 import { IOSLayout } from './components/IOSLayout';
@@ -25,27 +25,32 @@ function App() {
     if (confirm('Are you sure you want to clear all checks?')) {
       setCheckedState(new Array(allQuestions.length).fill(false));
       setIsSubmitted(false);
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   // Selection Logic: Every 5th question if Short Mode
-  const isQuestionIncluded = (index: number) => {
+  const isQuestionIncluded = useCallback((index: number) => {
     if (!isShortMode) return true;
     return index % 5 === 0;
-  };
+  }, [isShortMode]);
+
 
   const currentMaxScore = isShortMode ? 30 : 150;
 
-  const displayScore = useMemo(() => {
-     let checkedCount = 0;
+  const { displayScore, progress } = useMemo(() => {
+     let count = 0;
      allQuestions.forEach((_, index) => {
-        if (isQuestionIncluded(index) && checkedState[index]) {
-          checkedCount++;
+        const included = isQuestionIncluded(index);
+        if (included && checkedState[index]) {
+          count++;
         }
      });
-     return currentMaxScore - checkedCount;
-  }, [checkedState, isShortMode, currentMaxScore, allQuestions]);
+     return {
+       displayScore: currentMaxScore - count,
+       progress: (count / currentMaxScore) * 100
+     };
+  }, [checkedState, currentMaxScore, allQuestions, isQuestionIncluded]);
 
   const category = useMemo(() => {
     const scoreToLookup = isShortMode ? displayScore * 5 : displayScore;
@@ -55,12 +60,12 @@ function App() {
 
   const handleSubmit = () => {
     setIsSubmitted(true);
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleRetake = () => {
     setIsSubmitted(false);
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   let globalIndexCounter = 0;
@@ -87,8 +92,8 @@ function App() {
 
   if (isSubmitted) {
     return (
-      <IOSLayout title="Results">
-        <div className="results-view">
+      <IOSLayout title="Results" showLargeTitle={false}>
+        <div className="results-view animate-fade-in">
            <ScoreDial 
              score={displayScore} 
              maxScore={currentMaxScore} 
@@ -117,10 +122,14 @@ function App() {
 
   return (
     <IOSLayout 
-      title="Rice Purity test"
+      title="Rice Purity Test"
       rightAction={<span className="clear-button" onClick={handleReset}>Clear</span>}
     >
-      <div className="app-container">
+      <div className="progress-container">
+        <div className="progress-bar" style={{ width: `${progress}%` }} />
+      </div>
+
+      <div className="app-container animate-fade-in">
         <div className="privacy-badge">
           <span role="img" aria-label="shield">🛡️</span>
           <span>Runs entirely locally and can work offline</span>

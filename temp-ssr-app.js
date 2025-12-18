@@ -666,16 +666,24 @@ var scoringCategories = [
 
 // src/components/IOSLayout.tsx
 var import_react = __toESM(require_react(), 1);
-var IOSLayout = ({ title, children, rightAction }) => {
+var IOSLayout = ({ title, children, rightAction, showLargeTitle = true }) => {
   const [scrolled, setScrolled] = (0, import_react.useState)(false);
+  const [titleOpacity, setTitleOpacity] = (0, import_react.useState)(0);
   (0, import_react.useEffect)(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      const scrollY = window.scrollY;
+      setScrolled(scrollY > 40);
+      if (scrollY > 20) {
+        const opacity = Math.min((scrollY - 20) / 40, 1);
+        setTitleOpacity(opacity);
+      } else {
+        setTitleOpacity(0);
+      }
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  return /* @__PURE__ */ import_react.default.createElement("div", { className: "ios-layout" }, /* @__PURE__ */ import_react.default.createElement("header", { className: `ios-header ${scrolled ? "scrolled" : ""}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: "header-content" }, /* @__PURE__ */ import_react.default.createElement("h1", null, title), rightAction && /* @__PURE__ */ import_react.default.createElement("div", { className: "header-right" }, rightAction))), /* @__PURE__ */ import_react.default.createElement("main", { className: "ios-content" }, children));
+  return /* @__PURE__ */ import_react.default.createElement("div", { className: "ios-layout" }, /* @__PURE__ */ import_react.default.createElement("header", { className: `ios-header ${scrolled ? "scrolled" : ""}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: "header-content" }, /* @__PURE__ */ import_react.default.createElement("h1", { style: { opacity: showLargeTitle ? titleOpacity : 1 } }, title), rightAction && /* @__PURE__ */ import_react.default.createElement("div", { className: "header-right" }, rightAction))), /* @__PURE__ */ import_react.default.createElement("main", { className: "ios-content" }, showLargeTitle && /* @__PURE__ */ import_react.default.createElement("div", { className: "large-title-container" }, /* @__PURE__ */ import_react.default.createElement("h1", { className: "large-title" }, title)), children));
 };
 
 // src/components/ToggleRow.tsx
@@ -686,6 +694,12 @@ var ToggleRow = ({ label, index, checked, onChange, last }) => {
       e.preventDefault();
       onChange(!checked);
     }
+  };
+  const handleChange = (newChecked) => {
+    if (typeof navigator !== "undefined" && navigator.vibrate) {
+      navigator.vibrate(10);
+    }
+    onChange(newChecked);
   };
   return /* @__PURE__ */ import_react2.default.createElement(
     "label",
@@ -703,7 +717,7 @@ var ToggleRow = ({ label, index, checked, onChange, last }) => {
         type: "checkbox",
         className: "hidden-checkbox",
         checked,
-        onChange: (e) => onChange(e.target.checked),
+        onChange: (e) => handleChange(e.target.checked),
         tabIndex: -1
       }
     ),
@@ -746,6 +760,23 @@ var SEOContent = () => {
 // src/components/ScoreDial.tsx
 var import_react4 = __toESM(require_react(), 1);
 var ScoreDial = ({ score, maxScore, category }) => {
+  const [animatedScore, setAnimatedScore] = (0, import_react4.useState)(0);
+  (0, import_react4.useEffect)(() => {
+    const end = score;
+    const duration = 1e3;
+    const startTime = performance.now();
+    const animate = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      const currentScore = Math.floor(easeProgress * end);
+      setAnimatedScore(currentScore);
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+    requestAnimationFrame(animate);
+  }, [score]);
   const getColor = (p) => {
     if (p >= 0.9) return "#34c759";
     if (p >= 0.7) return "#ffcc00";
@@ -769,18 +800,22 @@ var ScoreDial = ({ score, maxScore, category }) => {
   ), /* @__PURE__ */ import_react4.default.createElement(
     "circle",
     {
-      className: "dial-progress",
+      className: "dial-progress animate-ring",
       cx: "70",
       cy: "70",
       r: radius,
       strokeWidth: "10",
       stroke: color,
       strokeDasharray: circumference,
-      strokeDashoffset: offset,
+      style: {
+        "--target-offset": offset,
+        "--circumference": circumference,
+        transition: "stroke-dashoffset 1s cubic-bezier(0.22, 1, 0.36, 1), stroke 0.5s"
+      },
       strokeLinecap: "round",
       transform: "rotate(-90 70 70)"
     }
-  )), /* @__PURE__ */ import_react4.default.createElement("div", { className: "score-value" }, score, /* @__PURE__ */ import_react4.default.createElement("div", { className: "score-max" }, "/", maxScore))), /* @__PURE__ */ import_react4.default.createElement("div", { className: "score-category" }, category));
+  )), /* @__PURE__ */ import_react4.default.createElement("div", { className: "score-value" }, animatedScore, /* @__PURE__ */ import_react4.default.createElement("div", { className: "score-max" }, "/", maxScore))), /* @__PURE__ */ import_react4.default.createElement("div", { className: "score-category visible" }, category));
 };
 
 // src/App.tsx
@@ -799,23 +834,27 @@ function App() {
     if (confirm("Are you sure you want to clear all checks?")) {
       setCheckedState(new Array(allQuestions.length).fill(false));
       setIsSubmitted(false);
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
-  const isQuestionIncluded = (index) => {
+  const isQuestionIncluded = (0, import_react5.useCallback)((index) => {
     if (!isShortMode) return true;
     return index % 5 === 0;
-  };
+  }, [isShortMode]);
   const currentMaxScore = isShortMode ? 30 : 150;
-  const displayScore = (0, import_react5.useMemo)(() => {
-    let checkedCount = 0;
+  const { displayScore, progress } = (0, import_react5.useMemo)(() => {
+    let count = 0;
     allQuestions.forEach((_, index) => {
-      if (isQuestionIncluded(index) && checkedState[index]) {
-        checkedCount++;
+      const included = isQuestionIncluded(index);
+      if (included && checkedState[index]) {
+        count++;
       }
     });
-    return currentMaxScore - checkedCount;
-  }, [checkedState, isShortMode, currentMaxScore, allQuestions]);
+    return {
+      displayScore: currentMaxScore - count,
+      progress: count / currentMaxScore * 100
+    };
+  }, [checkedState, currentMaxScore, allQuestions, isQuestionIncluded]);
   const category = (0, import_react5.useMemo)(() => {
     const scoreToLookup = isShortMode ? displayScore * 5 : displayScore;
     const found = scoringCategories.find((c) => scoreToLookup >= c.min && scoreToLookup <= c.max);
@@ -823,31 +862,49 @@ function App() {
   }, [displayScore, isShortMode]);
   const handleSubmit = () => {
     setIsSubmitted(true);
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
   const handleRetake = () => {
     setIsSubmitted(false);
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
   let globalIndexCounter = 0;
   let displayedQuestionCounter = 1;
+  const handleShare = async () => {
+    const shareData = {
+      title: "Rice Purity Test Result",
+      text: `I scored a ${displayScore}/${currentMaxScore} on the Rice Purity Test! Check your score here:`,
+      url: window.location.origin
+    };
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
+        alert("Score copied to clipboard!");
+      }
+    } catch (err) {
+      console.error("Error sharing:", err);
+    }
+  };
   if (isSubmitted) {
-    return /* @__PURE__ */ React.createElement(IOSLayout, { title: "Results" }, /* @__PURE__ */ React.createElement("div", { className: "results-view" }, /* @__PURE__ */ React.createElement(
+    return /* @__PURE__ */ React.createElement(IOSLayout, { title: "Results", showLargeTitle: false }, /* @__PURE__ */ React.createElement("div", { className: "results-view animate-fade-in" }, /* @__PURE__ */ React.createElement(
       ScoreDial,
       {
         score: displayScore,
         maxScore: currentMaxScore,
         category
       }
-    ), /* @__PURE__ */ React.createElement("div", { className: "action-buttons" }, /* @__PURE__ */ React.createElement("button", { onClick: handleRetake, className: "button-primary" }, "Review Answers"), /* @__PURE__ */ React.createElement("button", { onClick: handleReset, className: "button-text-danger" }, "Start Over")), /* @__PURE__ */ React.createElement("div", { className: "seo-wrapper" }, /* @__PURE__ */ React.createElement(SEOContent, null))));
+    ), /* @__PURE__ */ React.createElement("div", { className: "action-buttons" }, /* @__PURE__ */ React.createElement("button", { onClick: handleShare, className: "button-primary" }, "Share Result"), /* @__PURE__ */ React.createElement("button", { onClick: handleRetake, className: "button-secondary" }, "Review Answers"), /* @__PURE__ */ React.createElement("button", { onClick: handleReset, className: "button-text-danger" }, "Start Over")), /* @__PURE__ */ React.createElement("div", { className: "seo-wrapper" }, /* @__PURE__ */ React.createElement(SEOContent, null))));
   }
   return /* @__PURE__ */ React.createElement(
     IOSLayout,
     {
-      title: "Rice Purity test",
+      title: "Rice Purity",
       rightAction: /* @__PURE__ */ React.createElement("span", { className: "clear-button", onClick: handleReset }, "Clear")
     },
-    /* @__PURE__ */ React.createElement("div", { className: "app-container" }, /* @__PURE__ */ React.createElement("div", { className: "privacy-badge" }, /* @__PURE__ */ React.createElement("span", { role: "img", "aria-label": "shield" }, "\u{1F6E1}\uFE0F"), /* @__PURE__ */ React.createElement("span", null, "Runs entirely locally and can work offline")), showIntro && /* @__PURE__ */ React.createElement("div", { className: "intro-card" }, /* @__PURE__ */ React.createElement("h2", { className: "intro-title" }, introText.title), /* @__PURE__ */ React.createElement("p", { className: "intro-desc" }, introText.description), /* @__PURE__ */ React.createElement("div", { className: "intro-section" }, /* @__PURE__ */ React.createElement("h4", { className: "intro-subtitle" }, "Instructions"), /* @__PURE__ */ React.createElement("p", { className: "intro-text-small", dangerouslySetInnerHTML: { __html: introText.instructions } })), /* @__PURE__ */ React.createElement("div", { className: "intro-section" }, /* @__PURE__ */ React.createElement("h4", { className: "intro-subtitle" }, "Definitions"), introText.definitions.map((def, i) => /* @__PURE__ */ React.createElement("div", { key: i, className: "definition-item" }, /* @__PURE__ */ React.createElement("span", { className: "term" }, def.term, ":"), " ", /* @__PURE__ */ React.createElement("span", { className: "definition" }, def.definition)))), /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React.createElement("div", { className: "progress-container" }, /* @__PURE__ */ React.createElement("div", { className: "progress-bar", style: { width: `${progress}%` } })),
+    /* @__PURE__ */ React.createElement("div", { className: "app-container animate-fade-in" }, /* @__PURE__ */ React.createElement("div", { className: "privacy-badge" }, /* @__PURE__ */ React.createElement("span", { role: "img", "aria-label": "shield" }, "\u{1F6E1}\uFE0F"), /* @__PURE__ */ React.createElement("span", null, "Runs entirely locally and can work offline")), showIntro && /* @__PURE__ */ React.createElement("div", { className: "intro-card" }, /* @__PURE__ */ React.createElement("h2", { className: "intro-title" }, introText.title), /* @__PURE__ */ React.createElement("p", { className: "intro-desc" }, introText.description), /* @__PURE__ */ React.createElement("div", { className: "intro-section" }, /* @__PURE__ */ React.createElement("h4", { className: "intro-subtitle" }, "Instructions"), /* @__PURE__ */ React.createElement("p", { className: "intro-text-small", dangerouslySetInnerHTML: { __html: introText.instructions } })), /* @__PURE__ */ React.createElement("div", { className: "intro-section" }, /* @__PURE__ */ React.createElement("h4", { className: "intro-subtitle" }, "Definitions"), introText.definitions.map((def, i) => /* @__PURE__ */ React.createElement("div", { key: i, className: "definition-item" }, /* @__PURE__ */ React.createElement("span", { className: "term" }, def.term, ":"), " ", /* @__PURE__ */ React.createElement("span", { className: "definition" }, def.definition)))), /* @__PURE__ */ React.createElement(
       "button",
       {
         onClick: () => setShowIntro(false),

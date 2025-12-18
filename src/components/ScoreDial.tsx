@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './ScoreDial.css';
 
 interface ScoreDialProps {
@@ -8,6 +8,30 @@ interface ScoreDialProps {
 }
 
 export const ScoreDial: React.FC<ScoreDialProps> = ({ score, maxScore, category }) => {
+  const [animatedScore, setAnimatedScore] = useState(0);
+
+  useEffect(() => {
+    const end = score;
+    const duration = 1000;
+    const startTime = performance.now();
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      const currentScore = Math.floor(easeProgress * end);
+      
+      setAnimatedScore(currentScore);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [score]);
+
   // Calculate color based on percentage (100% is pure, 0% is corrupt)
   const getColor = (p: number) => {
     if (p >= 0.9) return '#34c759'; // Green
@@ -34,24 +58,28 @@ export const ScoreDial: React.FC<ScoreDialProps> = ({ score, maxScore, category 
             strokeWidth="10"
           />
           <circle
-            className="dial-progress"
+            className="dial-progress animate-ring"
             cx="70"
             cy="70"
             r={radius}
             strokeWidth="10"
             stroke={color}
             strokeDasharray={circumference}
-            strokeDashoffset={offset}
+            style={{ 
+               '--target-offset': offset, 
+               '--circumference': circumference,
+               transition: 'stroke-dashoffset 1s cubic-bezier(0.22, 1, 0.36, 1), stroke 0.5s'
+            } as React.CSSProperties}
             strokeLinecap="round"
             transform="rotate(-90 70 70)"
           />
         </svg>
         <div className="score-value">
-            {score}
+            {animatedScore}
             <div className="score-max">/{maxScore}</div>
         </div>
       </div>
-      <div className="score-category">
+      <div className="score-category visible">
         {category}
       </div>
     </div>

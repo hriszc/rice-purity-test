@@ -17,6 +17,13 @@ export const ToggleRow: React.FC<ToggleRowProps> = ({ label, index, checked, onC
     }
   };
 
+  const handleChange = (newChecked: boolean) => {
+    if (typeof navigator !== 'undefined' && navigator.vibrate) {
+      navigator.vibrate(10); // Light haptic feedback
+    }
+    onChange(newChecked);
+  };
+
   return (
     <label 
       className="toggle-row"
@@ -30,7 +37,7 @@ export const ToggleRow: React.FC<ToggleRowProps> = ({ label, index, checked, onC
         type="checkbox" 
         className="hidden-checkbox"
         checked={checked}
-        onChange={(e) => onChange(e.target.checked)}
+        onChange={(e) => handleChange(e.target.checked)}
         tabIndex={-1}
       />
       <div className="row-number">{index}.</div>
