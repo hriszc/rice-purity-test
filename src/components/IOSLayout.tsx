@@ -13,8 +13,17 @@ interface IOSLayoutProps {
 export const IOSLayout: React.FC<IOSLayoutProps> = ({ title, children, leftAction, rightAction, showLargeTitle = true }) => {
   const [scrolled, setScrolled] = useState(false);
   const [titleOpacity, setTitleOpacity] = useState(0);
+  const [isEmbedded, setIsEmbedded] = useState(false);
 
   useEffect(() => {
+    // Detect if embedded via iframe or query param
+    const checkEmbed = () => {
+      const isIframe = window.self !== window.top;
+      const hasEmbedParam = new URLSearchParams(window.location.search).get('embed') === 'true';
+      setIsEmbedded(isIframe || hasEmbedParam);
+    };
+    checkEmbed();
+
     const handleScroll = () => {
       const scrollY = window.scrollY;
       setScrolled(scrollY > 40);
@@ -33,8 +42,8 @@ export const IOSLayout: React.FC<IOSLayoutProps> = ({ title, children, leftActio
   }, []);
 
   return (
-    <div className="ios-layout">
-      <DanmakuBackground />
+    <div className={`ios-layout ${isEmbedded ? 'is-embedded' : ''}`}>
+      {!isEmbedded && <DanmakuBackground />}
       <header className={`ios-header ${(!showLargeTitle || scrolled) ? 'scrolled' : ''}`}>
         <div className="header-content">
           <div className="header-left">{leftAction}</div>
@@ -51,8 +60,8 @@ export const IOSLayout: React.FC<IOSLayoutProps> = ({ title, children, leftActio
             <h1 className="large-title">{title}</h1>
             {rightAction && (
               <div className="large-title-right-action" style={{ 
-                opacity: 1 - titleOpacity,
-                pointerEvents: (1 - titleOpacity < 0.5) ? 'none' : 'auto'
+                opacity: isEmbedded ? 1 : 1 - titleOpacity,
+                pointerEvents: (isEmbedded || 1 - titleOpacity > 0.5) ? 'auto' : 'none'
               }}>
                 {rightAction}
               </div>

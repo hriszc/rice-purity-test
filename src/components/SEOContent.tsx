@@ -85,6 +85,9 @@ export const SEOContent: React.FC = () => {
       <section style={{ marginBottom: '32px' }}>
         <h2 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '12px' }}>Resources & Guides</h2>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '12px' }}>
+          <a href="/about#embed" style={{ display: 'block', padding: '12px', backgroundColor: '#f2f2f7', borderRadius: '10px', color: '#1c1c1e', textDecoration: 'none', fontWeight: '500' }}>
+            🛠️ Embed Rice Purity Test on your Site
+          </a>
           <a href="/what-is-french-kissing" style={{ display: 'block', padding: '12px', backgroundColor: '#f2f2f7', borderRadius: '10px', color: '#1c1c1e', textDecoration: 'none', fontWeight: '500' }}>
             👄 What is French Kissing? Meaning & Tips
           </a>

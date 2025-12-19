@@ -137,13 +137,22 @@ export const TestView: React.FC<TestViewProps> = ({
 
             <div className="intro-section">
               <h4 className="intro-subtitle">Quick Links</h4>
-              <Link 
-                to="/rice-purity-test-score-meanings"
-                className="button-text-small"
-                style={{ padding: '4px 0', color: 'var(--accent-color)', fontWeight: '500', display: 'inline-block' }}
-              >
-                Rice Purity Test Score Meanings →
-              </Link>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                <Link 
+                  to="/rice-purity-test-score-meanings"
+                  className="button-text-small"
+                  style={{ padding: '4px 0', color: 'var(--accent-color)', fontWeight: '500', display: 'inline-block' }}
+                >
+                  Rice Purity Test Score Meanings →
+                </Link>
+                <Link 
+                  to="/about#embed"
+                  className="button-text-small"
+                  style={{ padding: '4px 0', color: 'var(--accent-color)', fontWeight: '500', display: 'inline-block' }}
+                >
+                  Embed this test on your site →
+                </Link>
+              </div>
             </div>
             
             <button 
@@ -238,7 +247,8 @@ export const TestView: React.FC<TestViewProps> = ({
       </div>
       
       <div className="footer-notice" style={{ marginBottom: showBanner ? '60px' : '0' }}>
-        Caution: This is the 1988 version. Definitions may vary.
+        Caution: This is the 1988 version. Definitions may vary. 
+        <Link to="/about#embed" style={{ color: 'var(--secondary-label)', marginLeft: '8px', textDecoration: 'underline' }}>Embed code</Link>
       </div>
 
       {showBanner && (

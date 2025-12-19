@@ -109,3 +109,27 @@
   transition: opacity 0.2s ease-out;
 }
 
+/* Embedded Mode Adjustments */
+.ios-layout.is-embedded {
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.ios-layout.is-embedded .ios-content {
+  padding-top: 10px;
+}
+
+.ios-layout.is-embedded .ios-header {
+  display: none; /* Hide header in embedded mode to save space */
+}
+
+.ios-layout.is-embedded .large-title {
+  font-size: 24px;
+  text-align: center;
+}
+
+.ios-layout.is-embedded .large-title-container {
+  justify-content: center;
+  padding-bottom: 20px;
+}
+

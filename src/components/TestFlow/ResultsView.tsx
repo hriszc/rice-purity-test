@@ -148,24 +148,157 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
          </div>
 
          <div className="action-buttons">
-           <div className="embed-section">
-             <h3 className="share-title">Add badge to your website</h3>
-             <p className="embed-desc">Copy this code to show off your score on your blog or profile:</p>
-             <div className="embed-box">
-               <textarea 
-                 readOnly 
-                 value={`<a href="${window.location.origin}" style="display:inline-block;padding:8px 16px;background:#007aff;color:white;text-decoration:none;border-radius:20px;font-family:system-ui;font-weight:bold;">Rice Purity Score: ${displayScore}</a>`}
-                 onClick={(e) => (e.target as HTMLTextAreaElement).select()}
-               />
-               <button 
-                 className="copy-btn"
-                 onClick={() => {
-                   navigator.clipboard.writeText(`<a href="${window.location.origin}" style="display:inline-block;padding:8px 16px;background:#007aff;color:white;text-decoration:none;border-radius:20px;font-family:system-ui;font-weight:bold;">Rice Purity Score: ${displayScore}</a>`);
-                   alert('Embed code copied!');
-                 }}
-               >
-                 Copy
-               </button>
+           <div className="embed-section" style={{ 
+             background: 'var(--tertiary-system-background)', 
+             padding: '20px', 
+             borderRadius: '24px', 
+             border: '1px solid var(--separator)',
+             marginTop: '32px'
+           }}>
+             <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '8px', color: 'var(--label)' }}>Share as a Badge</h3>
+             <p style={{ fontSize: '0.9rem', color: 'var(--secondary-label)', marginBottom: '20px' }}>
+               Display your achievement on your personal blog, forum profile, or website.
+             </p>
+
+             {/* Style 1: Modern Card */}
+             <div style={{ marginBottom: '24px' }}>
+               <div style={{ fontSize: '0.75rem', fontWeight: '600', color: 'var(--secondary-label)', textTransform: 'uppercase', marginBottom: '10px', letterSpacing: '0.5px' }}>Style 1: Modern Card</div>
+               <div className="preview-container" style={{ 
+                 padding: '16px', 
+                 background: 'var(--secondary-system-background)', 
+                 borderRadius: '16px', 
+                 display: 'flex', 
+                 justifyContent: 'center',
+                 marginBottom: '12px'
+               }}>
+                 {/* Preview */}
+                 <div style={{
+                   background: 'linear-gradient(135deg, #007aff 0%, #00c6ff 100%)',
+                   color: 'white',
+                   padding: '12px 20px',
+                   borderRadius: '16px',
+                   boxShadow: '0 4px 15px rgba(0,122,255,0.3)',
+                   fontFamily: '-apple-system, sans-serif',
+                   display: 'inline-flex',
+                   alignItems: 'center',
+                   gap: '12px'
+                 }}>
+                   <div style={{ fontSize: '1.2rem' }}>🍚</div>
+                   <div>
+                     <div style={{ fontSize: '10px', opacity: 0.8, fontWeight: 600, textTransform: 'uppercase' }}>Rice Purity Test</div>
+                     <div style={{ fontSize: '18px', fontWeight: 800 }}>Score: {displayScore}</div>
+                   </div>
+                 </div>
+               </div>
+               
+               <div style={{ position: 'relative' }}>
+                 <textarea 
+                   readOnly 
+                   style={{
+                     width: '100%',
+                     height: '80px',
+                     padding: '12px',
+                     borderRadius: '12px',
+                     border: '1px solid var(--separator)',
+                     fontSize: '0.75rem',
+                     fontFamily: 'monospace',
+                     background: 'var(--system-background)',
+                     color: 'var(--label)',
+                     resize: 'none'
+                   }}
+                   value={`<a href="https://ricepurity.online/" style="text-decoration:none;display:inline-block"><div style="background:linear-gradient(135deg,#007aff 0%,#00c6ff 100%);color:white;padding:12px 20px;border-radius:16px;box-shadow:0 4px 15px rgba(0,122,255,0.3);font-family:sans-serif;display:inline-flex;align-items:center;gap:12px"><div><div style="font-size:10px;opacity:0.8;font-weight:600;text-transform:uppercase">Rice Purity Test</div><div style="font-size:18px;font-weight:800">Score: ${displayScore}</div></div></div></a>`}
+                   onClick={(e) => (e.target as HTMLTextAreaElement).select()}
+                 />
+                 <button 
+                   onClick={() => {
+                     const code = `<a href="https://ricepurity.online/" style="text-decoration:none;display:inline-block"><div style="background:linear-gradient(135deg,#007aff 0%,#00c6ff 100%);color:white;padding:12px 20px;border-radius:16px;box-shadow:0 4px 15px rgba(0,122,255,0.3);font-family:sans-serif;display:inline-flex;align-items:center;gap:12px"><div><div style="font-size:10px;opacity:0.8;font-weight:600;text-transform:uppercase">Rice Purity Test</div><div style="font-size:18px;font-weight:800">Score: ${displayScore}</div></div></div></a>`;
+                     navigator.clipboard.writeText(code);
+                     alert('Modern Card code copied!');
+                   }}
+                   style={{
+                     position: 'absolute',
+                     right: '8px',
+                     bottom: '8px',
+                     padding: '6px 12px',
+                     borderRadius: '8px',
+                     border: 'none',
+                     backgroundColor: 'var(--accent-color)',
+                     color: 'white',
+                     fontSize: '0.8rem',
+                     fontWeight: '600',
+                     cursor: 'pointer'
+                   }}
+                 >
+                   Copy
+                 </button>
+               </div>
+             </div>
+
+             {/* Style 2: Flat Badge */}
+             <div>
+               <div style={{ fontSize: '0.75rem', fontWeight: '600', color: 'var(--secondary-label)', textTransform: 'uppercase', marginBottom: '10px', letterSpacing: '0.5px' }}>Style 2: Minimalist Badge</div>
+               <div className="preview-container" style={{ 
+                 padding: '16px', 
+                 background: 'var(--secondary-system-background)', 
+                 borderRadius: '16px', 
+                 display: 'flex', 
+                 justifyContent: 'center',
+                 marginBottom: '12px'
+               }}>
+                 {/* Preview */}
+                 <div style={{
+                   display: 'inline-flex',
+                   borderRadius: '4px',
+                   overflow: 'hidden',
+                   fontFamily: 'Verdana, Geneva, sans-serif',
+                   fontSize: '11px'
+                 }}>
+                   <div style={{ background: '#555', color: '#fff', padding: '4px 8px' }}>Rice Purity</div>
+                   <div style={{ background: '#34c759', color: '#fff', padding: '4px 8px', fontWeight: 'bold' }}>{displayScore}</div>
+                 </div>
+               </div>
+               
+               <div style={{ position: 'relative' }}>
+                 <textarea 
+                   readOnly 
+                   style={{
+                     width: '100%',
+                     height: '60px',
+                     padding: '12px',
+                     borderRadius: '12px',
+                     border: '1px solid var(--separator)',
+                     fontSize: '0.75rem',
+                     fontFamily: 'monospace',
+                     background: 'var(--system-background)',
+                     color: 'var(--label)',
+                     resize: 'none'
+                   }}
+                   value={`<a href="https://ricepurity.online/" style="text-decoration:none;display:inline-flex;border-radius:4px;overflow:hidden;font-family:Verdana,sans-serif;font-size:11px"><div style="background:#555;color:#fff;padding:4px 8px">Rice Purity</div><div style="background:#34c759;color:#fff;padding:4px 8px;font-weight:bold">${displayScore}</div></a>`}
+                   onClick={(e) => (e.target as HTMLTextAreaElement).select()}
+                 />
+                 <button 
+                   onClick={() => {
+                     const code = `<a href="https://ricepurity.online/" style="text-decoration:none;display:inline-flex;border-radius:4px;overflow:hidden;font-family:Verdana,sans-serif;font-size:11px"><div style="background:#555;color:#fff;padding:4px 8px">Rice Purity</div><div style="background:#34c759;color:#fff;padding:4px 8px;font-weight:bold">${displayScore}</div></a>`;
+                     navigator.clipboard.writeText(code);
+                     alert('Flat Badge code copied!');
+                   }}
+                   style={{
+                     position: 'absolute',
+                     right: '8px',
+                     bottom: '8px',
+                     padding: '6px 12px',
+                     borderRadius: '8px',
+                     border: 'none',
+                     backgroundColor: 'var(--accent-color)',
+                     color: 'white',
+                     fontSize: '0.8rem',
+                     fontWeight: '600',
+                     cursor: 'pointer'
+                   }}
+                 >
+                   Copy
+                 </button>
+               </div>
              </div>
            </div>
 
