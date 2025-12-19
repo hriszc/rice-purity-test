@@ -20,6 +20,7 @@ export function TestPage() {
   const [isShortMode, setIsShortMode] = useState(false);
   const [view, setView] = useState<View>('test');
   const [showIntro, setShowIntro] = useState(false);
+  const [showHint, setShowHint] = useState(true);
 
   const handleLinkClick = (e: React.MouseEvent<HTMLParagraphElement>) => {
     const target = e.target as HTMLElement;
@@ -33,6 +34,9 @@ export function TestPage() {
     const newCheckedState = [...checkedState];
     newCheckedState[index] = checked;
     setCheckedState(newCheckedState);
+    if (checked && showHint) {
+      setShowHint(false);
+    }
   };
 
   const handleReset = () => {
@@ -366,6 +370,14 @@ export function TestPage() {
             Short (30)
           </button>
         </div>
+
+        {showHint && (
+          <div className="check-guide-hint animate-bounce-subtle">
+            <span className="hint-icon">💡</span>
+            <span className="hint-text">Tap any item to reveal peer stats</span>
+            <span className="hint-arrow">⬇️</span>
+          </div>
+        )}
 
         {sections.map((section, sIndex) => {
           const questionsToRender: { text: string; emoji: string; originalIndex: number; displayIndex: number; probability?: number }[] = [];
