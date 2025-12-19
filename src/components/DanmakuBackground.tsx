@@ -115,16 +115,18 @@ export const DanmakuBackground: React.FC = () => {
   const [items, setItems] = useState<DanmakuItem[]>([]);
 
   useEffect(() => {
-    const numTracks = 25; // 25 horizontal tracks
-    const itemsPerTrack = Math.ceil(DANMAKU_POOL.length / numTracks);
+    const numTracks = 15; // Reduced from 25 to 15 horizontal tracks
+    const maxItems = 45; // Limit total items to reduce density
+    const shuffledPool = [...DANMAKU_POOL]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, maxItems);
+    
+    const itemsPerTrack = Math.ceil(shuffledPool.length / numTracks);
     const newItems: DanmakuItem[] = [];
-
-    // Shuffle pool to randomize which text goes to which track
-    const shuffledPool = [...DANMAKU_POOL].sort(() => Math.random() - 0.5);
 
     for (let t = 0; t < numTracks; t++) {
       // Each track gets its own speed to avoid a grid-like appearance
-      const duration = 40 + Math.random() * 30; // 40s to 70s
+      const duration = 50 + Math.random() * 40; // Slower: 50s to 90s
       
       for (let i = 0; i < itemsPerTrack; i++) {
         const poolIndex = t * itemsPerTrack + i;
@@ -132,11 +134,10 @@ export const DanmakuBackground: React.FC = () => {
 
         const text = shuffledPool[poolIndex];
         // Vertical position: spread evenly across tracks with a bit of offset
-        const top = (t / numTracks) * 95 + 2; 
+        const top = (t / numTracks) * 90 + 5; 
         
-        // Horizontal spacing: space out items in the same track
-        // We use a large initial delay plus the items-per-track spacing
-        const delay = i * (duration / itemsPerTrack) + (Math.random() * 5);
+        // Horizontal spacing: more spread out
+        const delay = i * (duration / itemsPerTrack) + (Math.random() * 10);
 
         newItems.push({
           id: poolIndex,
