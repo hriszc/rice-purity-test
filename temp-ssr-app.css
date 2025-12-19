@@ -536,6 +536,55 @@
   transition: opacity 0.2s ease-out;
 }
 
+/* src/components/DanmakuBackground.css */
+.danmaku-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+  user-select: none;
+}
+.danmaku-item {
+  position: absolute;
+  white-space: nowrap;
+  font-size: 14px;
+  color: #888;
+  opacity: 0.15;
+  will-change: transform;
+  transform: translateX(100vw);
+  animation: danmaku-scroll linear infinite;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+@keyframes danmaku-scroll {
+  from {
+    transform: translateX(100vw);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+@media (prefers-color-scheme: light) {
+  .danmaku-item {
+    color: #333;
+    opacity: 0.08;
+  }
+}
+[data-theme=dark] .danmaku-item {
+  color: #fff;
+  opacity: 0.1;
+}
+
 /* src/components/ToggleRow.css */
 .toggle-row {
   display: flex;

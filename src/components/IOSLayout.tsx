@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './IOSLayout.css';
+import { DanmakuBackground } from './DanmakuBackground';
 
 interface IOSLayoutProps {
   title: string;
@@ -33,6 +34,7 @@ export const IOSLayout: React.FC<IOSLayoutProps> = ({ title, children, leftActio
 
   return (
     <div className="ios-layout">
+      <DanmakuBackground />
       <header className={`ios-header ${(!showLargeTitle || scrolled) ? 'scrolled' : ''}`}>
         <div className="header-content">
           <div className="header-left">{leftAction}</div>
