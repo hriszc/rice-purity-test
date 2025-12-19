@@ -33,17 +33,28 @@ export const IOSLayout: React.FC<IOSLayoutProps> = ({ title, children, leftActio
 
   return (
     <div className="ios-layout">
-      <header className={`ios-header ${scrolled ? 'scrolled' : ''}`}>
+      <header className={`ios-header ${(!showLargeTitle || scrolled) ? 'scrolled' : ''}`}>
         <div className="header-content">
           <div className="header-left">{leftAction}</div>
           <div className="sticky-header-title" style={{ opacity: showLargeTitle ? titleOpacity : 1 }}>{title}</div>
-          <div className="header-right">{rightAction}</div>
+          <div className="header-right" style={{ 
+            opacity: showLargeTitle ? titleOpacity : 1,
+            pointerEvents: (showLargeTitle && titleOpacity < 0.5) ? 'none' : 'auto'
+          }}>{rightAction}</div>
         </div>
       </header>
       <main className="ios-content">
         {showLargeTitle && (
           <div className="large-title-container">
             <h1 className="large-title">{title}</h1>
+            {rightAction && (
+              <div className="large-title-right-action" style={{ 
+                opacity: 1 - titleOpacity,
+                pointerEvents: (1 - titleOpacity < 0.5) ? 'none' : 'auto'
+              }}>
+                {rightAction}
+              </div>
+            )}
           </div>
         )}
         {children}

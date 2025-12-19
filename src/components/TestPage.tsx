@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { sections, scoringCategories, introText } from '../data';
 import { IOSLayout } from './IOSLayout';
