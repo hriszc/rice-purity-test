@@ -92,7 +92,7 @@ export function TestPage() {
     return index % 5 === 0;
   }, [isShortMode]);
 
-  const currentMaxScore = isShortMode ? 30 : 150;
+  const currentMaxScore = 150;
 
   const { displayScore, progress, categoryScores } = useMemo(() => {
      let count = 0;
@@ -124,17 +124,19 @@ export function TestPage() {
        value: val.total > 0 ? (val.checked / val.total) * 100 : 0
      }));
 
+     const totalIncluded = isShortMode ? 30 : 150;
+     const scoreValue = isShortMode ? (30 - count) * 5 : (150 - count);
+
      return {
-       displayScore: currentMaxScore - count,
-       progress: (count / currentMaxScore) * 100,
+       displayScore: scoreValue,
+       progress: (count / totalIncluded) * 100,
        categoryScores: radarData
      };
-  }, [checkedState, currentMaxScore, allQuestions, isQuestionIncluded]);
+  }, [checkedState, allQuestions, isQuestionIncluded, isShortMode]);
 
   const currentCategory = useMemo(() => {
-    const scoreToLookup = isShortMode ? displayScore * 5 : displayScore;
-    return scoringCategories.find(c => scoreToLookup >= c.min && scoreToLookup <= c.max);
-  }, [displayScore, isShortMode]);
+    return scoringCategories.find(c => displayScore >= c.min && displayScore <= c.max);
+  }, [displayScore]);
 
   const handleSubmit = () => {
     setView('results');
@@ -149,7 +151,7 @@ export function TestPage() {
   const handleShare = async () => {
     const shareData = {
       title: 'Rice Purity Test Result',
-      text: `I scored a ${displayScore}/${currentMaxScore} on the Rice Purity Test! Check your score here:`,
+      text: `I scored a ${displayScore}/150 on the Rice Purity Test! Check your score here:`,
       url: window.location.origin,
     };
 
