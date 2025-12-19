@@ -6,7 +6,7 @@ import { ToggleRow } from './ToggleRow';
 import { SEOContent } from './SEOContent';
 import { ScoreDial } from './ScoreDial';
 import { WidgetPoster } from './WidgetPoster';
-import { Link, useNavigate } from 'react-router-dom';
+import { SEO_CONFIG } from '../seoConfig';
 
 type View = 'test' | 'results';
 
@@ -219,8 +219,8 @@ export function TestPage() {
       rightAction={<span className="clear-button" onClick={handleReset}>Clear</span>}
     >
       <Helmet>
-        <title>Rice Purity Test - The 1988 Original Version</title>
-        <meta name="description" content="Take the original 1988 Rice Purity Test. 150 questions to calculate your purity score. Works offline and on mobile." />
+        <title>{SEO_CONFIG.home.title}</title>
+        <meta name="description" content={SEO_CONFIG.home.description} />
       </Helmet>
 
       <div className="progress-container">
