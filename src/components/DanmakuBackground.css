@@ -19,7 +19,7 @@
   will-change: transform;
   transform: translateX(100vw);
   animation: danmaku-scroll linear infinite;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 @keyframes danmaku-scroll {
