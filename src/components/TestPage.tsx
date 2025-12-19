@@ -368,7 +368,7 @@ export function TestPage() {
         </div>
 
         {sections.map((section, sIndex) => {
-          const questionsToRender: { text: string; emoji: string; originalIndex: number; displayIndex: number }[] = [];
+          const questionsToRender: { text: string; emoji: string; originalIndex: number; displayIndex: number; probability?: number }[] = [];
           
           section.questions.forEach((q) => {
              const currentOriginalIndex = globalIndexCounter;
@@ -378,7 +378,8 @@ export function TestPage() {
                  text: q.text,
                  emoji: q.emoji,
                  originalIndex: currentOriginalIndex,
-                 displayIndex: displayedQuestionCounter
+                 displayIndex: displayedQuestionCounter,
+                 probability: q.probability
                });
                displayedQuestionCounter++;
              }
@@ -405,6 +406,7 @@ export function TestPage() {
                       checked={checkedState[q.originalIndex]}
                       onChange={(c) => handleToggle(q.originalIndex, c)}
                       last={i === questionsToRender.length - 1}
+                      probability={q.probability}
                     />
                    );
                 })}

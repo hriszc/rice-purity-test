@@ -8,9 +8,18 @@ interface ToggleRowProps {
   checked: boolean;
   onChange: (checked: boolean) => void;
   last?: boolean;
+  probability?: number;
 }
 
-export const ToggleRow: React.FC<ToggleRowProps> = ({ label, emoji, index, checked, onChange, last }) => {
+export const ToggleRow: React.FC<ToggleRowProps> = ({ 
+  label, 
+  emoji, 
+  index, 
+  checked, 
+  onChange, 
+  last,
+  probability 
+}) => {
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === ' ' || e.key === 'Enter') {
       e.preventDefault();
@@ -45,7 +54,14 @@ export const ToggleRow: React.FC<ToggleRowProps> = ({ label, emoji, index, check
       <div className={`row-content ${last ? 'last' : ''}`}>
         <div className="label-with-emoji">
           {emoji && <span className={`row-emoji ${checked ? 'animate-bounce' : ''}`}>{emoji}</span>}
-          <span className="row-label">{label}</span>
+          <div className="label-container">
+            <span className="row-label">{label}</span>
+            {checked && probability !== undefined && (
+              <span className="probability-badge animate-fade-in">
+                {probability}% of people also checked this
+              </span>
+            )}
+          </div>
         </div>
         <div className={`ios-switch ${checked ? 'checked' : ''}`} aria-hidden="true">
           <div className="switch-handle" />
