@@ -6,7 +6,7 @@ import { type ScoringCategory } from '../../data';
 interface CertificateCardProps {
   displayScore: number;
   currentMaxScore: number;
-  currentCategory: ScoringCategory;
+  currentCategory?: ScoringCategory;
   rankingLabel: string;
   fullVerdict: string;
   isFlipped: boolean;

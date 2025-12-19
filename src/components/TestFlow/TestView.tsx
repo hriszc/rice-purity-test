@@ -23,7 +23,7 @@ interface ProcessedSection {
 interface TestViewProps {
   progress: number;
   displayScore: number;
-  currentCategory: ScoringCategory;
+  currentCategory?: ScoringCategory;
   showIntro: boolean;
   setShowIntro: (show: boolean) => void;
   isShortMode: boolean;

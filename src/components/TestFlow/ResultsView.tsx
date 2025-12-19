@@ -30,7 +30,7 @@ interface ResultsViewProps {
   categoryScores: CategoryScore[];
   handleRetake: () => void;
   handleReset: () => void;
-  setView: (view: 'intro' | 'test' | 'results') => void;
+  setView: (view: 'test' | 'results') => void;
 }
 
 export const ResultsView: React.FC<ResultsViewProps> = ({
