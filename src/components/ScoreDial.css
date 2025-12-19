@@ -2,11 +2,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 32px 16px;
-  background-color: var(--tertiary-system-background);
-  border-radius: 12px;
-  margin: 16px;
-  box-shadow: var(--card-shadow);
+  padding: 10px 0;
+  background-color: transparent;
+  border-radius: 0;
+  margin: 0;
+  box-shadow: none;
 }
 
 .score-title-badge {

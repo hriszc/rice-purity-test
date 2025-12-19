@@ -248,39 +248,101 @@ export function TestPage() {
         <Helmet title={`My Rice Purity Test Score: ${displayScore}`}>
           <meta name="robots" content="noindex" />
         </Helmet>
-        <div className="results-view animate-fade-in">
-           <ScoreDial 
-             score={displayScore} 
-             maxScore={currentMaxScore} 
-             title={currentCategory?.title}
-             category={currentCategory?.text || ""} 
-           />
-
-           <div className="verdict-card" style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '14px', color: 'var(--secondary-label)', marginBottom: '4px' }}>Percentile Ranking</div>
-              <div style={{ fontSize: '24px', fontWeight: 'bold', color: 'var(--accent-color)', textTransform: 'capitalize' }}>
-                {rankingLabel}
+        <div className="results-view animate-fade-in" style={{ paddingBottom: '40px' }}>
+           {/* 1. Integrated Hero Section: Score, Ranking, Verdict & Distribution */}
+           <div className="results-hero-card" style={{
+             background: 'var(--secondary-system-background)',
+             borderRadius: '32px',
+             padding: '24px 16px',
+             boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
+             textAlign: 'center',
+             marginBottom: '20px',
+             position: 'relative' // Needed for absolute positioning of share buttons
+           }}>
+              {/* Compact Circle Share Buttons in Top Right */}
+              <div style={{ 
+                position: 'absolute', 
+                top: '16px', 
+                right: '16px', 
+                display: 'flex', 
+                flexDirection: 'column',
+                gap: '8px',
+                zIndex: 20
+              }}>
+                <button 
+                  onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(window.location.origin)}`, '_blank')}
+                  style={{ width: '36px', height: '36px', borderRadius: '50%', border: 'none', background: '#1DA1F2', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px' }}
+                  title="Share on X"
+                >
+                  𝕏
+                </button>
+                <button 
+                  onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(shareText + " " + window.location.origin)}`, '_blank')}
+                  style={{ width: '36px', height: '36px', borderRadius: '50%', border: 'none', background: '#25D366', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}
+                  title="Share on WhatsApp"
+                >
+                  💬
+                </button>
+                <button 
+                  onClick={handleShare}
+                  style={{ width: '36px', height: '36px', borderRadius: '50%', border: 'none', background: 'var(--tertiary-system-background)', color: 'var(--label)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px' }}
+                  title="More options"
+                >
+                  ⋯
+                </button>
               </div>
-              <p style={{ fontSize: '13px', color: 'var(--secondary-label)', marginTop: '4px' }}>
-                {isFlipped 
-                  ? `You have more life experience than ${( (1 - pLessPureOrEqual) * 100 ).toFixed(2)}% of people.`
-                  : `You are more pure than ${( (1 - pPurerOrEqual) * 100 ).toFixed(2)}% of participants.`}
-              </p>
+
+              <div style={{ fontSize: '11px', color: 'var(--secondary-label)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px', textAlign: 'left', paddingLeft: '8px' }}>
+                Purity Certificate
+              </div>
+
+              <ScoreDial 
+                score={displayScore} 
+                maxScore={currentMaxScore} 
+                title={currentCategory?.title}
+                category={currentCategory?.text || ""} 
+              />
+
+              <div style={{ marginTop: '4px', padding: '0 8px' }}>
+                 <div style={{ fontSize: '24px', fontWeight: '800', color: 'var(--accent-color)', marginBottom: '4px' }}>
+                   {rankingLabel}
+                 </div>
+                 <p style={{ fontSize: '15px', lineHeight: '1.4', fontWeight: '600', color: 'var(--label)', fontStyle: 'italic', margin: '8px 0' }}>
+                   "{fullVerdict}"
+                 </p>
+                 <p style={{ fontSize: '12px', color: 'var(--secondary-label)', marginBottom: '16px' }}>
+                   {isFlipped 
+                     ? `More experience than ${( (1 - pLessPureOrEqual) * 100 ).toFixed(2)}% of people.`
+                     : `Purer than ${( (1 - pPurerOrEqual) * 100 ).toFixed(2)}% of participants.`}
+                 </p>
+              </div>
+
+              {/* Integrated Distribution Chart at the bottom of the card */}
+              <div style={{ 
+                borderTop: '1px solid var(--separator)', 
+                paddingTop: '16px',
+                marginTop: '16px'
+              }}>
+                <ScoreDistributionChart userScore={displayScore} />
+              </div>
            </div>
 
-           <ScoreDistributionChart userScore={displayScore} />
-
-           <div className="verdict-card">
-              <h3 className="verdict-title">Our Verdict</h3>
-              <p className="verdict-text">
-                {fullVerdict}
-              </p>
+           {/* 2. Primary Action Button (The "Generate Certificate" part) */}
+           <div style={{ marginBottom: '32px' }}>
+             <WidgetPoster 
+               score={displayScore} 
+               maxScore={currentMaxScore} 
+               verdict={fullVerdict}
+               title={currentCategory?.title}
+               rankingLabel={rankingLabel}
+             />
            </div>
 
-           <div className="analysis-card">
-              <h3 className="analysis-title">Personality Analysis</h3>
+           {/* 3. Deep Dive Analysis */}
+           <div className="analysis-card" style={{ background: 'transparent', boxShadow: 'none', padding: '0', marginTop: '32px' }}>
+              <h3 className="analysis-title" style={{ textAlign: 'left', paddingLeft: '8px' }}>Personality Analysis</h3>
               <RadarChart data={categoryScores} />
-              <div className="category-legend">
+              <div className="category-legend" style={{ background: 'var(--secondary-system-background)', borderRadius: '16px', padding: '16px', marginTop: '16px' }}>
                 {categoryScores.map(cs => (
                   <div key={cs.label} className="legend-item">
                     <span className="legend-label">{cs.label}:</span>
@@ -291,49 +353,6 @@ export function TestPage() {
            </div>
 
            <div className="action-buttons">
-             <WidgetPoster 
-               score={displayScore} 
-               maxScore={currentMaxScore} 
-               verdict={fullVerdict}
-               title={currentCategory?.title}
-               rankingLabel={rankingLabel}
-             />
-
-             {/* Social Sharing Section */}
-             <div className="share-section">
-               <h3 className="share-title">Share your result</h3>
-               <div className="social-buttons-grid">
-                 <button 
-                   onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(window.location.origin)}`, '_blank')}
-                   className="social-button twitter"
-                 >
-                   Twitter
-                 </button>
-                 <button 
-                   onClick={() => window.open(`https://www.reddit.com/submit?title=${encodeURIComponent(`I scored ${displayScore}/150 on the Rice Purity Test!`)}&text=${encodeURIComponent(shareText + " " + window.location.origin)}&url=${encodeURIComponent(window.location.origin)}`, '_blank')}
-                   className="social-button reddit"
-                 >
-                   Reddit
-                 </button>
-                 <button 
-                   onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin)}&quote=${encodeURIComponent(shareText)}`, '_blank')}
-                   className="social-button facebook"
-                 >
-                   Facebook
-                 </button>
-                 <button 
-                   onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(shareText + " " + window.location.origin)}`, '_blank')}
-                   className="social-button whatsapp"
-                 >
-                   WhatsApp
-                 </button>
-               </div>
-               
-               <button onClick={handleShare} className="button-secondary" style={{ marginTop: '12px' }}>
-                 More Options...
-               </button>
-             </div>
-
              {/* Embed Code Section */}
              <div className="embed-section">
                <h3 className="share-title">Add badge to your website</h3>

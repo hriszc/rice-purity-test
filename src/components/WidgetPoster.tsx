@@ -157,11 +157,12 @@ export const WidgetPoster: React.FC<WidgetPosterProps> = ({ score, maxScore, ver
         }
       }
       ctx.fillText(line, width / 2, y);
+      yOffset = y + 100; // Update yOffset to be after the verdict
     }
 
-    // 4. Seal/Stamp (Bottom Left)
+    // 4. Seal/Stamp (Bottom Left) - Positioned relative to content end or bottom
     const sealX = cardX + 220;
-    const sealY = cardHeight - 120;
+    const sealY = Math.max(yOffset + 60, cardHeight - 150);
     
     ctx.save();
     ctx.translate(sealX, sealY);
@@ -185,7 +186,7 @@ export const WidgetPoster: React.FC<WidgetPosterProps> = ({ score, maxScore, ver
 
     // 5. Signature Line (Bottom Right)
     const sigX = cardWidth - 250;
-    const sigY = cardHeight - 120;
+    const sigY = Math.max(yOffset + 60, cardHeight - 150);
     ctx.strokeStyle = textColor;
     ctx.lineWidth = 3;
     ctx.beginPath();
@@ -255,8 +256,8 @@ export const WidgetPoster: React.FC<WidgetPosterProps> = ({ score, maxScore, ver
           Save Image
         </button>
         <button onClick={shareImage} className="button-primary" style={{ flex: 1, backgroundColor: '#007AFF', color: 'white' }}>
-          <span style={{ marginRight: '8px' }}>𝕏</span>
-          Share to X
+          <span style={{ marginRight: '8px' }}>📤</span>
+          Share
         </button>
       </div>
       <canvas ref={canvasRef} style={{ display: 'none' }} />

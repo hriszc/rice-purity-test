@@ -1,8 +1,8 @@
 .distribution-chart-container {
-  background: var(--secondary-system-background);
-  border-radius: 12px;
-  padding: 16px;
-  margin: 16px 0;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .chart-title {
