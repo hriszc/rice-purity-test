@@ -1,11 +1,12 @@
 import { forwardRef } from 'react';
 import { ScoreDial } from '../ScoreDial';
 import { ScoreDistributionChart } from '../ScoreDistributionChart';
+import { type ScoringCategory } from '../../data';
 
 interface CertificateCardProps {
   displayScore: number;
   currentMaxScore: number;
-  currentCategory: any;
+  currentCategory: ScoringCategory;
   rankingLabel: string;
   fullVerdict: string;
   isFlipped: boolean;

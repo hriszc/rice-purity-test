@@ -1,16 +1,29 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
-import { introText } from '../../data';
+import { introText, type ScoringCategory } from '../../data';
 import { IOSLayout } from '../IOSLayout';
 import { ToggleRow } from '../ToggleRow';
 import { SEOContent } from '../SEOContent';
 import { SEO_CONFIG } from '../../seoConfig';
 
+interface ProcessedQuestion {
+  text: string;
+  emoji: string;
+  originalIndex: number;
+  displayIndex: number;
+  probability?: number;
+}
+
+interface ProcessedSection {
+  title?: string;
+  questionsToRender: ProcessedQuestion[];
+}
+
 interface TestViewProps {
   progress: number;
   displayScore: number;
-  currentCategory: any;
+  currentCategory: ScoringCategory;
   showIntro: boolean;
   setShowIntro: (show: boolean) => void;
   isShortMode: boolean;
@@ -26,7 +39,7 @@ interface TestViewProps {
   setShowBanner: (show: boolean) => void;
   setBannerClosing: (closing: boolean) => void;
   isQuestionIncluded: (index: number) => boolean;
-  processedSections: any[];
+  processedSections: ProcessedSection[];
 }
 
 export const TestView: React.FC<TestViewProps> = ({
@@ -216,7 +229,7 @@ export const TestView: React.FC<TestViewProps> = ({
                 </div>
               )}
               <div className="questions-group">
-                {section.questionsToRender.map((q: any, i: number) => {
+                {section.questionsToRender.map((q, i) => {
                    return (
                     <ToggleRow
                       key={q.originalIndex}

@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import { useRef, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { toPng } from 'html-to-image';
 import { IOSLayout } from '../IOSLayout';
@@ -6,15 +6,31 @@ import { SEOContent } from '../SEOContent';
 import { RadarChart } from '../RadarChart';
 import { WidgetPoster, type WidgetPosterHandle } from '../WidgetPoster';
 import { CertificateCard } from './CertificateCard';
+import { type ScoringCategory } from '../../data';
 import './ResultsView.css';
+
+interface RankingDetails {
+  rankingLabel: string;
+  fullVerdict: string;
+  shareText: string;
+  isFlipped: boolean;
+  pPurerOrEqual: number;
+  pLessPureOrEqual: number;
+  currentCategory?: ScoringCategory;
+}
+
+interface CategoryScore {
+  label: string;
+  value: number;
+}
 
 interface ResultsViewProps {
   displayScore: number;
-  rankingDetails: any;
-  categoryScores: any[];
+  rankingDetails: RankingDetails;
+  categoryScores: CategoryScore[];
   handleRetake: () => void;
   handleReset: () => void;
-  setView: (view: 'test' | 'results') => void;
+  setView: (view: 'intro' | 'test' | 'results') => void;
 }
 
 export const ResultsView: React.FC<ResultsViewProps> = ({

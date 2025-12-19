@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider, type FilledContext } from 'react-helmet-async';
 import App from './App';
 
-export function render(url: string, helmetContext: any) {
+export function render(url: string, helmetContext: FilledContext) {
   return ReactDOMServer.renderToString(
     <React.StrictMode>
       <HelmetProvider context={helmetContext}>

@@ -214,7 +214,7 @@ export const WidgetPoster = forwardRef<WidgetPosterHandle, WidgetPosterProps>(({
     ctx.fillText('https://ricepurity.online', width / 2, height - 100);
 
     return canvas;
-  }, [score, maxScore, verdict, title, rankingLabel]);
+  }, [score, maxScore, verdict, title, rankingLabel, colors, isDark]);
 
   const generateImage = useCallback(() => {
     const canvas = drawCanvas();

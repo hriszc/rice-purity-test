@@ -1,7 +1,7 @@
 import { scoringCategories, sections, type Question } from '../data';
-import { getFullRankingData } from '../rankingData';
+import { getFullRankingData, type ScoreStat } from '../rankingData';
 
-let memoizedRankingData: any[] | null = null;
+let memoizedRankingData: ScoreStat[] | null = null;
 const getCachedRankingData = () => {
   if (!memoizedRankingData) {
     memoizedRankingData = getFullRankingData();
