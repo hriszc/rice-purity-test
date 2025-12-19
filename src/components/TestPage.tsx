@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { sections, scoringCategories, introText } from '../data';
@@ -23,6 +23,44 @@ export function TestPage() {
   const [view, setView] = useState<View>('test');
   const [showIntro, setShowIntro] = useState(false);
   const [showHint, setShowHint] = useState(true);
+  const [showBanner, setShowBanner] = useState(true);
+  const [bannerAnimate, setBannerAnimate] = useState(false);
+  const [bannerClosing, setBannerClosing] = useState(false);
+
+  // 1. Detect scroll to start the sequence
+  useEffect(() => {
+    if (view !== 'test' || bannerAnimate || bannerClosing || !showBanner) return;
+
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setBannerAnimate(true);
+        window.removeEventListener('scroll', handleScroll);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [view, bannerAnimate, bannerClosing, showBanner]);
+
+  // 2. After animation starts, wait and then trigger closing
+  useEffect(() => {
+    if (bannerAnimate && !bannerClosing) {
+      const timer = setTimeout(() => {
+        setBannerClosing(true);
+      }, 3500); // 3.5s after jump starts
+      return () => clearTimeout(timer);
+    }
+  }, [bannerAnimate, bannerClosing]);
+
+  // 3. After closing starts, wait for animation to finish then unmount
+  useEffect(() => {
+    if (bannerClosing) {
+      const timer = setTimeout(() => {
+        setShowBanner(false);
+      }, 600); // match CSS transition time
+      return () => clearTimeout(timer);
+    }
+  }, [bannerClosing]);
 
   const handleLinkClick = (e: React.MouseEvent<HTMLParagraphElement>) => {
     const target = e.target as HTMLElement;
@@ -471,9 +509,25 @@ export function TestPage() {
         <SEOContent />
       </div>
       
-      <div className="footer-notice">
+      <div className="footer-notice" style={{ marginBottom: showBanner ? '60px' : '0' }}>
         Caution: This is the 1988 version. Definitions may vary.
       </div>
+
+      {showBanner && (
+        <div className={`fixed-ranking-banner ${bannerAnimate ? 'banner-jump' : ''} ${bannerClosing ? 'banner-slide-out' : ''}`}>
+          <div className="banner-icon-container">
+            <span>🏆</span>
+          </div>
+          <div className="banner-content">
+            <span className="banner-text-title">Ready for your rank?</span>
+            <span className="banner-text-sub">Finish the test to unlock your global purity percentile!</span>
+          </div>
+          <button className="banner-close" onClick={() => {
+            setBannerClosing(true);
+            setTimeout(() => setShowBanner(false), 600);
+          }}>✕</button>
+        </div>
+      )}
     </IOSLayout>
   );
 }
