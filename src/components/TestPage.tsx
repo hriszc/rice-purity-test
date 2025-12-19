@@ -8,6 +8,8 @@ import { SEOContent } from './SEOContent';
 import { ScoreDial } from './ScoreDial';
 import { WidgetPoster } from './WidgetPoster';
 import { RadarChart } from './RadarChart';
+import { ScoreDistributionChart } from './ScoreDistributionChart';
+import { rankingData } from '../rankingData';
 import { SEO_CONFIG } from '../seoConfig';
 
 type View = 'test' | 'results';
@@ -149,6 +151,20 @@ export function TestPage() {
   let displayedQuestionCounter = 1;
 
   if (view === 'results') {
+    const stat = rankingData.find(d => d.score === displayScore);
+    const userPercentile = stat?.percentile || 0;
+    const userProb = stat?.prob || 0;
+    
+    // Original Top Pure: P(S >= score)
+    const pPurerOrEqual = (1 - userPercentile + userProb);
+    // Top Experienced: P(S <= score)
+    const pLessPureOrEqual = userPercentile;
+
+    const isFlipped = pPurerOrEqual > 0.5;
+    const finalPercentage = (isFlipped ? pLessPureOrEqual : pPurerOrEqual) * 100;
+    const topPercentageStr = finalPercentage.toFixed(2);
+    const rankingLabel = `top ${topPercentageStr}% ${isFlipped ? 'most experienced' : 'purest'}`;
+
     return (
       <IOSLayout title="Results" showLargeTitle={false} leftAction={<span className="back-button" onClick={() => setView('test')}>Back</span>}>
         <Helmet title={`My Rice Purity Test Score: ${displayScore}`}>
@@ -162,9 +178,25 @@ export function TestPage() {
              category={currentCategory?.text || ""} 
            />
 
+           <div className="verdict-card" style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: '14px', color: 'var(--secondary-label)', marginBottom: '4px' }}>Percentile Ranking</div>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', color: 'var(--accent-color)', textTransform: 'capitalize' }}>
+                {rankingLabel}
+              </div>
+              <p style={{ fontSize: '13px', color: 'var(--secondary-label)', marginTop: '4px' }}>
+                {isFlipped 
+                  ? `You have more life experience than ${( (1 - pLessPureOrEqual) * 100 ).toFixed(2)}% of people.`
+                  : `You are more pure than ${( (1 - pPurerOrEqual) * 100 ).toFixed(2)}% of participants.`}
+              </p>
+           </div>
+
+           <ScoreDistributionChart userScore={displayScore} />
+
            <div className="verdict-card">
               <h3 className="verdict-title">Our Verdict</h3>
-              <p className="verdict-text">{currentCategory?.verdict}</p>
+              <p className="verdict-text">
+                {currentCategory?.verdict.replace('{{ranking}}', rankingLabel)}
+              </p>
            </div>
 
            <div className="analysis-card">
@@ -184,7 +216,7 @@ export function TestPage() {
              <WidgetPoster 
                score={displayScore} 
                maxScore={currentMaxScore} 
-               verdict={currentCategory?.verdict}
+               verdict={currentCategory?.verdict.replace('{{ranking}}', rankingLabel)}
                title={currentCategory?.title}
              />
 

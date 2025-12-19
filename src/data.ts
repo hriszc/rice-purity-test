@@ -199,57 +199,57 @@ export const scoringCategories: ScoringCategory[] = [
   { 
     min: 145, max: 150, title: "Angelic", 
     text: "You are the definition of purity. Even a drop of rain would feel guilty touching you.", 
-    verdict: "Your purity exceeds 99% of the population. Are you a literal angel or just very, very good at saying no?" 
+    verdict: "You rank in the {{ranking}} of the population. You are truly an angel in a world of temptation." 
   },
   { 
     min: 130, max: 144, title: "Saint", 
     text: "A pillar of virtue in a chaotic world.", 
-    verdict: "You've dipped your toes into the pool of life, but you're still wearing your floaties. Stay pure!" 
+    verdict: "You are in the {{ranking}} of your peers. You've maintained a high level of virtue while navigating life." 
   },
   { 
     min: 110, max: 129, title: "Pure", 
     text: "Mostly innocent, with just a hint of curiosity.", 
-    verdict: "You're like a vanilla cupcake. Sweet, classic, and maybe a little bit predictable—but everyone loves a cupcake." 
+    verdict: "You are in the {{ranking}} range. You're beginning to explore life's mysteries, but still quite innocent." 
   },
   { 
     min: 95, max: 109, title: "Innocent", 
     text: "The world is starting to look a lot more interesting.", 
-    verdict: "You've seen some things, but your halo is still mostly intact. Just don't let it slip over your eyes." 
+    verdict: "You are now in the {{ranking}} of the population. You've definitely left your 'innocent' days behind." 
   },
   { 
     min: 80, max: 94, title: "Curious", 
     text: "Beginning to explore the boundaries of the known world.", 
-    verdict: "You're in the 'Danger Zone' of curiosity. One more party and that halo might start looking like a necklace." 
+    verdict: "You rank in the {{ranking}} of souls. Your experiences are significantly beyond the average student." 
   },
   { 
     min: 65, max: 79, title: "Experienced", 
     text: "You've been around the block, and you know the shortcuts.", 
-    verdict: "You've definitely graduated from the school of 'Wait, we can do that?'. You're the one teaching the freshmen now." 
+    verdict: "Your score is in the {{ranking}} of the population. You've lived a life most only read about." 
   },
   { 
     min: 50, max: 64, title: "Adventurous", 
     text: "Life is an adventure, and you're the lead explorer.", 
-    verdict: "Your bucket list is mostly checked off. At this point, you're not just 'experienced', you're a subject matter expert." 
+    verdict: "You are a living legend ({{ranking}}). Your score is so rare it barely registers on our general charts." 
   },
   { 
     min: 35, max: 49, title: "Wild", 
     text: "You don't just push the envelope; you shred it.", 
-    verdict: "Your life story is probably restricted in 14 countries. Have you considered writing a memoir? Or hiring a lawyer?" 
+    verdict: "You have transcended the test ({{ranking}}). At this point, you're not just 'experienced', you're an outlier." 
   },
   { 
     min: 20, max: 34, title: "Party Animal", 
     text: "The party doesn't start until you walk in.", 
-    verdict: "You've seen the sunrise more times than a baker. Your 'purity' is now a collector's item because it's so rare." 
+    verdict: "Your ranking is {{ranking}}. Your life is a statistical anomaly." 
   },
   { 
     min: 10, max: 19, title: "Fallen Angel", 
     text: "The halo is long gone, replaced by a very stylish pair of horns.", 
-    verdict: "You didn't just fall from grace; you did a triple backflip into the abyss. And honestly? It looks good on you." 
+    verdict: "You rank in the {{ranking}} outlier. You didn't just fall from grace; you did a triple backflip into the abyss." 
   },
   { 
     min: 0, max: 9, title: "Legend", 
     text: "You've seen everything, done everything, and probably invented a few things.", 
-    verdict: "You are the person the 'Rice Purity Test' was warned about. You don't take the test; you ARE the test." 
+    verdict: "You are the {{ranking}} outlier that the 'Rice Purity Test' was warned about. You don't take the test; you ARE the test." 
   },
 ];
 
