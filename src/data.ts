@@ -199,57 +199,56 @@ export const scoringCategories: ScoringCategory[] = [
   { 
     min: 145, max: 150, title: "Angelic", 
     text: "You are the definition of purity. Even a drop of rain would feel guilty touching you.", 
-    verdict: "You rank in the {{ranking}} of the population. You are truly an angel in a world of temptation." 
+    verdict: "A true rarity in the modern world. You're in the {{ranking}}, maintaining a level of innocence that's practically legendary." 
   },
   { 
     min: 130, max: 144, title: "Saint", 
     text: "A pillar of virtue in a chaotic world.", 
-    verdict: "You are in the {{ranking}} of your peers. You've maintained a high level of virtue while navigating life." 
+    verdict: "Impressive restraint! You rank in the {{ranking}}, proving that it's still possible to stay virtuous while navigating life's temptations." 
   },
   { 
     min: 110, max: 129, title: "Pure", 
     text: "Mostly innocent, with just a hint of curiosity.", 
-    verdict: "You are in the {{ranking}} range. You're beginning to explore life's mysteries, but still quite innocent." 
+    verdict: "You're in the {{ranking}}, striking a perfect balance between wide-eyed wonder and a healthy dose of curiosity." 
   },
   { 
     min: 95, max: 109, title: "Innocent", 
     text: "The world is starting to look a lot more interesting.", 
-    verdict: "You are now in the {{ranking}} of the population. You've definitely left your 'innocent' days behind." 
+    verdict: "The journey has begun! You've officially entered the {{ranking}}, leaving the 'total innocence' phase in your rearview mirror." 
   },
   { 
     min: 80, max: 94, title: "Curious", 
     text: "Beginning to explore the boundaries of the known world.", 
-    verdict: "You rank in the {{ranking}} of souls. Your experiences are significantly beyond the average student." 
+    verdict: "Adventure is calling! Ranking in the {{ranking}}, you're starting to collect the kind of stories that make for great late-night conversations." 
   },
   { 
     min: 65, max: 79, title: "Experienced", 
     text: "You've been around the block, and you know the shortcuts.", 
-    verdict: "Your score is in the {{ranking}} of the population. You've lived a life most only read about." 
+    verdict: "You've officially joined the {{ranking}}. You're no stranger to the wilder side of life, and you've got the scars (or smiles) to prove it." 
   },
   { 
     min: 50, max: 64, title: "Adventurous", 
     text: "Life is an adventure, and you're the lead explorer.", 
-    verdict: "You are a living legend ({{ranking}}). Your score is so rare it barely registers on our general charts." 
+    verdict: "A living legend in the making! You're in the {{ranking}}, living a life that most people only ever see in the movies." 
   },
-  { 
-    min: 35, max: 49, title: "Wild", 
-    text: "You don't just push the envelope; you shred it.", 
-    verdict: "You have transcended the test ({{ranking}}). At this point, you're not just 'experienced', you're an outlier." 
-  },
-  { 
+    {
+      min: 35, max: 49, title: "Wild",
+      text: "You don't just push the envelope; you shred it.",
+      verdict: "You've transcended the average experience. Ranking in the {{ranking}}, you're an outlier who treats the rulebook like a suggestion."
+    },  { 
     min: 20, max: 34, title: "Party Animal", 
     text: "The party doesn't start until you walk in.", 
-    verdict: "Your ranking is {{ranking}}. Your life is a statistical anomaly." 
+    verdict: "An absolute statistical anomaly! You're in the {{ranking}}, and at this point, you probably have stories that would make a sailor blush." 
   },
   { 
     min: 10, max: 19, title: "Fallen Angel", 
     text: "The halo is long gone, replaced by a very stylish pair of horns.", 
-    verdict: "You rank in the {{ranking}} outlier. You didn't just fall from grace; you did a triple backflip into the abyss." 
+    verdict: "You rank in the {{ranking}} of the abyss. You didn't just lose your way; you intentionally took the scenic route through every forbidden valley." 
   },
   { 
     min: 0, max: 9, title: "Legend", 
     text: "You've seen everything, done everything, and probably invented a few things.", 
-    verdict: "You are the {{ranking}} outlier that the 'Rice Purity Test' was warned about. You don't take the test; you ARE the test." 
+    verdict: "You ARE the test. Ranking in the {{ranking}}, you've completed the side quests that most people don't even know exist." 
   },
 ];
 

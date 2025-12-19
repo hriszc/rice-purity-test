@@ -149,10 +149,60 @@ export function TestPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const { rankingLabel, fullVerdict, shareText, isFlipped, pPurerOrEqual, pLessPureOrEqual } = useMemo(() => {
+    if (view !== 'results') return { rankingLabel: '', fullVerdict: '', shareText: '', isFlipped: false, pPurerOrEqual: 0, pLessPureOrEqual: 0 };
+    
+    const stat = allRankingData.find(d => d.score === displayScore);
+    const userPercentile = stat?.percentile || 0;
+    const userProb = stat?.prob || 0;
+    
+    // Percentile is P(S <= score)
+    // pPurer is the proportion of people who scored >= current score
+    // So if you score 149, and 2.66% got 150, and 4.28% got 149, you are in the top (2.66 + 4.28) = 6.94%
+    const pPurer = (1 - userPercentile + userProb);
+    const pLessPure = userPercentile;
+
+    const flipped = pPurer > 0.5;
+    const finalPercentage = (flipped ? pLessPure : pPurer) * 100;
+    
+    // Ensure we don't show 0.00%
+    const displayPercentage = Math.max(finalPercentage, 0.01);
+    const topPercentageStr = displayPercentage.toFixed(2);
+    const label = `top ${topPercentageStr}% ${flipped ? 'most experienced' : 'purest'}`;
+    
+    const verdictTemplate = currentCategory?.verdict || '';
+    const verdict = verdictTemplate.replace('{{ranking}}', label);
+    
+    // Convert "You" to "I" for sharing
+    const shareVerdict = verdict
+      .replace(/\bYou're\b/g, "I'm")
+      .replace(/\byou're\b/g, "I'm")
+      .replace(/\bYou rank\b/g, "I rank")
+      .replace(/\byou rank\b/g, "I rank")
+      .replace(/\bYou are\b/g, "I am")
+      .replace(/\byou are\b/g, "I am")
+      .replace(/\bYou\b/g, "I")
+      .replace(/\byou\b/g, "I")
+      .replace(/\bYour\b/g, "My")
+      .replace(/\byour\b/g, "my");
+
+    const text = `I scored ${displayScore}/150 on the Rice Purity Test! 🏆 ${shareVerdict} ✨ Check yours here:`;
+    
+    return { 
+      rankingLabel: label, 
+      fullVerdict: verdict,
+      shareText: text,
+      isFlipped: flipped,
+      pPurerOrEqual: pPurer,
+      pLessPureOrEqual: pLessPure
+    };
+  }, [view, displayScore, currentCategory]);
+
   const handleShare = async () => {
+    // ... (rest of handleShare)
     const shareData = {
       title: 'Rice Purity Test Result',
-      text: `I scored a ${displayScore}/150 on the Rice Purity Test! Check your score here:`,
+      text: shareText,
       url: window.location.origin,
     };
 
@@ -169,6 +219,7 @@ export function TestPage() {
   };
 
   const renderLabel = (text: string) => {
+    // ... (rest of renderLabel)
     if (text.includes("French kissed")) {
       const parts = text.split("French kissed");
       return (
@@ -192,20 +243,6 @@ export function TestPage() {
   let displayedQuestionCounter = 1;
 
   if (view === 'results') {
-    const stat = allRankingData.find(d => d.score === displayScore);
-    const userPercentile = stat?.percentile || 0;
-    const userProb = stat?.prob || 0;
-    
-    // Original Top Pure: P(S >= score)
-    const pPurerOrEqual = (1 - userPercentile + userProb);
-    // Top Experienced: P(S <= score)
-    const pLessPureOrEqual = userPercentile;
-
-    const isFlipped = pPurerOrEqual > 0.5;
-    const finalPercentage = (isFlipped ? pLessPureOrEqual : pPurerOrEqual) * 100;
-    const topPercentageStr = finalPercentage.toFixed(2);
-    const rankingLabel = `top ${topPercentageStr}% ${isFlipped ? 'most experienced' : 'purest'}`;
-
     return (
       <IOSLayout title="Results" showLargeTitle={false} leftAction={<span className="back-button" onClick={() => setView('test')}>Back</span>}>
         <Helmet title={`My Rice Purity Test Score: ${displayScore}`}>
@@ -236,7 +273,7 @@ export function TestPage() {
            <div className="verdict-card">
               <h3 className="verdict-title">Our Verdict</h3>
               <p className="verdict-text">
-                {currentCategory?.verdict.replace('{{ranking}}', rankingLabel)}
+                {fullVerdict}
               </p>
            </div>
 
@@ -257,8 +294,9 @@ export function TestPage() {
              <WidgetPoster 
                score={displayScore} 
                maxScore={currentMaxScore} 
-               verdict={currentCategory?.verdict.replace('{{ranking}}', rankingLabel)}
+               verdict={fullVerdict}
                title={currentCategory?.title}
+               rankingLabel={rankingLabel}
              />
 
              {/* Social Sharing Section */}
@@ -266,25 +304,25 @@ export function TestPage() {
                <h3 className="share-title">Share your result</h3>
                <div className="social-buttons-grid">
                  <button 
-                   onClick={() => window.open(`https://twitter.com/intent/tweet?text=I%20scored%20a%20${displayScore}/${currentMaxScore}%20on%20the%20Rice%20Purity%20Test!%20See%20your%20score%20here:%20&url=${window.location.origin}`, '_blank')}
+                   onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(window.location.origin)}`, '_blank')}
                    className="social-button twitter"
                  >
                    Twitter
                  </button>
                  <button 
-                   onClick={() => window.open(`https://www.reddit.com/submit?title=I%20scored%20a%20${displayScore}/${currentMaxScore}%20on%20the%20Rice%20Purity%20Test!&url=${window.location.origin}`, '_blank')}
+                   onClick={() => window.open(`https://www.reddit.com/submit?title=${encodeURIComponent(`I scored ${displayScore}/150 on the Rice Purity Test!`)}&text=${encodeURIComponent(shareText + " " + window.location.origin)}&url=${encodeURIComponent(window.location.origin)}`, '_blank')}
                    className="social-button reddit"
                  >
                    Reddit
                  </button>
                  <button 
-                   onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${window.location.origin}&quote=I%20scored%20a%20${displayScore}/${currentMaxScore}%20on%20the%20Rice%20Purity%20Test!`, '_blank')}
+                   onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin)}&quote=${encodeURIComponent(shareText)}`, '_blank')}
                    className="social-button facebook"
                  >
                    Facebook
                  </button>
                  <button 
-                   onClick={() => window.open(`https://wa.me/?text=I%20scored%20a%20${displayScore}/${currentMaxScore}%20on%20the%20Rice%20Purity%20Test!%20Check%20yours%20here:%20${window.location.origin}`, '_blank')}
+                   onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(shareText + " " + window.location.origin)}`, '_blank')}
                    className="social-button whatsapp"
                  >
                    WhatsApp
