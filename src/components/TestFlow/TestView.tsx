@@ -86,6 +86,7 @@ export const TestView: React.FC<TestViewProps> = ({
     >
       <Helmet title={`${SEO_CONFIG.home.title}`}>
         <meta name="description" content={SEO_CONFIG.home.description} />
+        <meta name="keywords" content={SEO_CONFIG.home.keywords} />
       </Helmet>
 
       <div className="progress-container">

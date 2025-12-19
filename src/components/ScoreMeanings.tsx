@@ -51,6 +51,7 @@ export const ScoreMeanings: React.FC = () => {
     >
       <Helmet title="Rice Purity Test Score Meanings - Complete Guide">
         <meta name="description" content="Understand your Rice Purity Test score. Detailed breakdown of score ranges, average scores by age, and the 1988 original scale meanings." />
+        <meta name="keywords" content="Rice Purity Test score meanings, Rice Purity Test average score, Rice Purity Test results meaning, Rice Purity Test 100 point scale, Rice Purity Test 150 point scale, Rice Purity Test angelic score, Rice Purity Test wild score, Rice Purity Test score guide, what does my rice purity score mean, Rice University purity test categories, purity test score interpretation, high school purity test average, college purity test average" />
         {origin && <link rel="canonical" href={origin + "/rice-purity-test-score-meanings"} />}
         <script type="application/ld+json">
           {JSON.stringify(faqSchema)}

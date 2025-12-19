@@ -16,6 +16,7 @@ export const AboutPage: React.FC = () => {
     >
       <Helmet title="About Us & Privacy Policy | ricepurity.online">
         <meta name="description" content="Learn about the team behind ricepurity.online and our commitment to your privacy. Our Rice Purity Test calculator is 100% private and runs locally." />
+        <meta name="keywords" content="Rice Purity Test about, ricepurity.online privacy, Rice Purity Test developers, Rice Purity Test mission, Rice Purity Test contact, Rice Purity Test embed, Rice Purity Test iframe, Rice Purity Test security, is Rice Purity Test safe, Rice Purity Test anonymous, Rice Purity Test creator, Rice University purity test origin" />
       </Helmet>
 
       <div className="app-container animate-fade-in" style={{ padding: '20px', lineHeight: '1.6' }}>
