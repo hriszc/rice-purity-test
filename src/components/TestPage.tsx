@@ -9,16 +9,17 @@ import { ScoreDial } from './ScoreDial';
 import { WidgetPoster } from './WidgetPoster';
 import { RadarChart } from './RadarChart';
 import { ScoreDistributionChart } from './ScoreDistributionChart';
-import { rankingData } from '../rankingData';
+import { getFullRankingData } from '../rankingData';
 import { SEO_CONFIG } from '../seoConfig';
 
 type View = 'test' | 'results';
+const allRankingData = getFullRankingData();
 
 export function TestPage() {
-  const allQuestions = useMemo(() => sections.flatMap(s => s.questions), []);
   const navigate = useNavigate();
-  
+  const allQuestions = useMemo(() => sections.flatMap(s => s.questions), []);
   const [checkedState, setCheckedState] = useState<boolean[]>(new Array(allQuestions.length).fill(false));
+
   const [isShortMode, setIsShortMode] = useState(false);
   const [view, setView] = useState<View>('test');
   const [showIntro, setShowIntro] = useState(false);
@@ -191,7 +192,7 @@ export function TestPage() {
   let displayedQuestionCounter = 1;
 
   if (view === 'results') {
-    const stat = rankingData.find(d => d.score === displayScore);
+    const stat = allRankingData.find(d => d.score === displayScore);
     const userPercentile = stat?.percentile || 0;
     const userProb = stat?.prob || 0;
     
