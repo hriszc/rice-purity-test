@@ -7,13 +7,12 @@ interface ScoreDistributionChartProps {
   userScore: number;
 }
 
-const allRankingData = getFullRankingData();
-
 export const ScoreDistributionChart: React.FC<ScoreDistributionChartProps> = ({ userScore }) => {
   const { colors } = useTheme();
 
   // Group by 2 points to reduce bar count and make them more visible in captures
   const groupedData = useMemo(() => {
+    const allRankingData = getFullRankingData();
     const groups: { score: number; prob: number; hasUser: boolean }[] = [];
     for (let i = 150; i >= 0; i -= 2) {
       const d1 = allRankingData.find(d => d.score === i);

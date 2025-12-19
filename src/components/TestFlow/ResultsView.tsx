@@ -6,6 +6,7 @@ import { SEOContent } from '../SEOContent';
 import { RadarChart } from '../RadarChart';
 import { WidgetPoster, type WidgetPosterHandle } from '../WidgetPoster';
 import { CertificateCard } from './CertificateCard';
+import './ResultsView.css';
 
 interface ResultsViewProps {
   displayScore: number;

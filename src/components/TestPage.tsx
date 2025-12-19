@@ -1,7 +1,9 @@
+import { lazy, Suspense } from 'react';
 import { useTestFlow } from '../hooks/useTestFlow';
 import { TestView } from './TestFlow/TestView';
-import { ResultsView } from './TestFlow/ResultsView';
 import './TestPage.css';
+
+const ResultsView = lazy(() => import('./TestFlow/ResultsView').then(m => ({ default: m.ResultsView })));
 
 export function TestPage() {
   const {
@@ -32,14 +34,16 @@ export function TestPage() {
 
   if (view === 'results' && rankingDetails) {
     return (
-      <ResultsView
-        displayScore={displayScore}
-        rankingDetails={rankingDetails}
-        categoryScores={categoryScores}
-        handleRetake={handleRetake}
-        handleReset={handleReset}
-        setView={setView}
-      />
+      <Suspense fallback={<div className="loading-fallback" />}>
+        <ResultsView
+          displayScore={displayScore}
+          rankingDetails={rankingDetails}
+          categoryScores={categoryScores}
+          handleRetake={handleRetake}
+          handleReset={handleReset}
+          setView={setView}
+        />
+      </Suspense>
     );
   }
 

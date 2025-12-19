@@ -1,7 +1,13 @@
 import { scoringCategories, sections, type Question } from '../data';
 import { getFullRankingData } from '../rankingData';
 
-const allRankingData = getFullRankingData();
+let memoizedRankingData: any[] | null = null;
+const getCachedRankingData = () => {
+  if (!memoizedRankingData) {
+    memoizedRankingData = getFullRankingData();
+  }
+  return memoizedRankingData;
+};
 
 export const calculateScores = (
   checkedState: boolean[],
@@ -48,6 +54,7 @@ export const calculateScores = (
 };
 
 export const getRankingDetails = (displayScore: number) => {
+  const allRankingData = getCachedRankingData();
   const currentCategory = scoringCategories.find(
     (c) => displayScore >= c.min && displayScore <= c.max
   );

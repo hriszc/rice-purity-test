@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import './DanmakuBackground.css';
 
 const DANMAKU_POOL = [
@@ -111,60 +111,70 @@ interface DanmakuItem {
   duration: number;
 }
 
+const DanmakuItemComponent = memo(({ item }: { item: DanmakuItem }) => (
+  <div
+    className="danmaku-item"
+    style={{
+      top: `${item.top}%`,
+      animationDelay: `${item.delay}s`,
+      animationDuration: `${item.duration}s`
+    }}
+  >
+    {item.text}
+  </div>
+));
+
 export const DanmakuBackground: React.FC = () => {
   const [items, setItems] = useState<DanmakuItem[]>([]);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    const numTracks = 15; // Reduced from 25 to 15 horizontal tracks
-    const maxItems = 45; // Limit total items to reduce density
-    const shuffledPool = [...DANMAKU_POOL]
-      .sort(() => Math.random() - 0.5)
-      .slice(0, maxItems);
-    
-    const itemsPerTrack = Math.ceil(shuffledPool.length / numTracks);
-    const newItems: DanmakuItem[] = [];
-
-    for (let t = 0; t < numTracks; t++) {
-      // Each track gets its own speed to avoid a grid-like appearance
-      const duration = 50 + Math.random() * 40; // Slower: 50s to 90s
+    // Delay initialization to prioritize critical content
+    const timer = setTimeout(() => {
+      const isMobile = window.innerWidth < 768;
+      const numTracks = isMobile ? 8 : 15; 
+      const maxItems = isMobile ? 20 : 45; 
       
-      for (let i = 0; i < itemsPerTrack; i++) {
-        const poolIndex = t * itemsPerTrack + i;
-        if (poolIndex >= shuffledPool.length) break;
+      const shuffledPool = [...DANMAKU_POOL]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, maxItems);
+      
+      const itemsPerTrack = Math.ceil(shuffledPool.length / numTracks);
+      const newItems: DanmakuItem[] = [];
 
-        const text = shuffledPool[poolIndex];
-        // Vertical position: spread evenly across tracks with a bit of offset
-        const top = (t / numTracks) * 90 + 5; 
+      for (let t = 0; t < numTracks; t++) {
+        const duration = 50 + Math.random() * 40; 
         
-        // Horizontal spacing: more spread out
-        const delay = i * (duration / itemsPerTrack) + (Math.random() * 10);
+        for (let i = 0; i < itemsPerTrack; i++) {
+          const poolIndex = t * itemsPerTrack + i;
+          if (poolIndex >= shuffledPool.length) break;
 
-        newItems.push({
-          id: poolIndex,
-          text,
-          top,
-          delay,
-          duration
-        });
+          const text = shuffledPool[poolIndex];
+          const top = (t / numTracks) * 90 + 5; 
+          const delay = i * (duration / itemsPerTrack) + (Math.random() * 10);
+
+          newItems.push({
+            id: poolIndex,
+            text,
+            top,
+            delay,
+            duration
+          });
+        }
       }
-    }
-    setItems(newItems);
+      setItems(newItems);
+      setIsReady(true);
+    }, 2000); // 2 second delay
+
+    return () => clearTimeout(timer);
   }, []);
+
+  if (!isReady) return null;
 
   return (
     <div className="danmaku-container">
       {items.map((item) => (
-        <div
-          key={item.id}
-          className="danmaku-item"
-          style={{
-            top: `${item.top}%`,
-            animationDelay: `${item.delay}s`,
-            animationDuration: `${item.duration}s`
-          }}
-        >
-          {item.text}
-        </div>
+        <DanmakuItemComponent key={item.id} item={item} />
       ))}
     </div>
   );

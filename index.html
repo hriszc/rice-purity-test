@@ -12,7 +12,57 @@
     <meta name="keywords" content="Rice Purity Test, Rice Purity Test 2024, Rice Purity Test 2025, Rice Purity Test 14 year old, official version, innocence test, purity score calculator, ricepurity.online, privacy protected" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://ricepurity.online/" />
+    
+    <!-- Resource Hints -->
     <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+
+    <style>
+      :root {
+        --system-background: #ffffff;
+        --secondary-system-background: #f2f2f7;
+        --label: #000000;
+        --header-bg: rgba(242, 242, 247, 0.8);
+        --accent-color: #007aff;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --system-background: #000000;
+          --secondary-system-background: #1c1c1e;
+          --label: #ffffff;
+          --header-bg: rgba(0, 0, 0, 0.7);
+          --accent-color: #0a84ff;
+        }
+      }
+      body {
+        margin: 0;
+        background-color: var(--secondary-system-background);
+        color: var(--label);
+        font-family: -apple-system, system-ui, sans-serif;
+      }
+      .ios-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: calc(44px + env(safe-area-inset-top, 20px));
+        background-color: var(--header-bg);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        z-index: 1001;
+      }
+      .ios-content {
+        padding-top: calc(44px + env(safe-area-inset-top, 20px));
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .loading-fallback {
+        height: 100vh;
+        background-color: var(--secondary-system-background);
+      }
+    </style>
 
     <!-- iOS / Web App Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -38,13 +88,19 @@
     <meta property="twitter:description" content="How innocent are you? Take the classic 150-question Rice Purity Test. Private & Anonymous." />
     <meta property="twitter:image" content="https://ricepurity.online/og-image.png" />
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NMDLS6EQYS"></script>
+    <!-- Google tag (gtag.js) - Delayed for performance -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-NMDLS6EQYS');
+      window.addEventListener('load', function() {
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = "https://www.googletagmanager.com/gtag/js?id=G-NMDLS6EQYS";
+        document.head.appendChild(script);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-NMDLS6EQYS');
+      });
     </script>
     <script type="application/ld+json">
       {

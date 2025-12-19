@@ -1,4 +1,4 @@
-import React, { type KeyboardEvent } from 'react';
+import React, { type KeyboardEvent, memo } from 'react';
 import './ToggleRow.css';
 
 interface ToggleRowProps {
@@ -11,7 +11,7 @@ interface ToggleRowProps {
   probability?: number;
 }
 
-export const ToggleRow: React.FC<ToggleRowProps> = ({ 
+export const ToggleRow = memo(({ 
   label, 
   emoji, 
   index, 
@@ -19,7 +19,7 @@ export const ToggleRow: React.FC<ToggleRowProps> = ({
   onChange, 
   last,
   probability 
-}) => {
+}: ToggleRowProps) => {
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === ' ' || e.key === 'Enter') {
       e.preventDefault();
@@ -69,4 +69,4 @@ export const ToggleRow: React.FC<ToggleRowProps> = ({
       </div>
     </label>
   );
-};
+});
