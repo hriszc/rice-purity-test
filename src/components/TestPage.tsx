@@ -1,22 +1,26 @@
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { sections, scoringCategories, introText } from '../data';
 import { IOSLayout } from './IOSLayout';
 import { ToggleRow } from './ToggleRow';
 import { SEOContent } from './SEOContent';
+import { toPng } from 'html-to-image';
 import { ScoreDial } from './ScoreDial';
-import { WidgetPoster } from './WidgetPoster';
+import { WidgetPoster, type WidgetPosterHandle } from './WidgetPoster';
 import { RadarChart } from './RadarChart';
 import { ScoreDistributionChart } from './ScoreDistributionChart';
 import { getFullRankingData } from '../rankingData';
 import { SEO_CONFIG } from '../seoConfig';
+import './TestPage.css';
 
 type View = 'test' | 'results';
 const allRankingData = getFullRankingData();
 
 export function TestPage() {
   const navigate = useNavigate();
+  const posterRef = useRef<WidgetPosterHandle>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const allQuestions = useMemo(() => sections.flatMap(s => s.questions), []);
   const [checkedState, setCheckedState] = useState<boolean[]>(new Array(allQuestions.length).fill(false));
 
@@ -198,6 +202,49 @@ export function TestPage() {
     };
   }, [view, displayScore, currentCategory]);
 
+  const handleDownloadCard = useCallback(async () => {
+    if (cardRef.current === null) return;
+    
+    try {
+      // Hide buttons temporarily for cleaner screenshot
+      const buttons = cardRef.current.querySelector('.hero-share-buttons') as HTMLElement;
+      if (buttons) buttons.style.display = 'none';
+
+      // Wait a bit for animations to settle (ScoreDial is 500ms)
+      await new Promise(resolve => setTimeout(resolve, 700));
+
+      // Get actual colors from CSS variables
+      const style = window.getComputedStyle(cardRef.current);
+      const bgColor = style.getPropertyValue('--secondary-system-background').trim() || '#f2f2f7';
+      const textColor = style.getPropertyValue('--label').trim() || '#000000';
+
+      const dataUrl = await toPng(cardRef.current, {
+        cacheBust: true,
+        backgroundColor: bgColor,
+        pixelRatio: 3,
+        style: {
+          borderRadius: '32px',
+          color: textColor,
+          background: bgColor,
+          fill: textColor, // Ensure SVGs also pick up the text color if they use currentColor
+        },
+        filter: (node: Node) => {
+          return !(node instanceof HTMLElement && node.classList.contains('hero-share-buttons'));
+        }
+      });
+      
+      if (buttons) buttons.style.display = 'flex';
+
+      const link = document.createElement('a');
+      link.download = `rice-purity-result-${displayScore}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch (err) {
+      console.error('oops, something went wrong!', err);
+      alert('Failed to generate image. Please try again or take a screenshot.');
+    }
+  }, [displayScore]);
+
   const handleShare = async () => {
     // ... (rest of handleShare)
     const shareData = {
@@ -250,17 +297,66 @@ export function TestPage() {
         </Helmet>
         <div className="results-view animate-fade-in" style={{ paddingBottom: '40px' }}>
            {/* 1. Integrated Hero Section: Score, Ranking, Verdict & Distribution */}
-           <div className="results-hero-card" style={{
-             background: 'var(--secondary-system-background)',
-             borderRadius: '32px',
-             padding: '24px 16px',
-             boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
-             textAlign: 'center',
-             marginBottom: '20px',
-             position: 'relative' // Needed for absolute positioning of share buttons
-           }}>
+           <div 
+             ref={cardRef}
+             className="results-hero-card certificate-theme" 
+             style={{
+               background: 'var(--secondary-system-background)',
+               borderRadius: '32px',
+               padding: '32px 20px',
+               boxShadow: '0 10px 40px rgba(0,0,0,0.12)',
+               textAlign: 'center',
+               marginBottom: '24px',
+               position: 'relative',
+               border: '10px double var(--accent-color)', // The "Frame"
+               overflow: 'hidden'
+             }}
+           >
+              {/* Decorative Corner Elements */}
+              <div style={{ position: 'absolute', top: '10px', left: '10px', width: '30px', height: '30px', borderTop: '4px solid var(--accent-color)', borderLeft: '4px solid var(--accent-color)', opacity: 0.5 }}></div>
+              <div style={{ position: 'absolute', top: '10px', right: '10px', width: '30px', height: '30px', borderTop: '4px solid var(--accent-color)', borderRight: '4px solid var(--accent-color)', opacity: 0.5 }}></div>
+              <div style={{ position: 'absolute', bottom: '10px', left: '10px', width: '30px', height: '30px', borderBottom: '4px solid var(--accent-color)', borderLeft: '4px solid var(--accent-color)', opacity: 0.5 }}></div>
+              <div style={{ position: 'absolute', bottom: '10px', right: '10px', width: '30px', height: '30px', borderBottom: '4px solid var(--accent-color)', borderRight: '4px solid var(--accent-color)', opacity: 0.5 }}></div>
+
+              {/* CEO Watermark */}
+              <div style={{
+                position: 'absolute',
+                bottom: '15px',
+                right: '25px',
+                fontSize: '11px',
+                fontWeight: '600',
+                color: 'var(--accent-color)',
+                opacity: 0.4,
+                fontStyle: 'italic',
+                pointerEvents: 'none',
+                zIndex: 5
+              }}>
+                by ricepurity.online CEO
+              </div>
+
+              {/* Official Seal Mockup */}
+              <div style={{
+                position: 'absolute',
+                bottom: '40px',
+                left: '20px',
+                width: '70px',
+                height: '70px',
+                border: '2px dashed var(--accent-color)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column',
+                opacity: 0.3,
+                transform: 'rotate(-15deg)',
+                zIndex: 5
+              }}>
+                <span style={{ fontSize: '8px', fontWeight: 'bold' }}>OFFICIAL</span>
+                <span style={{ fontSize: '10px', fontWeight: '900' }}>SEAL</span>
+              </div>
+
               {/* Compact Circle Share Buttons in Top Right */}
-              <div style={{ 
+              <div className="hero-share-buttons" style={{ 
                 position: 'absolute', 
                 top: '16px', 
                 right: '16px', 
@@ -282,6 +378,13 @@ export function TestPage() {
                   title="Share on WhatsApp"
                 >
                   💬
+                </button>
+                <button 
+                  onClick={handleDownloadCard}
+                  style={{ width: '36px', height: '36px', borderRadius: '50%', border: 'none', background: 'var(--accent-color)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}
+                  title="Download Card Image"
+                >
+                  💾
                 </button>
                 <button 
                   onClick={handleShare}
@@ -330,6 +433,7 @@ export function TestPage() {
            {/* 2. Primary Action Button (The "Generate Certificate" part) */}
            <div style={{ marginBottom: '32px' }}>
              <WidgetPoster 
+               ref={posterRef}
                score={displayScore} 
                maxScore={currentMaxScore} 
                verdict={fullVerdict}

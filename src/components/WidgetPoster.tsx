@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import { useRef, useCallback, useImperativeHandle, forwardRef } from 'react';
 import './WidgetPoster.css';
 
 interface WidgetPosterProps {
@@ -9,7 +9,12 @@ interface WidgetPosterProps {
   rankingLabel?: string;
 }
 
-export const WidgetPoster: React.FC<WidgetPosterProps> = ({ score, maxScore, verdict, title, rankingLabel }) => {
+export interface WidgetPosterHandle {
+  generateImage: () => void;
+  shareImage: () => void;
+}
+
+export const WidgetPoster = forwardRef<WidgetPosterHandle, WidgetPosterProps>(({ score, maxScore, verdict, title, rankingLabel }, ref) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const drawCanvas = useCallback(() => {
@@ -139,7 +144,7 @@ export const WidgetPoster: React.FC<WidgetPosterProps> = ({ score, maxScore, ver
       ctx.fillStyle = textColor;
       
       // Simple text wrapping
-      const words = verdict.split(' ');
+      const words = (verdict || '').split(' ');
       let line = '';
       let y = yOffset;
       const lineHeight = 60;
@@ -238,22 +243,25 @@ export const WidgetPoster: React.FC<WidgetPosterProps> = ({ score, maxScore, ver
           text: `I scored ${score}/150 on the Rice Purity Test! 🏆 #RicePurityTest`,
         });
       } else {
-        // Fallback to download if sharing is not supported
         generateImage();
-        alert('Sharing files is not supported on this browser. Certificate downloaded instead!');
       }
     } catch (err) {
       console.error('Error sharing image:', err);
+      generateImage();
     }
   }, [drawCanvas, score, generateImage]);
 
+  useImperativeHandle(ref, () => ({
+    generateImage,
+    shareImage
+  }));
 
   return (
     <div className="widget-poster-container">
       <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
         <button onClick={generateImage} className="button-secondary" style={{ flex: 1 }}>
           <span style={{ marginRight: '8px' }}>💾</span>
-          Save Image
+          Save Certificate
         </button>
         <button onClick={shareImage} className="button-primary" style={{ flex: 1, backgroundColor: '#007AFF', color: 'white' }}>
           <span style={{ marginRight: '8px' }}>📤</span>
@@ -263,4 +271,6 @@ export const WidgetPoster: React.FC<WidgetPosterProps> = ({ score, maxScore, ver
       <canvas ref={canvasRef} style={{ display: 'none' }} />
     </div>
   );
-};
+});
+
+WidgetPoster.displayName = 'WidgetPoster';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './ScoreDial.css';
 
 interface ScoreDialProps {
@@ -9,40 +9,29 @@ interface ScoreDialProps {
 }
 
 export const ScoreDial: React.FC<ScoreDialProps> = ({ score, maxScore, title, category }) => {
-  const [animatedScore, setAnimatedScore] = useState(0);
+  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  
+  // Hardcoded hex values for reliable image capture
+  const colors = {
+    green: isDark ? '#30d158' : '#34c759',
+    yellow: isDark ? '#ffd60a' : '#ffcc00',
+    orange: isDark ? '#ff9f0a' : '#ff9500',
+    red: isDark ? '#ff453a' : '#ff3b30',
+    label: isDark ? '#ffffff' : '#000000',
+    secondaryLabel: '#8e8e93',
+    separator: isDark ? '#38383a' : '#c6c6c8',
+    accent: isDark ? '#0a84ff' : '#007aff',
+  };
 
-  useEffect(() => {
-    const end = score;
-    const duration = 1000;
-    const startTime = performance.now();
-
-    const animate = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      
-      const easeProgress = 1 - Math.pow(1 - progress, 3);
-      const currentScore = Math.floor(easeProgress * end);
-      
-      setAnimatedScore(currentScore);
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
-
-    requestAnimationFrame(animate);
-  }, [score]);
-
-  // Calculate color based on percentage (100% is pure, 0% is corrupt)
   const getColor = (p: number) => {
-    if (p >= 0.9) return 'var(--system-green)';
-    if (p >= 0.7) return 'var(--system-yellow)';
-    if (p >= 0.5) return 'var(--system-orange)';
-    return 'var(--system-red)';
+    if (p >= 0.9) return colors.green;
+    if (p >= 0.7) return colors.yellow;
+    if (p >= 0.5) return colors.orange;
+    return colors.red;
   };
 
   const percentage = score / maxScore;
-  const color = getColor(percentage);
+  const ringColor = getColor(percentage);
   const radius = 60;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (percentage * circumference);
@@ -50,42 +39,40 @@ export const ScoreDial: React.FC<ScoreDialProps> = ({ score, maxScore, title, ca
   return (
     <div className="score-dial-container">
       {title && (
-        <div className="score-title-badge">
+        <div className="score-title-badge" style={{ backgroundColor: colors.accent, color: '#ffffff' }}>
           {title}
         </div>
       )}
       <div className="score-dial">
         <svg width="140" height="140" viewBox="0 0 140 140">
           <circle
-            className="dial-bg"
             cx="70"
             cy="70"
             r={radius}
             strokeWidth="10"
+            fill="none"
+            stroke={colors.separator}
           />
           <circle
-            className="dial-progress animate-ring"
             cx="70"
             cy="70"
             r={radius}
             strokeWidth="10"
-            stroke={color}
+            fill="none"
+            stroke={ringColor}
             strokeDasharray={circumference}
-            style={{ 
-               '--target-offset': offset, 
-               '--circumference': circumference,
-               transition: 'stroke-dashoffset 1s cubic-bezier(0.22, 1, 0.36, 1), stroke 0.5s'
-            } as React.CSSProperties}
+            strokeDashoffset={offset}
             strokeLinecap="round"
             transform="rotate(-90 70 70)"
+            style={{ transition: 'stroke-dashoffset 0.5s ease' }}
           />
         </svg>
-        <div className="score-value">
-            {animatedScore}
-            <div className="score-max">/{maxScore}</div>
+        <div className="score-value" style={{ color: colors.label }}>
+            {score}
+            <div className="score-max" style={{ color: colors.secondaryLabel }}>/{maxScore}</div>
         </div>
       </div>
-      <div className="score-description visible">
+      <div className="score-description visible" style={{ color: colors.secondaryLabel }}>
         {category}
       </div>
     </div>

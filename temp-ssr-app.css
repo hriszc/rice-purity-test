@@ -894,11 +894,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 32px 16px;
-  background-color: var(--tertiary-system-background);
-  border-radius: 12px;
-  margin: 16px;
-  box-shadow: var(--card-shadow);
+  padding: 10px 0;
+  background-color: transparent;
+  border-radius: 0;
+  margin: 0;
+  box-shadow: none;
 }
 .score-title-badge {
   margin-bottom: 24px;
@@ -950,7 +950,6 @@
   align-items: center;
   font-size: 44px;
   font-weight: 700;
-  color: var(--label);
   line-height: 1;
 }
 .score-max {
@@ -1052,10 +1051,10 @@
 
 /* src/components/ScoreDistributionChart.css */
 .distribution-chart-container {
-  background: var(--secondary-system-background);
-  border-radius: 12px;
-  padding: 16px;
-  margin: 16px 0;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
 }
 .chart-title {
   font-size: 16px;
@@ -1073,22 +1072,23 @@
   width: 100%;
   display: flex;
   align-items: flex-end;
+  justify-content: space-between;
   border-bottom: 1px solid var(--separator);
   position: relative;
+  padding: 0 2px;
 }
 .chart-bar {
-  position: absolute;
-  bottom: 0;
-  width: 2px;
-  background: var(--accent-color);
+  flex: 1;
+  max-width: 8px;
+  background-color: var(--accent-color);
   opacity: 0.3;
-  transition: opacity 0.3s;
+  margin: 0 1px;
 }
 .chart-bar.user-bar {
   opacity: 1;
-  background: var(--system-red);
+  background-color: var(--system-red);
   z-index: 2;
-  width: 3px;
+  position: relative;
 }
 .user-indicator {
   position: absolute;
@@ -1126,4 +1126,21 @@
   color: var(--secondary-label);
   text-align: center;
   margin-top: 8px;
+}
+
+/* src/components/TestPage.css */
+.results-hero-card.certificate-theme {
+  transition: all 0.3s ease;
+}
+.results-hero-card.certificate-theme::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border: 1px solid var(--accent-color);
+  opacity: 0.2;
+  border-radius: 26px;
+  pointer-events: none;
 }

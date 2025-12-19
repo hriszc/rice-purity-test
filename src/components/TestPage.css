@@ -1,0 +1,17 @@
+.results-hero-card.certificate-theme {
+  transition: all 0.3s ease;
+}
+
+/* Ensure capture tool picks up the border correctly */
+.results-hero-card.certificate-theme::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border: 1px solid var(--accent-color);
+  opacity: 0.2;
+  border-radius: 26px;
+  pointer-events: none;
+}

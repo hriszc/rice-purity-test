@@ -23,24 +23,25 @@
   width: 100%;
   display: flex;
   align-items: flex-end;
+  justify-content: space-between;
   border-bottom: 1px solid var(--separator);
   position: relative;
+  padding: 0 2px;
 }
 
 .chart-bar {
-  position: absolute;
-  bottom: 0;
-  width: 2px;
-  background: var(--accent-color);
+  flex: 1;
+  max-width: 8px;
+  background-color: var(--accent-color);
   opacity: 0.3;
-  transition: opacity 0.3s;
+  margin: 0 1px;
 }
 
 .chart-bar.user-bar {
   opacity: 1;
-  background: var(--system-red);
+  background-color: var(--system-red);
   z-index: 2;
-  width: 3px;
+  position: relative;
 }
 
 .user-indicator {

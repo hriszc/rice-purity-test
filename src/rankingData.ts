@@ -58,56 +58,24 @@ export const rankingData: ScoreStat[] = [
   { score: 103, percentile: 0.13252, prob: 0.00532 },
   { score: 102, percentile: 0.12720, prob: 0.00538 },
   { score: 101, percentile: 0.12182, prob: 0.00486 },
-  { score: 100, percentile: 0.11696, prob: 0.00485 },
-  { score: 99, percentile: 0.11211, prob: 0.00494 },
-  { score: 98, percentile: 0.10717, prob: 0.00465 },
-  { score: 97, percentile: 0.10252, prob: 0.00445 },
-  { score: 96, percentile: 0.09807, prob: 0.00418 },
-  { score: 95, percentile: 0.09389, prob: 0.00438 },
-  { score: 94, percentile: 0.08951, prob: 0.00424 },
-  { score: 93, percentile: 0.08527, prob: 0.00407 },
-  { score: 92, percentile: 0.08120, prob: 0.00423 },
-  { score: 91, percentile: 0.07697, prob: 0.00395 },
-  { score: 90, percentile: 0.07302, prob: 0.00397 },
-  { score: 89, percentile: 0.06905, prob: 0.00394 },
-  { score: 88, percentile: 0.06511, prob: 0.00388 },
-  { score: 87, percentile: 0.06123, prob: 0.00382 },
-  { score: 86, percentile: 0.05741, prob: 0.00385 },
-  { score: 85, percentile: 0.05356, prob: 0.00354 },
-  { score: 84, percentile: 0.05002, prob: 0.00336 },
-  { score: 83, percentile: 0.04666, prob: 0.00329 },
-  { score: 82, percentile: 0.04337, prob: 0.00329 },
-  { score: 81, percentile: 0.04008, prob: 0.00322 },
-  { score: 80, percentile: 0.03686, prob: 0.00304 },
-  { score: 79, percentile: 0.03382, prob: 0.00298 },
-  { score: 78, percentile: 0.03084, prob: 0.00276 },
-  { score: 77, percentile: 0.02808, prob: 0.00271 },
-  { score: 76, percentile: 0.02537, prob: 0.00257 },
-  { score: 75, percentile: 0.02280, prob: 0.00242 },
-  { score: 74, percentile: 0.02038, prob: 0.00244 },
-  { score: 73, percentile: 0.01794, prob: 0.00223 },
-  { score: 72, percentile: 0.01571, prob: 0.00213 },
-  { score: 71, percentile: 0.01358, prob: 0.00199 },
-  { score: 70, percentile: 0.01159, prob: 0.00185 },
-  { score: 69, percentile: 0.00974, prob: 0.00180 },
-  { score: 68, percentile: 0.00794, prob: 0.00160 },
-  { score: 67, percentile: 0.00634, prob: 0.00155 },
-  { score: 66, percentile: 0.00479, prob: 0.00138 },
-  { score: 65, percentile: 0.00341, prob: 0.00133 },
-  { score: 64, percentile: 0.00208, prob: 0.00115 },
-  { score: 63, percentile: 0.00093, prob: 0.00095 },
-  { score: 62, percentile: -0.00002, prob: 0.00078 }, // Values below 60 extrapolated from realistic.md
-  { score: 61, percentile: 0.00001, prob: 0.00034 },
-  { score: 60, percentile: 0.01210, prob: 0.000625 }, // From md: 1.21%
-  { score: 55, percentile: 0.01500, prob: 0.000600 },
+  { score: 100, percentile: 0.11790, prob: 0.004635 },
+  { score: 90, percentile: 0.07910, prob: 0.00321 },
+  { score: 80, percentile: 0.05220, prob: 0.002335 },
+  { score: 70, percentile: 0.03370, prob: 0.001515 },
+  { score: 65, percentile: 0.02680, prob: 0.00127 },
+  { score: 63, percentile: 0.02430, prob: 0.001225 },
+  { score: 62, percentile: 0.02310, prob: 0.00112 },
+  { score: 61, percentile: 0.02190, prob: 0.00119 },
+  { score: 60, percentile: 0.02070, prob: 0.000965 },
+  { score: 55, percentile: 0.01610, prob: 0.00095 },
   { score: 50, percentile: 0.01210, prob: 0.000625 },
-  { score: 45, percentile: 0.00890, prob: 0.000590 },
+  { score: 45, percentile: 0.00890, prob: 0.00059 },
   { score: 40, percentile: 0.00650, prob: 0.000425 },
-  { score: 35, percentile: 0.00450, prob: 0.000330 },
-  { score: 30, percentile: 0.00280, prob: 0.000210 },
-  { score: 25, percentile: 0.00170, prob: 0.000180 },
+  { score: 35, percentile: 0.00450, prob: 0.00033 },
+  { score: 30, percentile: 0.00280, prob: 0.00021 },
+  { score: 25, percentile: 0.00170, prob: 0.00018 },
   { score: 20, percentile: 0.00090, prob: 0.000105 },
-  { score: 15, percentile: 0.00050, prob: 0.000060 },
+  { score: 15, percentile: 0.00050, prob: 0.00006 },
   { score: 10, percentile: 0.00020, prob: 0.000035 },
   { score: 5, percentile: 0.00005, prob: 0.000015 },
   { score: 0, percentile: 0.00001, prob: 0.000005 },
@@ -116,14 +84,18 @@ export const rankingData: ScoreStat[] = [
 // Helper to interpolate data for missing scores
 export const getFullRankingData = (): ScoreStat[] => {
   const fullData: ScoreStat[] = [];
+  // Sort ascending for reliable neighbor finding
+  const sorted = [...rankingData].sort((a, b) => a.score - b.score);
+  
   for (let s = 150; s >= 0; s--) {
-    const exact = rankingData.find(d => d.score === s);
+    const exact = sorted.find(d => d.score === s);
     if (exact) {
       fullData.push(exact);
     } else {
-      // Find neighboring data points for linear interpolation
-      const upper = rankingData.find(d => d.score > s);
-      const lower = [...rankingData].reverse().find(d => d.score < s);
+      // Find nearest neighboring data points for linear interpolation
+      const upper = sorted.find(d => d.score > s);
+      const lower = [...sorted].reverse().find(d => d.score < s);
+      
       if (upper && lower) {
         const ratio = (s - lower.score) / (upper.score - lower.score);
         fullData.push({
@@ -131,6 +103,10 @@ export const getFullRankingData = (): ScoreStat[] => {
           percentile: lower.percentile + (upper.percentile - lower.percentile) * ratio,
           prob: lower.prob + (upper.prob - lower.prob) * ratio
         });
+      } else if (upper) {
+        fullData.push({ ...upper, score: s });
+      } else if (lower) {
+        fullData.push({ ...lower, score: s });
       }
     }
   }
