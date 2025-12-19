@@ -71,6 +71,22 @@ export const CertificateCard = forwardRef<HTMLDivElement, CertificateCardProps>(
           by ricepurity.online CEO
         </div>
 
+        {/* Website Domain Footer */}
+        <div style={{
+          position: 'absolute',
+          bottom: '12px',
+          left: '0',
+          right: '0',
+          fontSize: '10px',
+          fontWeight: '600',
+          color: 'var(--secondary-label)',
+          opacity: 0.5,
+          textAlign: 'center',
+          letterSpacing: '0.5px'
+        }}>
+          https://ricepurity.online
+        </div>
+
         {/* Official Seal Mockup */}
         <div style={{
           position: 'absolute',

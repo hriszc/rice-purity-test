@@ -211,7 +211,7 @@ export const WidgetPoster = forwardRef<WidgetPosterHandle, WidgetPosterProps>(({
     // 6. Website Footer
     ctx.font = '600 36px -apple-system';
     ctx.fillStyle = secondaryTextColor;
-    ctx.fillText('ricepurity.online', width / 2, height - 100);
+    ctx.fillText('https://ricepurity.online', width / 2, height - 100);
 
     return canvas;
   }, [score, maxScore, verdict, title, rankingLabel]);
