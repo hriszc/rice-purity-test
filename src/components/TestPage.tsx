@@ -7,6 +7,7 @@ import { ToggleRow } from './ToggleRow';
 import { SEOContent } from './SEOContent';
 import { ScoreDial } from './ScoreDial';
 import { WidgetPoster } from './WidgetPoster';
+import { RadarChart } from './RadarChart';
 import { SEO_CONFIG } from '../seoConfig';
 
 type View = 'test' | 'results';
@@ -49,17 +50,40 @@ export function TestPage() {
 
   const currentMaxScore = isShortMode ? 30 : 150;
 
-  const { displayScore, progress } = useMemo(() => {
+  const { displayScore, progress, categoryScores } = useMemo(() => {
      let count = 0;
-     allQuestions.forEach((_, index) => {
+     const catCounts: Record<string, { checked: number; total: number }> = {
+       romance: { checked: 0, total: 0 },
+       boldness: { checked: 0, total: 0 },
+       curiosity: { checked: 0, total: 0 },
+       rebellion: { checked: 0, total: 0 },
+       experience: { checked: 0, total: 0 },
+     };
+
+     allQuestions.forEach((q, index) => {
         const included = isQuestionIncluded(index);
-        if (included && checkedState[index]) {
-          count++;
+        if (included) {
+          if (q.category) {
+            catCounts[q.category].total++;
+          }
+          if (checkedState[index]) {
+            count++;
+            if (q.category) {
+              catCounts[q.category].checked++;
+            }
+          }
         }
      });
+
+     const radarData = Object.entries(catCounts).map(([key, val]) => ({
+       label: key.charAt(0).toUpperCase() + key.slice(1),
+       value: val.total > 0 ? (val.checked / val.total) * 100 : 0
+     }));
+
      return {
        displayScore: currentMaxScore - count,
-       progress: (count / currentMaxScore) * 100
+       progress: (count / currentMaxScore) * 100,
+       categoryScores: radarData
      };
   }, [checkedState, currentMaxScore, allQuestions, isQuestionIncluded]);
 
@@ -134,10 +158,30 @@ export function TestPage() {
              category={currentCategory?.text || ""} 
            />
 
+           <div className="verdict-card">
+              <h3 className="verdict-title">Our Verdict</h3>
+              <p className="verdict-text">{currentCategory?.verdict}</p>
+           </div>
+
+           <div className="analysis-card">
+              <h3 className="analysis-title">Personality Analysis</h3>
+              <RadarChart data={categoryScores} />
+              <div className="category-legend">
+                {categoryScores.map(cs => (
+                  <div key={cs.label} className="legend-item">
+                    <span className="legend-label">{cs.label}:</span>
+                    <span className="legend-value">{Math.round(cs.value)}%</span>
+                  </div>
+                ))}
+              </div>
+           </div>
+
            <div className="action-buttons">
              <WidgetPoster 
                score={displayScore} 
                maxScore={currentMaxScore} 
+               verdict={currentCategory?.verdict}
+               title={currentCategory?.title}
              />
 
              {/* Social Sharing Section */}

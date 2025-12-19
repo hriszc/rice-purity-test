@@ -4,9 +4,11 @@ import './WidgetPoster.css';
 interface WidgetPosterProps {
   score: number;
   maxScore: number;
+  verdict?: string;
+  title?: string;
 }
 
-export const WidgetPoster: React.FC<WidgetPosterProps> = ({ score, maxScore }) => {
+export const WidgetPoster: React.FC<WidgetPosterProps> = ({ score, maxScore, verdict, title }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const generateImage = useCallback(() => {
@@ -16,16 +18,17 @@ export const WidgetPoster: React.FC<WidgetPosterProps> = ({ score, maxScore }) =
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Set high resolution
-    const width = 800;
-    const height = 800;
+    // Set high resolution for better sharing quality
+    const width = 1200;
+    const height = 1600;
     canvas.width = width;
     canvas.height = height;
 
     const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const bgColor = isDark ? '#1C1C1E' : '#FFFFFF';
-    const textColor = isDark ? '#FFFFFF' : '#000000';
+    const textColor = isDark ? '#FFFFFF' : '#1C1C1E';
     const secondaryTextColor = '#8E8E93';
+    const accentColor = '#007AFF';
 
     // Helper: Rounded Rect
     const roundRect = (x: number, y: number, w: number, h: number, r: number) => {
@@ -42,85 +45,159 @@ export const WidgetPoster: React.FC<WidgetPosterProps> = ({ score, maxScore }) =
       ctx.closePath();
     };
 
-    // 1. Full Canvas Background
+    // 1. Background
     ctx.fillStyle = isDark ? '#000000' : '#F2F2F7';
     ctx.fillRect(0, 0, width, height);
 
-    // 2. Draw Widget Card
-    const wSize = 500;
-    const wX = (width - wSize) / 2;
-    const wY = (height - wSize) / 2;
-    const wRadius = 80;
+    // 2. Main Certificate Card
+    const margin = 60;
+    const cardWidth = width - margin * 2;
+    const cardHeight = height - margin * 2;
+    const cardX = margin;
+    const cardY = margin;
+    const cardRadius = 40;
 
     ctx.save();
-    ctx.shadowColor = 'rgba(0,0,0,0.12)';
-    ctx.shadowBlur = 50;
-    ctx.shadowOffsetY = 15;
-    roundRect(wX, wY, wSize, wSize, wRadius);
+    ctx.shadowColor = 'rgba(0,0,0,0.15)';
+    ctx.shadowBlur = 60;
+    ctx.shadowOffsetY = 20;
+    roundRect(cardX, cardY, cardWidth, cardHeight, cardRadius);
     ctx.fillStyle = bgColor;
     ctx.fill();
+    
+    // Border
+    ctx.strokeStyle = accentColor;
+    ctx.lineWidth = 12;
+    ctx.stroke();
+    
+    // Inner border
+    ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)';
+    ctx.lineWidth = 2;
+    roundRect(cardX + 30, cardY + 30, cardWidth - 60, cardHeight - 60, cardRadius - 10);
+    ctx.stroke();
     ctx.restore();
 
-    // 3. Header: Icon + Title
-    const iconSize = 64;
-    const iconX = wX + 40;
-    const iconY = wY + 40;
+    // 3. Content
+    ctx.textAlign = 'center';
     
-    // Icon Background (Gradient)
-    const iconGrad = ctx.createLinearGradient(iconX, iconY, iconX, iconY + iconSize);
-    iconGrad.addColorStop(0, '#5AC8FA');
-    iconGrad.addColorStop(1, '#007AFF');
-    roundRect(iconX, iconY, iconSize, iconSize, 16);
-    ctx.fillStyle = iconGrad;
-    ctx.fill();
-
-    // Icon Symbol (Simplified Rice Bowl)
-    ctx.fillStyle = '#FFFFFF';
-    ctx.beginPath();
-    ctx.arc(iconX + 32, iconY + 38, 18, 0, Math.PI, false);
-    ctx.fill();
-    ctx.fillRect(iconX + 20, iconY + 18, 24, 4);
-    ctx.fillRect(iconX + 26, iconY + 26, 12, 4);
-
     // Title
-    ctx.textAlign = 'left';
-    ctx.font = 'bold 32px -apple-system, BlinkMacSystemFont, "SF Pro Display"';
+    ctx.font = 'bold 80px -apple-system, BlinkMacSystemFont, "SF Pro Display"';
     ctx.fillStyle = textColor;
-    ctx.fillText('Rice Purity', iconX + 85, iconY + 44);
+    ctx.fillText('CERTIFICATE OF PURITY', width / 2, cardY + 180);
 
-    // 4. Score Display (Centered in the card)
-    const cardContentCenterY = wY + wSize / 2 + 30; // Slightly adjusted for visual balance
+    // Subtitle
+    ctx.font = '500 40px -apple-system';
+    ctx.fillStyle = secondaryTextColor;
+    ctx.fillText('THIS IS TO CERTIFY THAT THE SUBJECT SCORED', width / 2, cardY + 280);
+
+    // Score
+    ctx.font = '900 320px -apple-system';
+    ctx.fillStyle = accentColor;
+    ctx.fillText(score.toString(), width / 2, cardY + 600);
     
-    // Large Score
-    ctx.textAlign = 'center';
-    ctx.font = '900 180px -apple-system, BlinkMacSystemFont, "SF Pro Display"';
-    ctx.fillStyle = textColor;
-    ctx.fillText(score.toString(), wX + wSize / 2, cardContentCenterY);
-
-    // Max Score
-    ctx.font = '600 40px -apple-system';
+    ctx.font = 'bold 80px -apple-system';
     ctx.fillStyle = secondaryTextColor;
-    ctx.fillText(`/${maxScore}`, wX + wSize / 2, cardContentCenterY + 65);
+    ctx.fillText(`OUT OF ${maxScore}`, width / 2, cardY + 720);
 
-    // 5. Footer
-    ctx.textAlign = 'center';
-    ctx.font = '500 24px -apple-system';
+    // Title Badge
+    if (title) {
+      const badgeW = 400;
+      const badgeH = 80;
+      const badgeX = (width - badgeW) / 2;
+      const badgeY = cardY + 780;
+      roundRect(badgeX, badgeY, badgeW, badgeH, 40);
+      ctx.fillStyle = accentColor;
+      ctx.fill();
+      
+      ctx.font = 'bold 44px -apple-system';
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillText(title.toUpperCase(), width / 2, badgeY + 55);
+    }
+
+    // Verdict
+    if (verdict) {
+      const vMargin = 150;
+      const vWidth = width - vMargin * 2;
+      ctx.font = 'italic 44px -apple-system';
+      ctx.fillStyle = textColor;
+      
+      // Simple text wrapping
+      const words = verdict.split(' ');
+      let line = '';
+      let y = cardY + 980;
+      const lineHeight = 60;
+      
+      for (let n = 0; n < words.length; n++) {
+        const testLine = line + words[n] + ' ';
+        const metrics = ctx.measureText(testLine);
+        const testWidth = metrics.width;
+        if (testWidth > vWidth && n > 0) {
+          ctx.fillText(line, width / 2, y);
+          line = words[n] + ' ';
+          y += lineHeight;
+        } else {
+          line = testLine;
+        }
+      }
+      ctx.fillText(line, width / 2, y);
+    }
+
+    // 4. Seal/Stamp (Bottom Left)
+    const sealX = cardX + 200;
+    const sealY = cardHeight - 150;
+    
+    ctx.save();
+    ctx.translate(sealX, sealY);
+    ctx.rotate(-0.2);
+    
+    // Outer circle of seal
+    ctx.strokeStyle = accentColor;
+    ctx.lineWidth = 8;
+    ctx.beginPath();
+    ctx.arc(0, 0, 100, 0, Math.PI * 2);
+    ctx.stroke();
+    
+    // Inner text of seal
+    ctx.font = 'bold 24px -apple-system';
+    ctx.fillStyle = accentColor;
+    ctx.fillText('OFFICIAL', 0, -20);
+    ctx.fillText('RICE TEST', 0, 10);
+    ctx.fillText('2025', 0, 40);
+    
+    ctx.restore();
+
+    // 5. Signature Line (Bottom Right)
+    const sigX = cardWidth - 250;
+    const sigY = cardHeight - 150;
+    ctx.strokeStyle = textColor;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(sigX - 150, sigY);
+    ctx.lineTo(sigX + 150, sigY);
+    ctx.stroke();
+    
+    ctx.font = '13 28px -apple-system';
     ctx.fillStyle = secondaryTextColor;
-    ctx.fillText('ricepurity.online', width / 2, wY + wSize + 65);
+    ctx.fillText('Willy the Owl', sigX, sigY + 40);
 
-    // Download
+    // 6. Website Footer
+    ctx.font = '400 32px -apple-system';
+    ctx.fillStyle = secondaryTextColor;
+    ctx.fillText('ricepurity.online', width / 2, height - 100);
+
+    // Trigger Download
     const link = document.createElement('a');
-    link.download = `rice-purity-score-${score}.png`;
+    link.download = `rice-purity-certificate-${score}.png`;
     link.href = canvas.toDataURL('image/png', 1.0);
     link.click();
-  }, [score, maxScore]);
+  }, [score, maxScore, verdict, title]);
 
 
   return (
     <div className="widget-poster-container">
       <button onClick={generateImage} className="button-secondary">
-        <span style={{ marginRight: '8px' }}>🖼️</span>
-        Download Poster
+        <span style={{ marginRight: '8px' }}>📜</span>
+        Generate Certificate
       </button>
       <canvas ref={canvasRef} style={{ display: 'none' }} />
     </div>
