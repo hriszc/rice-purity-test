@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { getFullRankingData } from '../rankingData';
+import { useTheme } from '../hooks/useTheme';
 import './ScoreDistributionChart.css';
 
 interface ScoreDistributionChartProps {
@@ -9,16 +10,7 @@ interface ScoreDistributionChartProps {
 const allRankingData = getFullRankingData();
 
 export const ScoreDistributionChart: React.FC<ScoreDistributionChartProps> = ({ userScore }) => {
-  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  
-  const colors = {
-    accent: isDark ? '#0a84ff' : '#007aff',
-    user: isDark ? '#ff453a' : '#ff3b30',
-    labelBg: isDark ? '#2c2c2e' : '#ffffff',
-    text: isDark ? '#ffffff' : '#000000',
-    secondaryText: '#8e8e93',
-    separator: isDark ? '#38383a' : '#c6c6c8'
-  };
+  const { colors } = useTheme();
 
   // Group by 2 points to reduce bar count and make them more visible in captures
   const groupedData = useMemo(() => {
@@ -40,7 +32,7 @@ export const ScoreDistributionChart: React.FC<ScoreDistributionChartProps> = ({ 
   
   return (
     <div className="distribution-chart-container">
-      <h3 className="chart-title" style={{ color: colors.text }}>Global Score Distribution</h3>
+      <h3 className="chart-title" style={{ color: colors.label }}>Global Score Distribution</h3>
       <div className="chart-wrapper">
         <div className="chart-area" style={{ borderBottom: `1px solid ${colors.separator}` }}>
           {groupedData.map((d) => {
@@ -53,27 +45,27 @@ export const ScoreDistributionChart: React.FC<ScoreDistributionChartProps> = ({ 
                 className={`chart-bar ${isUserGroup ? 'user-bar' : ''}`}
                 style={{ 
                   height: `${height}%`,
-                  backgroundColor: isUserGroup ? colors.user : colors.accent
+                  backgroundColor: isUserGroup ? colors.red : colors.accent
                 }}
               >
                 {isUserGroup && (
                   <div className="user-indicator">
-                    <div className="user-label" style={{ backgroundColor: colors.labelBg, color: colors.user }}>You</div>
-                    <div className="user-dot" style={{ backgroundColor: colors.user }}></div>
+                    <div className="user-label" style={{ backgroundColor: colors.background, color: colors.red }}>You</div>
+                    <div className="user-dot" style={{ backgroundColor: colors.red }}></div>
                   </div>
                 )}
               </div>
             );
           })}
         </div>
-        <div className="chart-x-axis" style={{ color: colors.secondaryText }}>
+        <div className="chart-x-axis" style={{ color: colors.secondaryLabel }}>
           <span>150</span>
           <span>100</span>
           <span>50</span>
           <span>0</span>
         </div>
       </div>
-      <p className="chart-legend" style={{ color: colors.secondaryText }}>
+      <p className="chart-legend" style={{ color: colors.secondaryLabel }}>
         Higher scores mean more pure. Most users score in the 110-150 range.
       </p>
     </div>
