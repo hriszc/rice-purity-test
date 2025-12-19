@@ -4,10 +4,11 @@ import './ScoreDial.css';
 interface ScoreDialProps {
   score: number;
   maxScore: number;
+  title?: string;
   category: string;
 }
 
-export const ScoreDial: React.FC<ScoreDialProps> = ({ score, maxScore, category }) => {
+export const ScoreDial: React.FC<ScoreDialProps> = ({ score, maxScore, title, category }) => {
   const [animatedScore, setAnimatedScore] = useState(0);
 
   useEffect(() => {
@@ -48,6 +49,11 @@ export const ScoreDial: React.FC<ScoreDialProps> = ({ score, maxScore, category 
 
   return (
     <div className="score-dial-container">
+      {title && (
+        <div className="score-title-badge">
+          {title}
+        </div>
+      )}
       <div className="score-dial">
         <svg width="140" height="140" viewBox="0 0 140 140">
           <circle
@@ -79,7 +85,7 @@ export const ScoreDial: React.FC<ScoreDialProps> = ({ score, maxScore, category 
             <div className="score-max">/{maxScore}</div>
         </div>
       </div>
-      <div className="score-category visible">
+      <div className="score-description visible">
         {category}
       </div>
     </div>

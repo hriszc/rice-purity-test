@@ -45,8 +45,7 @@ export const WhatIsFrenchKissing: React.FC = () => {
         </Link>
       }
     >
-      <Helmet>
-        <title>What is French Kissing? Meaning, History & Rice Purity Test Guide</title>
+      <Helmet title="What is French Kissing? Meaning, History & Rice Purity Test Guide">
         <meta name="description" content="Learn exactly what French kissing is, its historical origins, and its role as a milestone in the Rice Purity Test. Discover tips for beginners and cultural significance." />
         <script type="application/ld+json">
           {JSON.stringify(faqSchema)}

@@ -49,8 +49,7 @@ export const ScoreMeanings: React.FC = () => {
       title="Rice Purity Test Score Meanings" 
       leftAction={<Link to="/" className="back-button" style={{ textDecoration: 'none' }}>Back</Link>}
     >
-      <Helmet>
-        <title>Rice Purity Test Score Meanings - Complete Guide</title>
+      <Helmet title="Rice Purity Test Score Meanings - Complete Guide">
         <meta name="description" content="Understand your Rice Purity Test score. Detailed breakdown of score ranges, average scores by age, and the 1988 original scale meanings." />
         {origin && <link rel="canonical" href={origin + "/rice-purity-test-score-meanings"} />}
         <script type="application/ld+json">

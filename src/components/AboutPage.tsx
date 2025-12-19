@@ -14,8 +14,7 @@ export const AboutPage: React.FC = () => {
         </Link>
       }
     >
-      <Helmet>
-        <title>About Us & Privacy Policy | ricepurity.online</title>
+      <Helmet title="About Us & Privacy Policy | ricepurity.online">
         <meta name="description" content="Learn about the team behind ricepurity.online and our commitment to your privacy. Our Rice Purity Test calculator is 100% private and runs locally." />
       </Helmet>
 

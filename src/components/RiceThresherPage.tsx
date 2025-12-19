@@ -67,8 +67,7 @@ export function RiceThresherPage() {
         </Link>
       }
     >
-      <Helmet>
-        <title>The Rice Thresher (April 1, 1988) - Original Rice Purity Test</title>
+      <Helmet title="The Rice Thresher (April 1, 1988) - Original Rice Purity Test">
         <meta name="description" content="Access the verified original source of the 1988 Rice Purity Test from The Rice Thresher archive. View the original PDF and historical context." />
         <meta name="keywords" content="Rice Purity Test 1988, The Rice Thresher April 1 1988, original purity test, Rice University history, purity test archive" />
         <link rel="canonical" href={pageUrl} />

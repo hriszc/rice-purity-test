@@ -12,6 +12,13 @@ export interface Section {
   questions: string[];
 }
 
+export interface ScoringCategory {
+  min: number;
+  max: number;
+  title: string;
+  text: string;
+}
+
 export const sections: Section[] = [
   {
     title: "General",
@@ -180,10 +187,16 @@ export const sections: Section[] = [
   }
 ];
 
-export const scoringCategories = [
-  { min: 121, max: 150, text: "Wynn I-have-been-at-Rice-for-almost-a-year-and-I-still-don't-know-what-felching-is-so-I-asked-my-mom Martin." },
-  { min: 91, max: 120, text: "Jenny I-am-a-hot-sexy-and-voluptuous-babe-in-the-wild-and-wet-fantasy-of-every-Sid-Rich-geek Berry" },
-  { min: 61, max: 90, text: "Paul Sat-by-his-phone-for-hours-and-still-didn't-get-invited-to-Randomlay Angles" },
-  { min: 31, max: 60, text: "Mike Yes-I-know-I-look-like-Paul-but-there's-no-way-I-would-use-his-ID Raphael" },
-  { min: 0, max: 30, text: "Michèle Whip-Me-Beat-Me-but-don't-lay-a-hand-on-my-dog Wucker." },
+export const scoringCategories: ScoringCategory[] = [
+  { min: 145, max: 150, title: "Angelic", text: "Wynn I-have-been-at-Rice-for-almost-a-year-and-I-still-don't-know-what-felching-is-so-I-asked-my-mom Martin." },
+  { min: 130, max: 144, title: "Saint", text: "Wynn I-have-been-at-Rice-for-almost-a-year-and-I-still-don't-know-what-felching-is-so-I-asked-my-mom Martin." },
+  { min: 110, max: 129, title: "Pure", text: "Jenny I-am-a-hot-sexy-and-voluptuous-babe-in-the-wild-and-wet-fantasy-of-every-Sid-Rich-geek Berry" },
+  { min: 95, max: 109, title: "Innocent", text: "Jenny I-am-a-hot-sexy-and-voluptuous-babe-in-the-wild-and-wet-fantasy-of-every-Sid-Rich-geek Berry" },
+  { min: 80, max: 94, title: "Curious", text: "Paul Sat-by-his-phone-for-hours-and-still-didn't-get-invited-to-Randomlay Angles" },
+  { min: 65, max: 79, title: "Experienced", text: "Paul Sat-by-his-phone-for-hours-and-still-didn't-get-invited-to-Randomlay Angles" },
+  { min: 50, max: 64, title: "Adventurous", text: "Mike Yes-I-know-I-look-like-Paul-but-there's-no-way-I-would-use-his-ID Raphael" },
+  { min: 35, max: 49, title: "Wild", text: "Mike Yes-I-know-I-look-like-Paul-but-there's-no-way-I-would-use-his-ID Raphael" },
+  { min: 20, max: 34, title: "Party Animal", text: "Michèle Whip-Me-Beat-Me-but-don't-lay-a-hand-on-my-dog Wucker." },
+  { min: 10, max: 19, title: "Fallen Angel", text: "Michèle Whip-Me-Beat-Me-but-don't-lay-a-hand-on-my-dog Wucker." },
+  { min: 0, max: 9, title: "Legend", text: "Michèle Whip-Me-Beat-Me-but-don't-lay-a-hand-on-my-dog Wucker." },
 ];

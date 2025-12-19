@@ -63,10 +63,9 @@ export function TestPage() {
      };
   }, [checkedState, currentMaxScore, allQuestions, isQuestionIncluded]);
 
-  const category = useMemo(() => {
+  const currentCategory = useMemo(() => {
     const scoreToLookup = isShortMode ? displayScore * 5 : displayScore;
-    const found = scoringCategories.find(c => scoreToLookup >= c.min && scoreToLookup <= c.max);
-    return found ? found.text : (isShortMode ? "Short Test Mode" : "");
+    return scoringCategories.find(c => scoreToLookup >= c.min && scoreToLookup <= c.max);
   }, [displayScore, isShortMode]);
 
   const handleSubmit = () => {
@@ -124,15 +123,15 @@ export function TestPage() {
   if (view === 'results') {
     return (
       <IOSLayout title="Results" showLargeTitle={false} leftAction={<span className="back-button" onClick={() => setView('test')}>Back</span>}>
-        <Helmet>
-          <title>My Rice Purity Test Score: {displayScore}</title>
+        <Helmet title={`My Rice Purity Test Score: ${displayScore}`}>
           <meta name="robots" content="noindex" />
         </Helmet>
         <div className="results-view animate-fade-in">
            <ScoreDial 
              score={displayScore} 
              maxScore={currentMaxScore} 
-             category={category} 
+             title={currentCategory?.title}
+             category={currentCategory?.text || ""} 
            />
 
            <div className="action-buttons">
@@ -219,13 +218,23 @@ export function TestPage() {
       title="Rice Purity Test"
       rightAction={<span className="clear-button" onClick={handleReset}>Clear</span>}
     >
-      <Helmet>
-        <title>{SEO_CONFIG.home.title}</title>
+      <Helmet title={`${SEO_CONFIG.home.title}`}>
         <meta name="description" content={SEO_CONFIG.home.description} />
       </Helmet>
 
       <div className="progress-container">
         <div className="progress-bar" style={{ width: `${progress}%` }} />
+      </div>
+
+      <div className="realtime-status">
+        <div className="status-label">
+          Purity Score: <span className="status-value">{displayScore}</span>
+        </div>
+        {currentCategory && (
+          <div className="status-title-badge">
+            {currentCategory.title}
+          </div>
+        )}
       </div>
 
       <div className="app-container animate-fade-in">

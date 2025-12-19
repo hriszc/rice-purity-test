@@ -9,6 +9,25 @@
   box-shadow: var(--card-shadow);
 }
 
+.score-title-badge {
+  margin-bottom: 24px;
+  padding: 6px 16px;
+  background-color: var(--accent-color);
+  color: white;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+  animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
 .score-dial {
   position: relative;
   width: 140px;
@@ -61,15 +80,16 @@
   }
 }
 
-.score-category {
+.score-description {
   margin-top: 16px;
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
   text-align: center;
   opacity: 0;
   transform: translateY(10px);
   animation: fadeInLabel 0.8s ease-out 0.5s forwards;
-  color: var(--label);
+  color: var(--secondary-label);
 }
 
 @keyframes fadeInLabel {
