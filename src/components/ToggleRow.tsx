@@ -3,13 +3,14 @@ import './ToggleRow.css';
 
 interface ToggleRowProps {
   label: React.ReactNode;
+  emoji?: string;
   index: number;
   checked: boolean;
   onChange: (checked: boolean) => void;
   last?: boolean;
 }
 
-export const ToggleRow: React.FC<ToggleRowProps> = ({ label, index, checked, onChange, last }) => {
+export const ToggleRow: React.FC<ToggleRowProps> = ({ label, emoji, index, checked, onChange, last }) => {
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === ' ' || e.key === 'Enter') {
       e.preventDefault();
@@ -26,7 +27,7 @@ export const ToggleRow: React.FC<ToggleRowProps> = ({ label, index, checked, onC
 
   return (
     <label 
-      className="toggle-row"
+      className={`toggle-row ${checked ? 'is-checked' : ''}`}
       onKeyDown={handleKeyDown}
       tabIndex={0}
       role="checkbox"
@@ -42,7 +43,10 @@ export const ToggleRow: React.FC<ToggleRowProps> = ({ label, index, checked, onC
       />
       <div className="row-number">{index}.</div>
       <div className={`row-content ${last ? 'last' : ''}`}>
-        <span className="row-label">{label}</span>
+        <div className="label-with-emoji">
+          {emoji && <span className={`row-emoji ${checked ? 'animate-bounce' : ''}`}>{emoji}</span>}
+          <span className="row-label">{label}</span>
+        </div>
         <div className={`ios-switch ${checked ? 'checked' : ''}`} aria-hidden="true">
           <div className="switch-handle" />
         </div>

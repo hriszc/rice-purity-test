@@ -324,14 +324,15 @@ export function TestPage() {
         </div>
 
         {sections.map((section, sIndex) => {
-          const questionsToRender: { text: string; originalIndex: number; displayIndex: number }[] = [];
+          const questionsToRender: { text: string; emoji: string; originalIndex: number; displayIndex: number }[] = [];
           
           section.questions.forEach((q) => {
              const currentOriginalIndex = globalIndexCounter;
              
              if (isQuestionIncluded(currentOriginalIndex)) {
                questionsToRender.push({
-                 text: q,
+                 text: q.text,
+                 emoji: q.emoji,
                  originalIndex: currentOriginalIndex,
                  displayIndex: displayedQuestionCounter
                });
@@ -355,6 +356,7 @@ export function TestPage() {
                     <ToggleRow
                       key={q.originalIndex}
                       index={q.displayIndex}
+                      emoji={q.emoji}
                       label={renderLabel(q.text)}
                       checked={checkedState[q.originalIndex]}
                       onChange={(c) => handleToggle(q.originalIndex, c)}
