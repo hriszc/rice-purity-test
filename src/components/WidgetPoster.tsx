@@ -1,4 +1,5 @@
 import { useRef, useCallback, useImperativeHandle, forwardRef } from 'react';
+import { useTheme } from '../hooks/useTheme';
 import './WidgetPoster.css';
 
 interface WidgetPosterProps {
@@ -16,6 +17,7 @@ export interface WidgetPosterHandle {
 
 export const WidgetPoster = forwardRef<WidgetPosterHandle, WidgetPosterProps>(({ score, maxScore, verdict, title, rankingLabel }, ref) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { isDark, colors } = useTheme();
 
   const drawCanvas = useCallback(() => {
     const canvas = canvasRef.current;
@@ -30,11 +32,10 @@ export const WidgetPoster = forwardRef<WidgetPosterHandle, WidgetPosterProps>(({
     canvas.width = width;
     canvas.height = height;
 
-    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const bgColor = isDark ? '#1C1C1E' : '#FFFFFF';
-    const textColor = isDark ? '#FFFFFF' : '#1C1C1E';
-    const secondaryTextColor = '#8E8E93';
-    const accentColor = '#007AFF';
+    const bgColor = colors.background;
+    const textColor = colors.label;
+    const secondaryTextColor = colors.secondaryLabel;
+    const accentColor = colors.accent;
 
     // Helper: Rounded Rect
     const roundRect = (x: number, y: number, w: number, h: number, r: number) => {
@@ -52,7 +53,7 @@ export const WidgetPoster = forwardRef<WidgetPosterHandle, WidgetPosterProps>(({
     };
 
     // 1. Background
-    ctx.fillStyle = isDark ? '#000000' : '#F2F2F7';
+    ctx.fillStyle = colors.secondaryBackground;
     ctx.fillRect(0, 0, width, height);
 
     // 2. Main Certificate Card

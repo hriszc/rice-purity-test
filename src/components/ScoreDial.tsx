@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from '../hooks/useTheme';
 import './ScoreDial.css';
 
 interface ScoreDialProps {
@@ -9,19 +10,7 @@ interface ScoreDialProps {
 }
 
 export const ScoreDial: React.FC<ScoreDialProps> = ({ score, maxScore, title, category }) => {
-  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  
-  // Hardcoded hex values for reliable image capture
-  const colors = {
-    green: isDark ? '#30d158' : '#34c759',
-    yellow: isDark ? '#ffd60a' : '#ffcc00',
-    orange: isDark ? '#ff9f0a' : '#ff9500',
-    red: isDark ? '#ff453a' : '#ff3b30',
-    label: isDark ? '#ffffff' : '#000000',
-    secondaryLabel: '#8e8e93',
-    separator: isDark ? '#38383a' : '#c6c6c8',
-    accent: isDark ? '#0a84ff' : '#007aff',
-  };
+  const { colors } = useTheme();
 
   const getColor = (p: number) => {
     if (p >= 0.9) return colors.green;

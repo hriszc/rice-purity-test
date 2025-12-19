@@ -889,6 +889,70 @@
   transform: translateX(20px);
 }
 
+/* src/components/RadarChart.css */
+.radar-chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  width: 100%;
+}
+.radar-grid {
+  fill: none;
+  stroke: var(--separator);
+  stroke-width: 1;
+}
+.radar-axis {
+  stroke: var(--separator);
+  stroke-width: 1;
+}
+.radar-area {
+  fill: rgba(0, 122, 255, 0.3);
+  stroke: var(--accent-color);
+  stroke-width: 2;
+  transition: all 0.5s ease;
+}
+.radar-point {
+  fill: var(--accent-color);
+}
+.radar-label {
+  font-size: 14px;
+  font-weight: 500;
+  fill: var(--secondary-label);
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Text",
+    "PingFang SC",
+    "Hiragino Sans GB",
+    "Microsoft YaHei",
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  .radar-grid,
+  .radar-axis {
+    stroke: rgba(255, 255, 255, 0.1);
+  }
+  .radar-label {
+    fill: #8E8E93;
+  }
+}
+
+/* src/components/WidgetPoster.css */
+.widget-poster-container {
+  width: 100%;
+  margin-bottom: 12px;
+}
+.widget-poster-container .button-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
 /* src/components/ScoreDial.css */
 .score-dial-container {
   display: flex;
@@ -982,70 +1046,6 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-/* src/components/WidgetPoster.css */
-.widget-poster-container {
-  width: 100%;
-  margin-bottom: 12px;
-}
-.widget-poster-container .button-secondary {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0;
-}
-
-/* src/components/RadarChart.css */
-.radar-chart-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0;
-  width: 100%;
-}
-.radar-grid {
-  fill: none;
-  stroke: var(--separator);
-  stroke-width: 1;
-}
-.radar-axis {
-  stroke: var(--separator);
-  stroke-width: 1;
-}
-.radar-area {
-  fill: rgba(0, 122, 255, 0.3);
-  stroke: var(--accent-color);
-  stroke-width: 2;
-  transition: all 0.5s ease;
-}
-.radar-point {
-  fill: var(--accent-color);
-}
-.radar-label {
-  font-size: 14px;
-  font-weight: 500;
-  fill: var(--secondary-label);
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "SF Pro Text",
-    "PingFang SC",
-    "Hiragino Sans GB",
-    "Microsoft YaHei",
-    "Helvetica Neue",
-    Helvetica,
-    Arial,
-    sans-serif;
-}
-@media (prefers-color-scheme: dark) {
-  .radar-grid,
-  .radar-axis {
-    stroke: rgba(255, 255, 255, 0.1);
-  }
-  .radar-label {
-    fill: #8E8E93;
   }
 }
 
