@@ -185,8 +185,8 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
                  }}>
                    <div style={{ fontSize: '1.2rem' }}>🍚</div>
                    <div>
-                     <div style={{ fontSize: '10px', opacity: 0.8, fontWeight: 600, textTransform: 'uppercase' }}>Rice Purity Test</div>
-                     <div style={{ fontSize: '18px', fontWeight: 800 }}>Score: {displayScore}</div>
+                     <div style={{ fontSize: '10px', opacity: 0.8, fontWeight: 600, textTransform: 'uppercase' }}>Rice Purity: {displayScore}/150</div>
+                     <div style={{ fontSize: '18px', fontWeight: 800 }}>{currentCategory?.title || 'Pure'}</div>
                    </div>
                  </div>
                </div>
@@ -206,12 +206,12 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
                      color: 'var(--label)',
                      resize: 'none'
                    }}
-                   value={`<a href="https://ricepurity.online/" style="text-decoration:none;display:inline-block"><div style="background:linear-gradient(135deg,#007aff 0%,#00c6ff 100%);color:white;padding:12px 20px;border-radius:16px;box-shadow:0 4px 15px rgba(0,122,255,0.3);font-family:sans-serif;display:inline-flex;align-items:center;gap:12px"><div><div style="font-size:10px;opacity:0.8;font-weight:600;text-transform:uppercase">Rice Purity Test</div><div style="font-size:18px;font-weight:800">Score: ${displayScore}</div></div></div></a>`}
+                   value={`<a href="https://ricepurity.online/" style="text-decoration:none;display:inline-block"><div style="background:linear-gradient(135deg,#007aff 0%,#00c6ff 100%);color:white;padding:12px 20px;border-radius:16px;box-shadow:0 4px 15px rgba(0,122,255,0.3);font-family:sans-serif;display:inline-flex;align-items:center;gap:12px"><div><div style="font-size:10px;opacity:0.8;font-weight:600;text-transform:uppercase">Rice Purity: ${displayScore}/150</div><div style="font-size:18px;font-weight:800">${currentCategory?.title || 'Pure'}</div></div></div></a>`}
                    onClick={(e) => (e.target as HTMLTextAreaElement).select()}
                  />
                  <button 
                    onClick={() => {
-                     const code = `<a href="https://ricepurity.online/" style="text-decoration:none;display:inline-block"><div style="background:linear-gradient(135deg,#007aff 0%,#00c6ff 100%);color:white;padding:12px 20px;border-radius:16px;box-shadow:0 4px 15px rgba(0,122,255,0.3);font-family:sans-serif;display:inline-flex;align-items:center;gap:12px"><div><div style="font-size:10px;opacity:0.8;font-weight:600;text-transform:uppercase">Rice Purity Test</div><div style="font-size:18px;font-weight:800">Score: ${displayScore}</div></div></div></a>`;
+                     const code = `<a href="https://ricepurity.online/" style="text-decoration:none;display:inline-block"><div style="background:linear-gradient(135deg,#007aff 0%,#00c6ff 100%);color:white;padding:12px 20px;border-radius:16px;box-shadow:0 4px 15px rgba(0,122,255,0.3);font-family:sans-serif;display:inline-flex;align-items:center;gap:12px"><div><div style="font-size:10px;opacity:0.8;font-weight:600;text-transform:uppercase">Rice Purity: ${displayScore}/150</div><div style="font-size:18px;font-weight:800">${currentCategory?.title || 'Pure'}</div></div></div></a>`;
                      navigator.clipboard.writeText(code);
                      alert('Modern Card code copied!');
                    }}
@@ -254,7 +254,7 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
                    fontSize: '11px'
                  }}>
                    <div style={{ background: '#555', color: '#fff', padding: '4px 8px' }}>Rice Purity</div>
-                   <div style={{ background: '#34c759', color: '#fff', padding: '4px 8px', fontWeight: 'bold' }}>{displayScore}</div>
+                   <div style={{ background: '#34c759', color: '#fff', padding: '4px 8px', fontWeight: 'bold' }}>{currentCategory?.title || displayScore}</div>
                  </div>
                </div>
                
@@ -273,12 +273,12 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
                      color: 'var(--label)',
                      resize: 'none'
                    }}
-                   value={`<a href="https://ricepurity.online/" style="text-decoration:none;display:inline-flex;border-radius:4px;overflow:hidden;font-family:Verdana,sans-serif;font-size:11px"><div style="background:#555;color:#fff;padding:4px 8px">Rice Purity</div><div style="background:#34c759;color:#fff;padding:4px 8px;font-weight:bold">${displayScore}</div></a>`}
+                   value={`<a href="https://ricepurity.online/" style="text-decoration:none;display:inline-flex;border-radius:4px;overflow:hidden;font-family:Verdana,sans-serif;font-size:11px"><div style="background:#555;color:#fff;padding:4px 8px">Rice Purity</div><div style="background:#34c759;color:#fff;padding:4px 8px;font-weight:bold">${currentCategory?.title || displayScore}</div></a>`}
                    onClick={(e) => (e.target as HTMLTextAreaElement).select()}
                  />
                  <button 
                    onClick={() => {
-                     const code = `<a href="https://ricepurity.online/" style="text-decoration:none;display:inline-flex;border-radius:4px;overflow:hidden;font-family:Verdana,sans-serif;font-size:11px"><div style="background:#555;color:#fff;padding:4px 8px">Rice Purity</div><div style="background:#34c759;color:#fff;padding:4px 8px;font-weight:bold">${displayScore}</div></a>`;
+                     const code = `<a href="https://ricepurity.online/" style="text-decoration:none;display:inline-flex;border-radius:4px;overflow:hidden;font-family:Verdana,sans-serif;font-size:11px"><div style="background:#555;color:#fff;padding:4px 8px">Rice Purity</div><div style="background:#34c759;color:#fff;padding:4px 8px;font-weight:bold">${currentCategory?.title || displayScore}</div></a>`;
                      navigator.clipboard.writeText(code);
                      alert('Flat Badge code copied!');
                    }}

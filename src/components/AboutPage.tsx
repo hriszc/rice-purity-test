@@ -61,49 +61,73 @@ export const AboutPage: React.FC = () => {
         <section id="embed" style={{ marginBottom: '32px' }}>
           <h2 style={{ fontSize: '1.4rem', marginBottom: '12px', color: 'var(--label)', fontWeight: '700' }}>Embed on your Website</h2>
           <p>
-            Want to share the Rice Purity Test with your audience? Copy the code below to embed the test directly on your website or blog.
+            Want to share the Rice Purity Test with your audience? Copy the code below to embed the complete interactive test directly on your website or blog.
           </p>
-          <div style={{ 
-            backgroundColor: 'var(--tertiary-system-background)', 
-            padding: '16px', 
-            borderRadius: '12px', 
-            border: '1px solid var(--separator)',
-            marginTop: '12px'
-          }}>
-            <code style={{ 
-              fontSize: '0.85rem', 
-              display: 'block', 
-              wordBreak: 'break-all', 
-              color: 'var(--label)',
-              backgroundColor: 'rgba(0,0,0,0.05)',
-              padding: '8px',
-              borderRadius: '6px',
-              marginBottom: '12px',
-              fontFamily: 'monospace'
+
+          <div style={{ marginTop: '20px' }}>
+            <h3 style={{ fontSize: '1.1rem', marginBottom: '12px', color: 'var(--label)', fontWeight: '600' }}>Preview</h3>
+            <div style={{ 
+              width: '100%', 
+              height: '400px', 
+              borderRadius: '12px', 
+              overflow: 'hidden', 
+              border: '1px solid var(--separator)',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+              backgroundColor: 'var(--system-background)',
+              marginBottom: '24px'
             }}>
-              {`<iframe src="https://ricepurity.online/?embed=true" width="100%" height="800" frameborder="0" style="border:none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></iframe>
+              <iframe 
+                src={`${window.location.origin}/?embed=true`} 
+                width="100%" 
+                height="100%" 
+                frameBorder="0" 
+                title="Rice Purity Test Preview"
+                style={{ border: 'none' }}
+              ></iframe>
+            </div>
+
+            <h3 style={{ fontSize: '1.1rem', marginBottom: '8px', color: 'var(--label)', fontWeight: '600' }}>Embed Code</h3>
+            <div style={{ 
+              backgroundColor: 'var(--tertiary-system-background)', 
+              padding: '16px', 
+              borderRadius: '12px', 
+              border: '1px solid var(--separator)'
+            }}>
+              <code style={{ 
+                fontSize: '0.85rem', 
+                display: 'block', 
+                wordBreak: 'break-all', 
+                color: 'var(--label)',
+                backgroundColor: 'rgba(0,0,0,0.05)',
+                padding: '8px',
+                borderRadius: '6px',
+                marginBottom: '12px',
+                fontFamily: 'monospace'
+              }}>
+                {`<iframe src="https://ricepurity.online/?embed=true" width="100%" height="800" frameborder="0" style="border:none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></iframe>
 <p style="text-align: center; font-size: 12px; margin-top: 8px;">Powered by <a href="https://ricepurity.online/">Rice Purity Test Official</a></p>`}
-            </code>
-            <button 
-              onClick={() => {
-                const code = `<iframe src="https://ricepurity.online/?embed=true" width="100%" height="800" frameborder="0" style="border:none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></iframe>\n<p style="text-align: center; font-size: 12px; margin-top: 8px;">Powered by <a href="https://ricepurity.online/">Rice Purity Test Official</a></p>`;
-                navigator.clipboard.writeText(code);
-                alert('Embed code copied to clipboard!');
-              }}
-              style={{
-                padding: '10px 20px',
-                borderRadius: '10px',
-                border: 'none',
-                backgroundColor: 'var(--accent-color)',
-                color: 'white',
-                fontSize: '0.95rem',
-                fontWeight: '600',
-                cursor: 'pointer',
-                width: '100%'
-              }}
-            >
-              Copy Embed Code
-            </button>
+              </code>
+              <button 
+                onClick={() => {
+                  const code = `<iframe src="https://ricepurity.online/?embed=true" width="100%" height="800" frameborder="0" style="border:none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></iframe>\n<p style="text-align: center; font-size: 12px; margin-top: 8px;">Powered by <a href="https://ricepurity.online/">Rice Purity Test Official</a></p>`;
+                  navigator.clipboard.writeText(code);
+                  alert('Embed code copied to clipboard!');
+                }}
+                style={{
+                  padding: '10px 20px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  backgroundColor: 'var(--accent-color)',
+                  color: 'white',
+                  fontSize: '0.95rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  width: '100%'
+                }}
+              >
+                Copy Embed Code
+              </button>
+            </div>
           </div>
         </section>
 
