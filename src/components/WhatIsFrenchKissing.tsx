@@ -4,6 +4,7 @@ import { IOSLayout } from './IOSLayout';
 import { Link } from 'react-router-dom';
 
 export const WhatIsFrenchKissing: React.FC = () => {
+  const canonicalUrl = "https://ricepurity.online/what-is-french-kissing/";
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -48,6 +49,7 @@ export const WhatIsFrenchKissing: React.FC = () => {
       <Helmet title="What is French Kissing? Meaning, History & Rice Purity Test Guide">
         <meta name="description" content="Learn exactly what French kissing is, its historical origins, and its role as a milestone in the Rice Purity Test. Discover tips for beginners and cultural significance." />
         <meta name="keywords" content="what is french kissing, french kissing meaning, how to french kiss, french kissing tips, french kiss history, french kissing rice purity test, tongue kissing, deep kissing, making out tips, first french kiss guide, french kissing milestone, why is it called a french kiss, galocher meaning, french kissing techniques, kissing advice for teens" />
+        <link rel="canonical" href={canonicalUrl} />
         <script type="application/ld+json">
           {JSON.stringify(faqSchema)}
         </script>
@@ -108,7 +110,7 @@ export const WhatIsFrenchKissing: React.FC = () => {
           <Link to="/" className="button-primary-large" style={{ textDecoration: 'none', width: '100%', maxWidth: '300px' }}>
             Back to Rice Purity Test
           </Link>
-          <Link to="/rice-purity-test-score-meanings" style={{ color: 'var(--accent-color)', textDecoration: 'none', fontSize: '0.9rem' }}>
+          <Link to="/rice-purity-test-score-meanings/" style={{ color: 'var(--accent-color)', textDecoration: 'none', fontSize: '0.9rem' }}>
             View Score Meanings →
           </Link>
         </div>

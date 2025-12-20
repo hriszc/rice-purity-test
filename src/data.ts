@@ -1,7 +1,7 @@
 export const introText = {
   title: "The New and Improved 1988 Rice Trasher Purity Test",
   description: "There's no doubt in anyone's mind that the old Purity Test, first printed in this very paper, is an enduring classic which should still be mandatory for all entering freshmen. However, it has been noted that the test is perhaps a little outdated. With this in mind, we at the backpage are proud to offer the new, improved, 1988 Purity Test.",
-  instructions: "For each of the following things you have done, give yourself one point. When you're done, subtract the total from 150. This is your score. Original source: <a href=\"/rice-test\" class=\"internal-link\">The Rice Thresher (April 1, 1988)</a>",
+  instructions: "For each of the following things you have done, give yourself one point. When you're done, subtract the total from 150. This is your score. Original source: <a href=\"/rice-test/\" class=\"internal-link\">The Rice Thresher (April 1, 1988)</a>",
   definitions: [
     { term: "Sexual activity", definition: "Either sexual intercourse or heavy activity with both (or all) parties naked and with orgasm as the ultimate goal. This is in response to complaints that intercourse is not always the most reliable indicator of purity." }
   ]
@@ -251,4 +251,3 @@ export const scoringCategories: ScoringCategory[] = [
     verdict: "You ARE the test. Ranking in the {{ranking}}, you've completed the side quests that most people don't even know exist." 
   },
 ];
-

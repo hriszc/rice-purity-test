@@ -63,6 +63,7 @@ export const TestView: React.FC<TestViewProps> = ({
   processedSections,
 }) => {
   const navigate = useNavigate();
+  const canonicalUrl = "https://ricepurity.online/";
 
   const handleLinkClick = (e: React.MouseEvent<HTMLParagraphElement>) => {
     const target = e.target as HTMLElement;
@@ -79,7 +80,7 @@ export const TestView: React.FC<TestViewProps> = ({
         <>
           {parts[0]}
           <Link 
-            to="/what-is-french-kissing" 
+            to="/what-is-french-kissing/" 
             onClick={(e) => e.stopPropagation()} 
             style={{ color: 'var(--accent-color)', textDecoration: 'underline' }}
           >
@@ -100,6 +101,7 @@ export const TestView: React.FC<TestViewProps> = ({
       <Helmet title={`${SEO_CONFIG.home.title}`}>
         <meta name="description" content={SEO_CONFIG.home.description} />
         <meta name="keywords" content={SEO_CONFIG.home.keywords} />
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
 
       <div className="progress-container">
@@ -153,14 +155,14 @@ export const TestView: React.FC<TestViewProps> = ({
               <h4 className="intro-subtitle">Quick Links</h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 <Link 
-                  to="/rice-purity-test-score-meanings"
+                  to="/rice-purity-test-score-meanings/"
                   className="button-text-small"
                   style={{ padding: '4px 0', color: 'var(--accent-color)', fontWeight: '500', display: 'inline-block' }}
                 >
                   Rice Purity Test Score Meanings →
                 </Link>
                 <Link 
-                  to="/about#embed"
+                  to="/about/#embed"
                   className="button-text-small"
                   style={{ padding: '4px 0', color: 'var(--accent-color)', fontWeight: '500', display: 'inline-block' }}
                 >
@@ -188,7 +190,7 @@ export const TestView: React.FC<TestViewProps> = ({
                Show Instructions
              </button>
              <Link 
-               to="/rice-purity-test-score-meanings"
+               to="/rice-purity-test-score-meanings/"
                className="info-toggle-button"
                style={{ textDecoration: 'none' }}
              >
@@ -262,7 +264,7 @@ export const TestView: React.FC<TestViewProps> = ({
       
       <div className="footer-notice" style={{ marginBottom: showBanner ? '60px' : '0' }}>
         Caution: This is the 1988 version. Definitions may vary. 
-        <Link to="/about#embed" style={{ color: 'var(--secondary-label)', marginLeft: '8px', textDecoration: 'underline' }}>Embed code</Link>
+        <Link to="/about/#embed" style={{ color: 'var(--secondary-label)', marginLeft: '8px', textDecoration: 'underline' }}>Embed code</Link>
       </div>
 
       {showBanner && (

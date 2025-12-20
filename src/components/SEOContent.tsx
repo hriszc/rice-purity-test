@@ -76,7 +76,7 @@ export const SEOContent: React.FC = () => {
             <p style={{ fontSize: '14px', color: '#666', margin: 0 }}>Almost everything on the checklist is familiar territory. Few boundaries exist for you.</p>
           </div>
           <div style={{ borderTop: '1px solid #eee', paddingTop: '12px', marginTop: '12px' }}>
-            <a href="/rice-purity-test-score-meanings" style={{ color: '#007aff', textDecoration: 'none', fontWeight: '600', fontSize: '15px' }}>View Full Score Meanings Guide →</a>
+            <a href="/rice-purity-test-score-meanings/" style={{ color: '#007aff', textDecoration: 'none', fontWeight: '600', fontSize: '15px' }}>View Full Score Meanings Guide →</a>
           </div>
         </div>
       </section>
@@ -85,16 +85,16 @@ export const SEOContent: React.FC = () => {
       <section style={{ marginBottom: '32px' }}>
         <h2 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '12px' }}>Resources & Guides</h2>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '12px' }}>
-          <a href="/about#embed" style={{ display: 'block', padding: '12px', backgroundColor: '#f2f2f7', borderRadius: '10px', color: '#1c1c1e', textDecoration: 'none', fontWeight: '500' }}>
+          <a href="/about/#embed" style={{ display: 'block', padding: '12px', backgroundColor: '#f2f2f7', borderRadius: '10px', color: '#1c1c1e', textDecoration: 'none', fontWeight: '500' }}>
             🛠️ Embed Rice Purity Test on your Site
           </a>
-          <a href="/what-is-french-kissing" style={{ display: 'block', padding: '12px', backgroundColor: '#f2f2f7', borderRadius: '10px', color: '#1c1c1e', textDecoration: 'none', fontWeight: '500' }}>
+          <a href="/what-is-french-kissing/" style={{ display: 'block', padding: '12px', backgroundColor: '#f2f2f7', borderRadius: '10px', color: '#1c1c1e', textDecoration: 'none', fontWeight: '500' }}>
             👄 What is French Kissing? Meaning & Tips
           </a>
-          <a href="/rice-test" style={{ display: 'block', padding: '12px', backgroundColor: '#f2f2f7', borderRadius: '10px', color: '#1c1c1e', textDecoration: 'none', fontWeight: '500' }}>
+          <a href="/rice-test/" style={{ display: 'block', padding: '12px', backgroundColor: '#f2f2f7', borderRadius: '10px', color: '#1c1c1e', textDecoration: 'none', fontWeight: '500' }}>
             📜 Original 1988 Rice Thresher Source
           </a>
-          <a href="/about" style={{ display: 'block', padding: '12px', backgroundColor: '#f2f2f7', borderRadius: '10px', color: '#1c1c1e', textDecoration: 'none', fontWeight: '500' }}>
+          <a href="/about/" style={{ display: 'block', padding: '12px', backgroundColor: '#f2f2f7', borderRadius: '10px', color: '#1c1c1e', textDecoration: 'none', fontWeight: '500' }}>
             🔒 About & Privacy Policy
           </a>
         </div>

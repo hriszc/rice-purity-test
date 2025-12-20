@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 
 export function RiceThresherPage() {
   const publishDate = "1988-04-01";
-  const pageUrl = "https://ricepurity.online/rice-test";
+  const pageUrl = "https://ricepurity.online/rice-test/";
   
   // Structured Data for SEO
   const jsonLd = {
