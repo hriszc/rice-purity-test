@@ -56,7 +56,7 @@ async function prerender() {
     for (const route of ROUTES) {
       console.log(`Prerendering ${route.path}...`);
       
-      const helmetContext = {};
+      const helmetContext = {}; // Reset context for each route
       
       // Call the exported render function
       const appHtml = render(route.path, helmetContext);
@@ -70,10 +70,22 @@ async function prerender() {
       
       // Inject SEO Meta
       if (helmet) {
+        // Clean up any existing SEO tags from the template to avoid duplicates or stale data
+        html = html.replace(/<title>.*?<\/title>/gi, '');
+        html = html.replace(/<meta\s+name=["']description["']\s+content=["'].*?["']\s*\/?>/gi, '');
+        html = html.replace(/<meta\s+name=["']title["']\s+content=["'].*?["']\s*\/?>/gi, '');
+        html = html.replace(/<meta\s+name=["']keywords["']\s+content=["'].*?["']\s*\/?>/gi, '');
+        html = html.replace(/<link\s+rel=["']canonical["']\s+href=["'].*?["']\s*\/?>/gi, '');
+        
+        // Also clean up OG and Twitter tags if they are being replaced
+        html = html.replace(/<meta\s+property=["']og:.*?["']\s+content=["'].*?["']\s*\/?>/gi, '');
+        html = html.replace(/<meta\s+name=["']twitter:.*?["']\s+content=["'].*?["']\s*\/?>/gi, '');
+
         const headTags = `
           ${helmet.title.toString()}
           ${helmet.meta.toString()}
           ${helmet.link.toString()}
+          ${helmet.script.toString()}
         `;
         html = html.replace('</head>', `${headTags}</head>`);
       }

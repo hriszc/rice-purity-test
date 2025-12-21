@@ -19,6 +19,20 @@ export const AboutPage: React.FC = () => {
         <meta name="description" content="Learn about the team behind ricepurity.online and our commitment to your privacy. Our Rice Purity Test calculator is 100% private and runs locally." />
         <meta name="keywords" content="Rice Purity Test about, ricepurity.online privacy, Rice Purity Test developers, Rice Purity Test mission, Rice Purity Test contact, Rice Purity Test embed, Rice Purity Test iframe, Rice Purity Test security, is Rice Purity Test safe, Rice Purity Test anonymous, Rice Purity Test creator, Rice University purity test origin" />
         <link rel="canonical" href={canonicalUrl} />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:title" content="About Us & Privacy Policy | ricepurity.online" />
+        <meta property="og:description" content="Learn about our commitment to your privacy. Our Rice Purity Test calculator is 100% private and runs locally." />
+        <meta property="og:image" content="https://ricepurity.online/og-image.png" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={canonicalUrl} />
+        <meta name="twitter:title" content="About Us & Privacy Policy | ricepurity.online" />
+        <meta name="twitter:description" content="Learn about our commitment to your privacy. Our Rice Purity Test calculator is 100% private and runs locally." />
+        <meta name="twitter:image" content="https://ricepurity.online/og-image.png" />
       </Helmet>
 
       <div className="app-container animate-fade-in" style={{ padding: '20px', lineHeight: '1.6' }}>

@@ -102,6 +102,20 @@ export const TestView: React.FC<TestViewProps> = ({
         <meta name="description" content={SEO_CONFIG.home.description} />
         <meta name="keywords" content={SEO_CONFIG.home.keywords} />
         <link rel="canonical" href={canonicalUrl} />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:title" content={SEO_CONFIG.home.title} />
+        <meta property="og:description" content={SEO_CONFIG.home.description} />
+        <meta property="og:image" content="https://ricepurity.online/og-image.png" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={canonicalUrl} />
+        <meta name="twitter:title" content={SEO_CONFIG.home.title} />
+        <meta name="twitter:description" content={SEO_CONFIG.home.description} />
+        <meta name="twitter:image" content="https://ricepurity.online/og-image.png" />
       </Helmet>
 
       <div className="progress-container">

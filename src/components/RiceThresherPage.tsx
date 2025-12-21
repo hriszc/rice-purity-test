@@ -71,6 +71,21 @@ export function RiceThresherPage() {
         <meta name="description" content="Access the verified original source of the 1988 Rice Purity Test from The Rice Thresher archive. View the original PDF and historical context." />
         <meta name="keywords" content="Rice Purity Test 1988, The Rice Thresher April 1 1988, original purity test, Rice University history, purity test archive, Rice Purity Test 1988 meaning, Rice Purity Test 1988 questions, Rice Purity Test 1988 score, Rice Purity Test 1988 calculator, Rice Purity Test 1988 official, Rice University student life 1980s, Rice University culture, Thresher archive, Rice Thresher archive, old Rice Purity Test, historical purity test, classic Rice Purity Test" />
         <link rel="canonical" href={pageUrl} />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={pageUrl} />
+        <meta property="og:title" content="The Rice Thresher (April 1, 1988) - Original Rice Purity Test" />
+        <meta property="og:description" content="Access the verified original source of the 1988 Rice Purity Test from The Rice Thresher archive." />
+        <meta property="og:image" content="https://ricepurity.online/og-image.png" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={pageUrl} />
+        <meta name="twitter:title" content="The Rice Thresher (April 1, 1988) - Original Rice Purity Test" />
+        <meta name="twitter:description" content="Access the verified original source of the 1988 Rice Purity Test from The Rice Thresher archive." />
+        <meta name="twitter:image" content="https://ricepurity.online/og-image.png" />
+
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
       </Helmet>
