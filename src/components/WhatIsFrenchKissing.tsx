@@ -93,14 +93,14 @@ export const WhatIsFrenchKissing: React.FC = () => {
           <p>
             On the <strong>Rice Purity Test</strong>, "French kissed a member of the opposite/same sex" is one of the foundational questions in the "General" section. It serves as a benchmark for physical interaction that goes beyond a "simple" or "closed-mouth" kiss.
           </p>
-          <p style={{ marginTop: '12px' }}>
-            In the context of the test:
+          <div style={{ marginTop: '12px' }}>
+            <p>In the context of the test:</p>
             <ul style={{ paddingLeft: '20px', marginTop: '8px' }}>
               <li>It implies mutual consent and participation.</li>
               <li>It involves tongue contact (the defining characteristic).</li>
               <li>It is often the first step toward more advanced physical activities listed later in the test.</li>
             </ul>
-          </p>
+          </div>
         </section>
 
         <section style={{ marginBottom: '32px' }}>
