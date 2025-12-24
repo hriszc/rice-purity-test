@@ -133,8 +133,8 @@ export const TestView: React.FC<TestViewProps> = ({
         )}
       </div>
 
-      <div className="app-container animate-fade-in">
-        <div className="privacy-badge">
+      <div className="app-container">
+        <div className="privacy-badge animate-fade-in">
           <span role="img" aria-label="shield">🛡️</span>
           <span>Runs entirely locally and can work offline</span>
         </div>

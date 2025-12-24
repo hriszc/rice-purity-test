@@ -57,7 +57,7 @@ export const ToggleRow = memo(({
           <div className="label-container">
             <span className="row-label">{label}</span>
             {checked && probability !== undefined && (
-              <span className="probability-badge animate-fade-in">
+              <span className="probability-badge animate-badge-fade-in">
                 {probability}% of people also checked this
               </span>
             )}

@@ -52,12 +52,12 @@
   letter-spacing: 0.5px;
 }
 .animate-fade-in {
-  animation: fadeIn 0.5s ease-out;
+  animation: fadeIn 0.4s ease-out;
 }
 @keyframes fadeIn {
   from {
-    opacity: 0;
-    transform: translateY(10px);
+    opacity: 0.8;
+    transform: translateY(4px);
   }
   to {
     opacity: 1;
@@ -88,6 +88,8 @@
   margin-bottom: 24px;
   box-shadow: var(--card-shadow);
   border: 0.5px solid var(--separator);
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 300px;
 }
 .intro-title {
   margin: 0 0 10px 0;
@@ -220,6 +222,8 @@
 }
 .section-container {
   margin-bottom: 24px;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 500px;
 }
 .section-title {
   padding: 0 12px 8px;
@@ -233,6 +237,10 @@
   border-radius: 12px;
   overflow: hidden;
   box-shadow: var(--card-shadow);
+}
+.seo-content-container {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 1000px;
 }
 .submit-container {
   margin-top: 30px;
@@ -656,10 +664,10 @@
   color: var(--secondary-label);
   font-weight: 500;
 }
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-out;
+.animate-badge-fade-in {
+  animation: badgeFadeIn 0.3s ease-out;
 }
-@keyframes fadeIn {
+@keyframes badgeFadeIn {
   from {
     opacity: 0;
     transform: translateY(-2px);

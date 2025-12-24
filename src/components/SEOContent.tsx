@@ -2,7 +2,7 @@ import React from 'react';
 
 export const SEOContent: React.FC = () => {
   return (
-    <div style={{ padding: '24px 16px', color: '#1c1c1e', maxWidth: '600px', margin: '0 auto' }}>
+    <div className="seo-content-container" style={{ padding: '24px 16px', color: '#1c1c1e', maxWidth: '600px', margin: '0 auto' }}>
       
       {/* Privacy Guarantee Section */}
       <section style={{ marginBottom: '32px', padding: '16px', backgroundColor: '#e8f5e9', borderRadius: '12px', border: '1px solid #c8e6c9' }}>

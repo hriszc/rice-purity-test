@@ -24,17 +24,22 @@ export const IOSLayout: React.FC<IOSLayoutProps> = ({ title, children, leftActio
     };
     checkEmbed();
 
+    let ticking = false;
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      setScrolled(scrollY > 40);
-      
-      // Calculate opacity for the header title (fades in as large title fades out)
-      // Large title is usually at top 16px-ish and has height ~40px
-      if (scrollY > 20) {
-        const opacity = Math.min((scrollY - 20) / 40, 1);
-        setTitleOpacity(opacity);
-      } else {
-        setTitleOpacity(0);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          setScrolled(scrollY > 40);
+          
+          if (scrollY > 20) {
+            const opacity = Math.min((scrollY - 20) / 40, 1);
+            setTitleOpacity(opacity);
+          } else {
+            setTitleOpacity(0);
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
