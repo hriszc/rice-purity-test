@@ -38,7 +38,6 @@ describe('scoring utils', () => {
 
     it('should handle extreme scores', () => {
       const perfect = getRankingDetails(150);
-      expect(perfect.displayScore).toBeUndefined(); // displayScore is not in return object, but let's check label
       expect(perfect.rankingLabel).toContain('purest');
 
       const zero = getRankingDetails(0);

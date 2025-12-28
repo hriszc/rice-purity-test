@@ -33,7 +33,7 @@ export const SEOContent: React.FC = () => {
       <section style={{ marginBottom: '32px' }}>
         <h2 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '12px' }}>History of the Rice Purity Test</h2>
         <p style={{ fontSize: '15px', lineHeight: '1.6', color: '#3c3c43', marginBottom: '16px' }}>
-          The Rice Purity Test is a famous 100-question survey that originated at Rice University in Houston, Texas. 
+          The Rice Purity Test is a famous 100-question survey that originated at <a href="https://en.wikipedia.org/wiki/Rice_Purity_Test" target="_blank" rel="noopener noreferrer" style={{ color: '#007aff', textDecoration: 'none' }}>Rice University</a> in Houston, Texas. 
           First published in 1924, it was designed to help students bond and track their life experiences throughout college.
           Over the decades, it has evolved into a viral internet phenomenon, serving as a rite of passage for high school 
           and college students worldwide. The "1988 version" featured here is considered one of the most classic and standard iterations, widely cited in student culture and online communities.

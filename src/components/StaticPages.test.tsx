@@ -1,6 +1,5 @@
-import React from 'react';
-import { describe, it, expect, vi } from 'vitest';
 import { screen } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import { renderWithProviders } from '../test/testUtils';
 import { AboutPage } from './AboutPage';
 import { ScoreMeanings } from './ScoreMeanings';

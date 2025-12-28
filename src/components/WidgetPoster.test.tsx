@@ -1,6 +1,5 @@
-import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
 import { WidgetPoster } from './WidgetPoster';
 
 describe('WidgetPoster', () => {

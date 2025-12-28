@@ -1,4 +1,3 @@
-import React from 'react';
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { act, render } from '@testing-library/react';
 import { DanmakuBackground } from './DanmakuBackground';

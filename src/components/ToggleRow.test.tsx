@@ -1,6 +1,5 @@
-import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { fireEvent, render } from '@testing-library/react';
 import { ToggleRow } from './ToggleRow';
 
 describe('ToggleRow', () => {
