@@ -129,29 +129,59 @@ export const SEOContent: React.FC = () => {
       <script type="application/ld+json">
         {JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "mainEntity": [{
-            "@type": "Question",
-            "name": "Is the Rice Purity Test anonymous?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, this calculator is purely client-side. Your answers are processed in your browser and are never sent to any server. Your privacy is guaranteed."
+          "@graph": [
+            {
+              "@type": "FAQPage",
+              "mainEntity": [{
+                "@type": "Question",
+                "name": "Is the Rice Purity Test anonymous?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, this calculator is purely client-side. Your answers are processed in your browser and are never sent to any server. Your privacy is guaranteed."
+                }
+              }, {
+                "@type": "Question",
+                "name": "What is a 'good' Rice Purity Score?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "There is no objective 'good' score. A high score means you are more innocent, while a low score means you are more experienced. Most college students score between 40 and 70."
+                }
+              }, {
+                "@type": "Question",
+                "name": "How many questions are there?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "The classic version has 100 questions. However, the 1988 version presented here includes 150 questions for a more comprehensive checklist. We also offer a 'Short Mode' with 30 questions for a quick check."
+                }
+              }]
+            },
+            {
+              "@type": "HowTo",
+              "name": "How to take the Rice Purity Test",
+              "step": [
+                {
+                  "@type": "HowToStep",
+                  "name": "Start the Test",
+                  "text": "Open the official Rice Purity Test calculator."
+                },
+                {
+                  "@type": "HowToStep",
+                  "name": "Answer Questions",
+                  "text": "Read through the list of 150 questions. For every experience you have had, click 'Yes' or check the box."
+                },
+                {
+                  "@type": "HowToStep",
+                  "name": "Get Your Score",
+                  "text": "Your score starts at 100 and drops with each 'Yes'. The final number is your Rice Purity Score."
+                },
+                {
+                  "@type": "HowToStep",
+                  "name": "Compare Results",
+                  "text": "Use the meaning guide to see if you rank as 'Innocent', 'Typical Student', or 'Wild' compared to others."
+                }
+              ]
             }
-          }, {
-            "@type": "Question",
-            "name": "What is a 'good' Rice Purity Score?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "There is no objective 'good' score. A high score means you are more innocent, while a low score means you are more experienced. Most college students score between 40 and 70."
-            }
-          }, {
-            "@type": "Question",
-            "name": "How many questions are there?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The classic version has 100 questions. However, the 1988 version presented here includes 150 questions for a more comprehensive checklist. We also offer a 'Short Mode' with 30 questions for a quick check."
-            }
-          }]
+          ]
         })}
       </script>
     </div>
