@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { fireEvent, screen } from '@testing-library/react';
 import { ResultsView } from './ResultsView';
 import { renderWithProviders } from '../../test/testUtils';
+import { getRankingDetails } from '../../utils/rankingDetails';
 
 vi.mock('../DanmakuBackground', () => ({
   DanmakuBackground: () => <div data-testid="danmaku" />,
@@ -9,21 +10,6 @@ vi.mock('../DanmakuBackground', () => ({
 
 const makeProps = () => ({
   displayScore: 123,
-  rankingDetails: {
-    rankingLabel: 'Very Pure',
-    fullVerdict: 'You are doing great.',
-    shareText: 'I scored 123!',
-    isFlipped: false,
-    pPurerOrEqual: 0.2,
-    pLessPureOrEqual: 0.8,
-    currentCategory: {
-      min: 0,
-      max: 150,
-      title: 'Pure',
-      text: 'Pure',
-      verdict: 'Pure verdict',
-    },
-  },
   categoryScores: [
     { label: 'Romance', value: 75 },
     { label: 'Boldness', value: 50 },
@@ -48,10 +34,11 @@ describe('ResultsView', () => {
 
   it('renders results and handles navigation actions', () => {
     const props = makeProps();
+    const rankingLabel = getRankingDetails(props.displayScore).rankingLabel;
     renderWithProviders(<ResultsView {...props} />);
 
     expect(screen.getByText('Results')).toBeInTheDocument();
-    expect(screen.getByText('Very Pure')).toBeInTheDocument();
+    expect(screen.getByText(rankingLabel)).toBeInTheDocument();
 
     fireEvent.click(screen.getByText('Back'));
     expect(props.setView).toHaveBeenCalledWith('test');

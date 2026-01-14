@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { toPng } from 'html-to-image';
 import { IOSLayout } from '../IOSLayout';
@@ -6,18 +6,8 @@ import { SEOContent } from '../SEOContent';
 import { RadarChart } from '../RadarChart';
 import { WidgetPoster, type WidgetPosterHandle } from '../WidgetPoster';
 import { CertificateCard } from './CertificateCard';
-import { type ScoringCategory } from '../../data';
+import { getRankingDetails } from '../../utils/rankingDetails';
 import './ResultsView.css';
-
-interface RankingDetails {
-  rankingLabel: string;
-  fullVerdict: string;
-  shareText: string;
-  isFlipped: boolean;
-  pPurerOrEqual: number;
-  pLessPureOrEqual: number;
-  currentCategory?: ScoringCategory;
-}
 
 interface CategoryScore {
   label: string;
@@ -26,7 +16,6 @@ interface CategoryScore {
 
 interface ResultsViewProps {
   displayScore: number;
-  rankingDetails: RankingDetails;
   categoryScores: CategoryScore[];
   handleRetake: () => void;
   handleReset: () => void;
@@ -35,7 +24,6 @@ interface ResultsViewProps {
 
 export const ResultsView: React.FC<ResultsViewProps> = ({
   displayScore,
-  rankingDetails,
   categoryScores,
   handleRetake,
   handleReset,
@@ -43,6 +31,7 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const posterRef = useRef<WidgetPosterHandle>(null);
+  const rankingDetails = useMemo(() => getRankingDetails(displayScore), [displayScore]);
 
   const {
     rankingLabel,

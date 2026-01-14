@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
-import { sections } from '../data';
-import { calculateScores, getRankingDetails, getProcessedSections } from '../utils/scoring';
+import { scoringCategories, sections } from '../data';
+import { calculateScores, getProcessedSections } from '../utils/scoring';
 
 export type View = 'test' | 'results';
 
@@ -83,9 +83,9 @@ export function useTestFlow() {
     [checkedState, allQuestions, isShortMode]
   );
 
-  const rankingDetails = useMemo(
-    () => (view === 'results' ? getRankingDetails(displayScore) : null),
-    [view, displayScore]
+  const currentCategory = useMemo(
+    () => scoringCategories.find((c) => displayScore >= c.min && displayScore <= c.max),
+    [displayScore]
   );
 
   const handleSubmit = useCallback(() => {
@@ -118,7 +118,7 @@ export function useTestFlow() {
     displayScore,
     progress,
     categoryScores,
-    rankingDetails,
+    currentCategory,
     handleSubmit,
     handleRetake,
     processedSections,

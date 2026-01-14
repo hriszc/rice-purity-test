@@ -40,7 +40,6 @@ describe('useTestFlow hook', () => {
       result.current.handleSubmit();
     });
     expect(result.current.view).toBe('results');
-    expect(result.current.rankingDetails).not.toBeNull();
 
     act(() => {
       result.current.handleRetake();

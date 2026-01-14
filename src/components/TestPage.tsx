@@ -11,7 +11,7 @@ export function TestPage() {
     setView,
     progress,
     displayScore,
-    rankingDetails,
+    currentCategory,
     showIntro,
     setShowIntro,
     isShortMode,
@@ -32,12 +32,11 @@ export function TestPage() {
     processedSections,
   } = useTestFlow();
 
-  if (view === 'results' && rankingDetails) {
+  if (view === 'results') {
     return (
       <Suspense fallback={<div className="loading-fallback" />}>
         <ResultsView
           displayScore={displayScore}
-          rankingDetails={rankingDetails}
           categoryScores={categoryScores}
           handleRetake={handleRetake}
           handleReset={handleReset}
@@ -51,7 +50,7 @@ export function TestPage() {
     <TestView
       progress={progress}
       displayScore={displayScore}
-      currentCategory={rankingDetails?.currentCategory}
+      currentCategory={currentCategory}
       showIntro={showIntro}
       setShowIntro={setShowIntro}
       isShortMode={isShortMode}

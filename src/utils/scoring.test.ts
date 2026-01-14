@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { calculateScores, getRankingDetails, getProcessedSections } from './scoring';
+import { calculateScores, getProcessedSections } from './scoring';
+import { getRankingDetails } from './rankingDetails';
 import { sections } from '../data';
 
 const allQuestions = sections.flatMap(s => s.questions);

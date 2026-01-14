@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import './IOSLayout.css';
-import { DanmakuBackground } from './DanmakuBackground';
+
+const DanmakuBackground = lazy(() =>
+  import('./DanmakuBackground').then((m) => ({ default: m.DanmakuBackground }))
+);
 
 interface IOSLayoutProps {
   title: string;
@@ -14,6 +17,7 @@ export const IOSLayout: React.FC<IOSLayoutProps> = ({ title, children, leftActio
   const [scrolled, setScrolled] = useState(false);
   const [titleOpacity, setTitleOpacity] = useState(0);
   const [isEmbedded, setIsEmbedded] = useState(false);
+  const [showDanmaku, setShowDanmaku] = useState(false);
 
   useEffect(() => {
     // Detect if embedded via iframe or query param
@@ -46,9 +50,26 @@ export const IOSLayout: React.FC<IOSLayoutProps> = ({ title, children, leftActio
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      setShowDanmaku(true);
+    }, 1200);
+
+    return () => window.clearTimeout(timer);
+  }, []);
+
   return (
     <div className={`ios-layout ${isEmbedded ? 'is-embedded' : ''}`}>
-      {!isEmbedded && <DanmakuBackground />}
+      {!isEmbedded && showDanmaku && (
+        <Suspense fallback={null}>
+          <DanmakuBackground />
+        </Suspense>
+      )}
       <header className={`ios-header ${(!showLargeTitle || scrolled) ? 'scrolled' : ''}`}>
         <div className="header-content">
           <div className="header-left">{leftAction}</div>
