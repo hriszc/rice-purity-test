@@ -32,7 +32,10 @@ export const onRequest = async (context: {
   }
 
   const templateResponse = await env.ASSETS.fetch(
-    new Request(new URL('/index.html', request.url), request)
+    new Request(new URL('/', request.url), {
+      method: 'GET',
+      headers: { Accept: 'text/html' },
+    })
   );
 
   if (!templateResponse.ok) {
