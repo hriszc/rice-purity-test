@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 export const AboutPage: React.FC = () => {
   const canonicalUrl = "https://ricepurity.online/about/";
+  const embedOrigin = typeof window === 'undefined' ? 'https://ricepurity.online' : window.location.origin;
   return (
     <IOSLayout 
       title="About & Privacy" 
@@ -94,7 +95,7 @@ export const AboutPage: React.FC = () => {
               marginBottom: '24px'
             }}>
               <iframe 
-                src={`${window.location.origin}/?embed=true`} 
+                src={`${embedOrigin}/?embed=true`} 
                 width="100%" 
                 height="100%" 
                 frameBorder="0" 
@@ -127,8 +128,12 @@ export const AboutPage: React.FC = () => {
               <button 
                 onClick={() => {
                   const code = `<iframe src="https://ricepurity.online/?embed=true" width="100%" height="800" frameborder="0" style="border:none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></iframe>\n<p style="text-align: center; font-size: 12px; margin-top: 8px;">Powered by <a href="https://ricepurity.online/">Rice Purity Test Official</a></p>`;
-                  navigator.clipboard.writeText(code);
-                  alert('Embed code copied to clipboard!');
+                  if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
+                    navigator.clipboard.writeText(code);
+                  }
+                  if (typeof window !== 'undefined') {
+                    window.alert('Embed code copied to clipboard!');
+                  }
                 }}
                 style={{
                   padding: '10px 20px',

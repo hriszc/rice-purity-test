@@ -5,14 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node prerender.js",
+    "dev:ssr": "NODE_ENV=development node server.js",
+    "build": "tsc -b && vite build && vite build --ssr src/entry-server.tsx",
+    "build:prerender": "tsc -b && vite build && node prerender.js",
     "lint": "eslint .",
     "prepare": "husky install",
     "preview": "vite preview",
+    "preview:ssr": "NODE_ENV=production node server.js",
     "test": "vitest",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "express": "^4.21.2",
     "html-to-image": "^1.11.13",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

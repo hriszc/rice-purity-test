@@ -17,12 +17,26 @@ const ROUTES = [
 ];
 
 async function prerender() {
-  const distPath = path.resolve(__dirname, 'dist');
+  const distPath = path.resolve(__dirname, 'dist/client');
   const templatePath = path.resolve(distPath, 'index.html'); // The base template from Vite build
   const tempSsrAppPath = path.resolve(__dirname, './temp-ssr-app.cjs'); // Use .cjs extension
   
   // Read the template once
   const templateHtml = await fs.readFile(templatePath, 'utf-8');
+  const normalizedTemplateHtml = templateHtml.replace(
+    /<div id="root">[\s\S]*?<\/div>(?=\s*<\/body>)/i,
+    '<div id="root"></div>'
+  );
+
+  const stripSeoTags = (html) =>
+    html
+      .replace(/<title[^>]*>[\s\S]*?<\/title>/gi, '')
+      .replace(/<meta[^>]+name=["']description["'][^>]*>/gi, '')
+      .replace(/<meta[^>]+name=["']title["'][^>]*>/gi, '')
+      .replace(/<meta[^>]+name=["']keywords["'][^>]*>/gi, '')
+      .replace(/<link[^>]+rel=["']canonical["'][^>]*>/gi, '')
+      .replace(/<meta[^>]+property=["']og:[^"']+["'][^>]*>/gi, '')
+      .replace(/<meta[^>]+name=["']twitter:[^"']+["'][^>]*>/gi, '');
 
   const esbuild = await import('esbuild');
 
@@ -63,7 +77,7 @@ async function prerender() {
 
       const { helmet } = helmetContext;
 
-      let html = templateHtml;
+      let html = normalizedTemplateHtml;
       
       // Inject App HTML
       html = html.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
@@ -71,15 +85,7 @@ async function prerender() {
       // Inject SEO Meta
       if (helmet) {
         // Clean up any existing SEO tags from the template to avoid duplicates or stale data
-        html = html.replace(/<title>.*?<\/title>/gi, '');
-        html = html.replace(/<meta\s+name=["']description["']\s+content=["'].*?["']\s*\/?>/gi, '');
-        html = html.replace(/<meta\s+name=["']title["']\s+content=["'].*?["']\s*\/?>/gi, '');
-        html = html.replace(/<meta\s+name=["']keywords["']\s+content=["'].*?["']\s*\/?>/gi, '');
-        html = html.replace(/<link\s+rel=["']canonical["']\s+href=["'].*?["']\s*\/?>/gi, '');
-        
-        // Also clean up OG and Twitter tags if they are being replaced
-        html = html.replace(/<meta\s+property=["']og:.*?["']\s+content=["'].*?["']\s*\/?>/gi, '');
-        html = html.replace(/<meta\s+name=["']twitter:.*?["']\s+content=["'].*?["']\s*\/?>/gi, '');
+        html = stripSeoTags(html);
 
         const headTags = `
           ${helmet.title.toString()}

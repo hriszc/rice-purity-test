@@ -3,10 +3,17 @@ import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ ssrBuild }) => ({
   plugins: [react()],
   optimizeDeps: {
     include: ['html-to-image']
+  },
+  ssr: {
+    target: 'webworker',
+    noExternal: ['react-helmet-async'],
+  },
+  build: {
+    outDir: ssrBuild ? 'dist/server' : 'dist/client',
   },
   test: {
     globals: true,
@@ -19,4 +26,4 @@ export default defineConfig({
       exclude: ['src/main.tsx', 'src/vite-env.d.ts', 'src/test/**'],
     },
   },
-})
+}))
