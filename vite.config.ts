@@ -3,7 +3,7 @@ import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
-export default defineConfig(({ ssrBuild }) => ({
+export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react()],
   optimizeDeps: {
     include: ['html-to-image']
@@ -13,7 +13,7 @@ export default defineConfig(({ ssrBuild }) => ({
     noExternal: ['react-helmet-async'],
   },
   build: {
-    outDir: ssrBuild ? 'dist/server' : 'dist/client',
+    outDir: isSsrBuild ? 'dist/server' : 'dist/client',
   },
   test: {
     globals: true,
